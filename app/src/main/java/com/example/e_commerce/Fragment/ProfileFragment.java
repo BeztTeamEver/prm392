@@ -1,5 +1,8 @@
 package com.example.e_commerce.Fragment;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,8 +20,11 @@ import com.example.e_commerce.Activity.LoginActivity;
 import com.example.e_commerce.Activity.SplashScreenActivity;
 import com.example.e_commerce.Model.User;
 import com.example.e_commerce.R;
+import com.google.gson.Gson;
 
 import org.w3c.dom.Text;
+
+import java.util.ResourceBundle;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -75,6 +81,13 @@ public class ProfileFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
 
         User user = User.getInstance();
+
+        SharedPreferences sharedPreferences = requireActivity()
+                .getSharedPreferences("MySharedPref",MODE_PRIVATE);
+        String userJson = sharedPreferences.getString("current_user", null);
+
+        Gson gson = new Gson();
+        user = gson.fromJson(userJson, User.class);
 
         tv_username = v.findViewById(R.id.profile_tv_username);
         tv_email = v.findViewById(R.id.profile_tv_email);

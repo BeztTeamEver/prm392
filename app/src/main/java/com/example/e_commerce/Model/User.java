@@ -1,6 +1,7 @@
 package com.example.e_commerce.Model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class User implements Serializable {
 
@@ -13,7 +14,43 @@ public class User implements Serializable {
     private String role;
     private String address;
     private String avatarUrl;
+    private String gender;
+    private Date createAt;
+    private int status;
     private static User user = null;
+
+    public User(int id, String fullname, String email, String password, String phoneNumber
+            , String username, String role, String address, String avatarUrl, String gender
+            , Date createAt, int status) {
+        this.id = id;
+        this.fullname = fullname;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.username = username;
+        this.role = role;
+        this.address = address;
+        this.avatarUrl = avatarUrl;
+        this.gender = gender;
+        this.createAt = createAt;
+        this.status = status;
+    }
+
+    public User(String fullname, String email, String password, String phoneNumber, String username
+            , String role, String address, String avatarUrl, String gender
+            , Date createAt, int status) {
+        this.fullname = fullname;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.username = username;
+        this.role = role;
+        this.address = address;
+        this.avatarUrl = avatarUrl;
+        this.gender = gender;
+        this.createAt = createAt;
+        this.status = status;
+    }
 
     public User(int id, String fullname, String email, String password, String phoneNumber
             , String username, String role, String address, String avatarUrl) {
@@ -126,5 +163,29 @@ public class User implements Serializable {
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

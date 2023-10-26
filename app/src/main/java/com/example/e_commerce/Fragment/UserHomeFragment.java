@@ -3,6 +3,7 @@ package com.example.e_commerce.Fragment;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +17,22 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.example.e_commerce.Activity.CategoryProductsActivity;
 import com.example.e_commerce.Activity.ProductActivity;
 import com.example.e_commerce.Database.Database;
 import com.example.e_commerce.Model.Book;
 import com.example.e_commerce.R;
+import com.example.e_commerce.Repository.RepositoryBase;
+import com.example.e_commerce.Service.BookService.BookService;
+import com.example.e_commerce.Service.IBookService;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,6 +43,8 @@ public class UserHomeFragment extends Fragment {
 
     ListView user_list_products;
     ArrayList<Book> products = new ArrayList<>();
+
+    IBookService bookService = RepositoryBase.getBookService();
     // Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -80,10 +93,14 @@ public class UserHomeFragment extends Fragment {
 
         // TODO: get products from database and show it in listView
 
-        Database dp = new Database(getContext());
-        products = dp.get_products();
-        UserHomeProductAdapter userHomeProductAdapter = new UserHomeProductAdapter(products);
-        user_list_products.setAdapter(userHomeProductAdapter);
+        //Database dp = new Database(getContext());
+        //products = dp.get_products();
+
+
+
+        /*UserHomeProductAdapter userHomeProductAdapter = new UserHomeProductAdapter(products);
+        user_list_products.setAdapter(userHomeProductAdapter);*/
+        getAllBook();
 
         user_list_products.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -105,6 +122,41 @@ public class UserHomeFragment extends Fragment {
         });
 
         return v;
+    }
+
+    private void getAllBook(){
+
+        try{
+            Call<List<Book>> call = bookService.getAll();
+            call.enqueue(new Callback<List<Book>>() {
+                @Override
+                public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
+                    List<Book> books = response.body();
+                    ArrayList bookList = new ArrayList();
+                    if (books == null){
+                        return;
+                    }
+
+                    for (Book book : books){
+                        bookList.add(book);
+                    }
+
+                    UserHomeProductAdapter userHomeProductAdapter
+                            = new UserHomeProductAdapter(bookList);
+                    user_list_products.setAdapter(userHomeProductAdapter);
+
+
+                }
+
+                @Override
+                public void onFailure(Call<List<Book>> call, Throwable t) {
+
+                }
+            });
+
+        } catch (Exception e){
+            Log.d("Error", e.getMessage());
+        }
     }
 
 
@@ -144,8 +196,8 @@ public class UserHomeFragment extends Fragment {
 
             product_name.setText(products.get(i).getTitle());
             product_price.setText(products.get(i).getPrice()+"");
-            String url = products.get(i).getImage_url();
-            Glide.with(getContext()).load(url).into(product_image);
+            //String url = products.get(i).getImage_url();
+            //Glide.with(getContext()).load(url).into(product_image);
 
             return item;
         }

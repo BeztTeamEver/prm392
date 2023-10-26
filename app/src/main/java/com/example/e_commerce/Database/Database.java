@@ -12,7 +12,7 @@ import com.example.e_commerce.Model.Book;
 import com.example.e_commerce.Model.Cart;
 import com.example.e_commerce.Model.Category;
 import com.example.e_commerce.Model.Order;
-import com.example.e_commerce.Model.OrderDetails;
+import com.example.e_commerce.Model.OrderItem;
 import com.example.e_commerce.Model.User;
 
 import java.util.ArrayList;
@@ -450,28 +450,28 @@ public class Database extends SQLiteOpenHelper {
         return arrayList;
     }
 
-    public ArrayList<OrderDetails> get_report(String date) {
+    public ArrayList<OrderItem> get_report(String date) {
         database = getReadableDatabase();
         Cursor cursor = database.rawQuery("select * from orders where date = '" + date + "'", null);
-        ArrayList<OrderDetails> arrayList = new ArrayList<>();
+        ArrayList<OrderItem> arrayList = new ArrayList<>();
         cursor.moveToFirst();
 
         while (cursor.isAfterLast() == false) {
-            arrayList.add(new OrderDetails(cursor.getInt(0)));
+            arrayList.add(new OrderItem(cursor.getInt(0)));
             cursor.moveToNext();
         }
         database.close();
         return arrayList;
     }
 
-    public ArrayList<OrderDetails> get_report(String date, int user_id){
+    public ArrayList<OrderItem> get_report(String date, int user_id){
         database = getReadableDatabase();
         Cursor cursor = database.rawQuery("select * from orders where date = '" + date + "' and user_id = '" + user_id + "'", null);
-        ArrayList<OrderDetails> arrayList = new ArrayList<>();
+        ArrayList<OrderItem> arrayList = new ArrayList<>();
         cursor.moveToFirst();
 
         while (cursor.isAfterLast() == false) {
-            arrayList.add(new OrderDetails(cursor.getInt(0)));
+            arrayList.add(new OrderItem(cursor.getInt(0)));
             cursor.moveToNext();
         }
         database.close();
