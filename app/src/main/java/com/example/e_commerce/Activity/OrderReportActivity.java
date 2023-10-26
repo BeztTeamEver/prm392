@@ -14,7 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.e_commerce.Database.Database;
-import com.example.e_commerce.Model.Product;
+import com.example.e_commerce.Model.Book;
 import com.example.e_commerce.R;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class OrderReportActivity extends AppCompatActivity {
     int order_id;
     TextView textView;
     ListView order_details;
-    ArrayList<Product> products;
+    ArrayList<Book> products;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +43,9 @@ public class OrderReportActivity extends AppCompatActivity {
 
     class ReportAdapter extends BaseAdapter {
 
-        ArrayList<Product> orderDetails = new ArrayList<>();
+        ArrayList<Book> orderDetails = new ArrayList<>();
 
-        public ReportAdapter(ArrayList<Product> orderDetails) {
+        public ReportAdapter(ArrayList<Book> orderDetails) {
             this.orderDetails = orderDetails;
         }
 
@@ -71,11 +71,11 @@ public class OrderReportActivity extends AppCompatActivity {
             LayoutInflater layoutInflater = getLayoutInflater();
             View item = layoutInflater.inflate(R.layout.listrow_details_item, null);
 
-            TextView product_name = (TextView) item.findViewById(R.id.report_product_name);
-            TextView product_quantity = (TextView) item.findViewById(R.id.report_product_quantity);
+            TextView product_title = (TextView) item.findViewById(R.id.report_product_name);
+            TextView product_stock_quantity = (TextView) item.findViewById(R.id.report_product_quantity);
 
-            product_name.setText(orderDetails.get(i).getName() + "");
-            product_quantity.setText(orderDetails.get(i).getQuantity() + "");
+            product_title.setText(orderDetails.get(i).getTitle() + "");
+            product_stock_quantity.setText(orderDetails.get(i).getStock_quantity()+ "");
 
             return item;
         }

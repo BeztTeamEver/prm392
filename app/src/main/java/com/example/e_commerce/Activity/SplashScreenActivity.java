@@ -37,12 +37,11 @@ public class SplashScreenActivity extends AppCompatActivity {
                 User user = User.getInstance();
                 if (remember_me) {
                     user.setId(sh.getInt("id", -1));
-                    user.setName(sh.getString("name", ""));
+                    user.setFullname(sh.getString("fullname", ""));
                     user.setEmail(sh.getString("email", ""));
+                    user.setPhone_number(sh.getString("phone_number", ""));
+                    user.setUsername(sh.getString("username", ""));
                     user.setPassword(sh.getString("password", ""));
-                    user.setGender(sh.getString("gender", ""));
-                    user.setBirthdate(sh.getString("birthdate", ""));
-                    user.setJob(sh.getString("job", ""));
                     startActivity(new Intent(SplashScreenActivity.this, UserActivity.class));
                 } else {
                     startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));

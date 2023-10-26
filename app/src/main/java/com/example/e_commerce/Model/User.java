@@ -1,11 +1,44 @@
 package com.example.e_commerce.Model;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
 
     private int id;
-    private String name, email, password, gender, job, birthdate;
-
+    private String fullname;
+    private String email;
+    private String password;
+    private String phoneNumber;
+    private String username;
+    private String role;
+    private String address;
+    private String avatarUrl;
     private static User user = null;
+
+    public User(int id, String fullname, String email, String password, String phoneNumber
+            , String username, String role, String address, String avatarUrl) {
+        this.id = id;
+        this.fullname = fullname;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.username = username;
+        this.role = role;
+        this.address = address;
+        this.avatarUrl = avatarUrl;
+    }
+
+    public User(String fullname, String email, String password, String phoneNumber
+            , String username, String role, String address, String avatarUrl) {
+        this.fullname = fullname;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.username = username;
+        this.role = role;
+        this.address = address;
+        this.avatarUrl = avatarUrl;
+    }
 
     private User() {}
 
@@ -23,12 +56,12 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFullname() {
+        return fullname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public String getEmail() {
@@ -47,27 +80,51 @@ public class User {
         this.password = password;
     }
 
-    public String getGender() {
-        return gender;
+    public String getPhone_number() {
+        return phoneNumber;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setPhone_number(String phone_number) {
+        this.phoneNumber = phone_number;
     }
 
-    public String getJob() {
-        return job;
+    public String getUsername() {
+        return username;
     }
 
-    public void setJob(String job) {
-        this.job = job;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getBirthdate() {
-        return birthdate;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setBirthdate(String birthdate) {
-        this.birthdate = birthdate;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 }

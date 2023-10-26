@@ -9,7 +9,7 @@
 //import android.widget.TextView;
 //
 //import com.bumptech.glide.Glide;
-//import com.example.e_commerce.Model.Product;
+//import com.example.e_commerce.Model.Book;
 //import com.example.e_commerce.R;
 //
 //import java.util.ArrayList;
@@ -18,11 +18,11 @@
 //
 //    // This adapter will used in user home and search.
 //
-//    ArrayList<Product> products = new ArrayList<>();
+//    ArrayList<Book> products = new ArrayList<>();
 //
 //    public UserHomeProductAdapter(Cursor cursor) {
 //        while (cursor.isAfterLast() == false) {
-//            this.products.add(new Product( // int id, int quantity, int cat_id, int sold, String name, String image, double price.
+//            this.products.add(new Book( // int id, int quantity, int cat_id, int sold, String name, String image, double price.
 //                    cursor.getInt(0),      // order of this will change passed on database attributes order.
 //                    cursor.getInt(1), cursor.getInt(2), cursor.getInt(3), cursor.getString(4), cursor.getString(5), cursor.getDouble(6)));
 //            cursor.moveToNext();

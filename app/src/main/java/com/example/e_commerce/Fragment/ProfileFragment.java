@@ -10,12 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.e_commerce.Activity.LoginActivity;
 import com.example.e_commerce.Activity.SplashScreenActivity;
 import com.example.e_commerce.Model.User;
 import com.example.e_commerce.R;
+
+import org.w3c.dom.Text;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,7 +27,7 @@ import com.example.e_commerce.R;
  */
 public class ProfileFragment extends Fragment {
 
-    TextView tv_username, tv_email, tv_password, tv_gender, tv_birthdate, tv_job;
+    TextView tv_username, tv_email, tv_password, tv_fullname, tv_phone_number;
     Button btn_logout;
 
     // Rename parameter arguments, choose names that match
@@ -75,18 +78,16 @@ public class ProfileFragment extends Fragment {
 
         tv_username = v.findViewById(R.id.profile_tv_username);
         tv_email = v.findViewById(R.id.profile_tv_email);
-        tv_password = v.findViewById(R.id.profile_tv_paswword);
-        tv_job = v.findViewById(R.id.profile_tv_job);
-        tv_birthdate = v.findViewById(R.id.profile_tv_birthdate);
-        tv_gender = v.findViewById(R.id.profile_tv_gender);
+        tv_phone_number = v.findViewById(R.id.profile_tv_phone_number);
+        tv_fullname = v.findViewById(R.id.profile_tv_fullname);
+        tv_password = v.findViewById(R.id.profile_tv_password);
 
-        // TODO: get user info from database and show it
-        tv_username.setText(user.getName());
-        tv_password.setText(user.getPassword());
-        tv_job.setText(user.getJob());
-        tv_birthdate.setText(user.getBirthdate());
-        tv_gender.setText(user.getGender());
+//         //TODO: get user info from database and show it
+        tv_username.setText(user.getUsername());
         tv_email.setText(user.getEmail());
+        tv_phone_number.setText(user.getPhone_number());
+        tv_fullname.setText(user.getFullname());
+        tv_password.setText(user.getPassword());
 
         btn_logout = v.findViewById(R.id.profile_btn_logout);
         btn_logout.setOnClickListener(new View.OnClickListener() {
@@ -96,9 +97,7 @@ public class ProfileFragment extends Fragment {
                 SharedPreferences sharedPreferences = getContext().getSharedPreferences("MySharedPref", 0);
                 SharedPreferences.Editor myEdit = sharedPreferences.edit();
                 myEdit.clear();
-//                myEdit.putBoolean("remember_me", false);
                 myEdit.commit();
-
                 getActivity().finish();
                 startActivity(new Intent(getContext(), LoginActivity.class));
             }

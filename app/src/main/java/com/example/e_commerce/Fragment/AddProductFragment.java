@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.e_commerce.Database.Database;
 import com.example.e_commerce.Model.Category;
-import com.example.e_commerce.Model.Product;
+import com.example.e_commerce.Model.Book;
 import com.example.e_commerce.R;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ import java.util.ArrayList;
  */
 public class AddProductFragment extends Fragment {
 
-    EditText txt_image, txt_name, txt_price, txt_quantity;
+    EditText txt_image_url, txt_title, txt_price, txt_stock_quantity, txt_description, txt_author ;
     Button btn_show, btn_add;
     Spinner spinner_categoty;
     ImageView iv_product_image;
@@ -80,10 +80,12 @@ public class AddProductFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_add_product, container, false);
 
         spinner_categoty = v.findViewById(R.id.add_product_spinner_category);
-        txt_name = v.findViewById(R.id.add_product_txt_name);
-        txt_image = v.findViewById(R.id.add_product_txt_image);
+        txt_title = v.findViewById(R.id.add_product_txt_title);
+        txt_image_url = v.findViewById(R.id.add_product_txt_image_url);
         txt_price = v.findViewById(R.id.add_product_txt_price);
-        txt_quantity = v.findViewById(R.id.add_product_txt_quantity);
+        txt_author = v.findViewById(R.id.add_product_txt_author);
+        txt_description = v.findViewById(R.id.add_product_txt_description);
+        txt_stock_quantity = v.findViewById(R.id.add_product_txt_stock_quantity);
         iv_product_image = v.findViewById(R.id.add_product_iv_image);
         btn_show = v.findViewById(R.id.add_product_btn_show_image);
         btn_add = v.findViewById(R.id.add_product_btn_add);
@@ -103,8 +105,8 @@ public class AddProductFragment extends Fragment {
         btn_show.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!txt_image.getText().toString().isEmpty()) {
-                    String url = txt_image.getText().toString();
+                if(!txt_image_url.getText().toString().isEmpty()) {
+                    String url = txt_image_url.getText().toString();
                     Glide.with(getContext()).load(url).into(iv_product_image);
                 }
             }
@@ -114,34 +116,40 @@ public class AddProductFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // TODO: add product
-                String image = txt_image.getText().toString();
-                String name = txt_name.getText().toString();
+                String image_url = txt_image_url.getText().toString();
+                String title = txt_title.getText().toString();
+                String author = txt_author.getText().toString();
+                String description = txt_description.getText().toString();
                 double price = -1;
                 price = Double.parseDouble(txt_price.getText().toString());
-                int quantiry = -1;
-                quantiry = Integer.parseInt(txt_quantity.getText().toString());
+                int stock_quantity = -1;
+                stock_quantity = Integer.parseInt(txt_stock_quantity.getText().toString());
                 String category = spinner_categoty.getSelectedItem().toString();
                 int cat_id = 0;
-                if(!image.isEmpty() && !name.isEmpty() && price!=-1 && quantiry!=-1){
+                if(!image_url.isEmpty() && !title.isEmpty() && !author.isEmpty() && !description.isEmpty() && price!=-1 && stock_quantity!=-1){
                     for(int i = 0 ; i < categories.size() ; i++){
                         if(categories.get(i).getName() == category){
                             cat_id = categories.get(i).getId();
                             break;
                         }
                     }
-                    Product product = new Product();
-                    product.setName(name);
+                    Book product = new Book();
+                    product.setTitle(title);
                     product.setPrice(price);
-                    product.setQuantity(quantiry);
-                    product.setImage(image);
-                    product.setCat_id(cat_id);
+                    product.setStock_quantity(stock_quantity);
+                    product.setImage_url(image_url);
+                    product.setBook_type_id(cat_id);
+                    product.setAuthor(author);
+                    product.setDescription(description);
 
                     db.add_product(product);
 
-                    txt_image.setText("");
-                    txt_name.setText("");
+                    txt_image_url.setText("");
+                    txt_title.setText("");
                     txt_price.setText("");
-                    txt_quantity.setText("");
+                    txt_stock_quantity.setText("");
+                    txt_author.setText("");
+                    txt_description.setText("");
                     iv_product_image.setImageResource(R.drawable.image_placeholder);
 
                 }else{

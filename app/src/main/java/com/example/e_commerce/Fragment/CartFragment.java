@@ -1,7 +1,6 @@
 package com.example.e_commerce.Fragment;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -11,7 +10,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -19,14 +17,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.e_commerce.Activity.OrderActivity;
-import com.example.e_commerce.Activity.ProductActivity;
 import com.example.e_commerce.Database.Database;
 import com.example.e_commerce.Model.Cart;
-import com.example.e_commerce.Model.Product;
 import com.example.e_commerce.Model.User;
 import com.example.e_commerce.R;
 

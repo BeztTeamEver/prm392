@@ -1,7 +1,6 @@
 package com.example.e_commerce.Fragment;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -30,7 +29,7 @@ import com.bumptech.glide.Glide;
 import com.example.e_commerce.Activity.ProductActivity;
 import com.example.e_commerce.Barcode.CaptuerAct;
 import com.example.e_commerce.Database.Database;
-import com.example.e_commerce.Model.Product;
+import com.example.e_commerce.Model.Book;
 import com.example.e_commerce.R;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
@@ -51,7 +50,7 @@ public class SearchFragment extends Fragment {
 
     int voiceCode = 1;
 
-    ArrayList<Product> products = new ArrayList<>();
+    ArrayList<Book> products = new ArrayList<>();
     // Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -171,13 +170,17 @@ public class SearchFragment extends Fragment {
 
                         Intent intent = new Intent(getActivity().getBaseContext(), ProductActivity.class);
                         intent = new Intent(getActivity(), ProductActivity.class);
-
                         intent.putExtra("id",products.get(i).getId());
-                        intent.putExtra("name",products.get(i).getName());
+                        intent.putExtra("stock_quantity",products.get(i).getStock_quantity());
+                        intent.putExtra("book_type_id",products.get(i).getBook_type_id());
+                        intent.putExtra("title",products.get(i).getTitle());
+                        intent.putExtra("author",products.get(i).getAuthor());
+                        intent.putExtra("image_url",products.get(i).getImage_url());
+                        intent.putExtra("description",products.get(i).getDescription());
                         intent.putExtra("price",products.get(i).getPrice());
-                        intent.putExtra("image",products.get(i).getImage());
+
                         getActivity().startActivity(intent);
-                        Toast.makeText(getContext(), "Product", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Book", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -212,9 +215,9 @@ public class SearchFragment extends Fragment {
 
     class UserSearchProductAdapter extends BaseAdapter {
 
-        ArrayList<Product> products = new ArrayList<>();
+        ArrayList<Book> products = new ArrayList<>();
 
-        public UserSearchProductAdapter(ArrayList<Product> products) {
+        public UserSearchProductAdapter(ArrayList<Book> products) {
             this.products = products;
         }
 
@@ -230,7 +233,7 @@ public class SearchFragment extends Fragment {
 
         @Override
         public Object getItem(int i) {
-            return products.get(i).getName();
+            return products.get(i).getTitle();
         }
 
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -244,9 +247,9 @@ public class SearchFragment extends Fragment {
             TextView product_name = (TextView) item.findViewById(R.id.user_home_tv_product_name);
             TextView product_price = (TextView) item.findViewById(R.id.user_home_tv_product_price);
 
-            product_name.setText(products.get(i).getName());
+            product_name.setText(products.get(i).getTitle());
             product_price.setText(products.get(i).getPrice()+"");
-            String url = products.get(i).getImage();
+            String url = products.get(i).getImage_url();
             Glide.with(getContext()).load(url).into(product_image);
 
             return item;

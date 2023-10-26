@@ -21,10 +21,8 @@ import com.example.e_commerce.R;
 public class LoginActivity extends AppCompatActivity {
 
     Button btn_login;
-    EditText txt_usrename, txt_password;
+    EditText txt_username, txt_password;
     TextView textView_forgot_password, textView_signup;
-    CheckBox checkBox_remember_me;
-    Boolean remember_me = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,25 +33,19 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         Database db = new Database(this);
 
-        checkBox_remember_me = (CheckBox) findViewById(R.id.login_checkBox_remember_me);
-        txt_usrename = findViewById(R.id.login_txt_username);
+        txt_username = findViewById(R.id.login_txt_username);
         txt_password = findViewById(R.id.login_txt_password);
         btn_login = (Button) findViewById(R.id.login_btn_login);
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(checkBox_remember_me.isChecked())
-                    remember_me = true;
-                else
-                    remember_me = false;
 
                 SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
                 SharedPreferences.Editor myEdit = sharedPreferences.edit();
-                myEdit.putBoolean("remember_me", remember_me);
                 myEdit.commit();
 
                 // TODO: login
-                String username = txt_usrename.getText().toString(),
+                String username = txt_username.getText().toString(),
                         password = txt_password.getText().toString();
 
                 if(!username.isEmpty() && !password.isEmpty()){
@@ -65,25 +57,23 @@ public class LoginActivity extends AppCompatActivity {
                         if(cursor.getCount() > 0){
                             User user = User.getInstance();
                             user.setId(cursor.getInt(0));
-                            user.setName(cursor.getString(1));
+                            user.setUsername(cursor.getString(1));
                             user.setEmail(cursor.getString(2));
-                            user.setPassword(cursor.getString(3));
-                            user.setGender(cursor.getString(4));
-                            user.setBirthdate(cursor.getString(5));
-                            user.setJob(cursor.getString(6));
+                            user.setPhone_number(cursor.getString(3));
+                            user.setUsername(cursor.getString(4));
+                            user.setPassword(cursor.getString(5));
 
                             myEdit.putInt("id", cursor.getInt(0));
-                            myEdit.putString("name", cursor.getString(1));
+                            myEdit.putString("username", cursor.getString(1));
                             myEdit.putString("email", cursor.getString(2));
-                            myEdit.putString("password", cursor.getString(3));
-                            myEdit.putString("gender", cursor.getString(4));
-                            myEdit.putString("birthdate", cursor.getString(5));
-                            myEdit.putString("job", cursor.getString(6));
+                            myEdit.putString("phone_number", cursor.getString(3));
+                            myEdit.putString("username", cursor.getString(4));
+                            myEdit.putString("password", cursor.getString(5));
                             myEdit.commit();
                             finish();
                             startActivity(new Intent(LoginActivity.this, UserActivity.class));
                         }else{
-                            Toast.makeText(getApplicationContext(), "Make suer from your data", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Make sure from your data", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }else{
@@ -98,15 +88,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //Navigate to signup screen
                 startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
-            }
-        });
-
-        textView_forgot_password = (TextView) findViewById(R.id.login_tv_forgot_password);
-        textView_forgot_password.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Navigate to forgot password screen
-                startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
             }
         });
     }

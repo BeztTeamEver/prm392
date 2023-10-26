@@ -23,12 +23,11 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
-        
+
         Database db = new Database(this);
         setTitle("Forgot Password");
 
         txt_email = (EditText) findViewById(R.id.forgot_password_txt_email);
-        textView_password = (TextView) findViewById(R.id.login_tv_forgot_password);
         forgot_password_tv_password = findViewById(R.id.forgot_password_tv_password);
 
         btn_get_password = (Button) findViewById(R.id.forgot_password_btn_get_password);

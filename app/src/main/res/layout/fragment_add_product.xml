@@ -19,7 +19,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="40dp" />
+                android:layout_height="24dp" />
 
             <TextView
                 android:id="@+id/textView"
@@ -28,15 +28,15 @@
                 android:layout_margin="5dp"
                 android:gravity="center"
                 android:padding="5dp"
-                android:text="Add Product"
-                android:textColor="@color/black"
+                android:text="Thêm sản phẩm"
+                android:textColor="@color/primary_700"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/add_product_iv_image"
                 android:layout_width="150dp"
-                android:layout_height="200dp"
+                android:layout_height="150dp"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
                 android:scaleType="centerCrop"
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/add_product_txt_image"
+                    android:id="@+id/add_product_txt_image_url"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -56,7 +56,7 @@
                     android:background="@drawable/bg_txt"
                     android:drawablePadding="10dp"
                     android:ems="10"
-                    android:hint="Product Image"
+                    android:hint="Hình ảnh"
                     android:inputType="textPersonName"
                     android:padding="10dp"
                     android:textColor="@color/black"
@@ -69,7 +69,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_btn_solid"
-                    android:text="Show"
+                    android:text="Hiện"
                     android:textAllCaps="false"
                     android:textColor="@color/white" />
             </LinearLayout>
@@ -80,14 +80,34 @@
                 android:layout_height="15dp" />
 
             <EditText
-                android:id="@+id/add_product_txt_name"
+                android:id="@+id/add_product_txt_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:background="@drawable/bg_txt"
                 android:drawablePadding="10dp"
                 android:ems="10"
-                android:hint="Product Name"
+                android:hint="Tên sản phẩm"
+                android:inputType="textPersonName"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textColorHighlight="#797183EA"
+                android:textColorLink="@color/mainColorLight"
+                android:textSize="20sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+
+            <EditText
+                android:id="@+id/add_product_txt_author"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/bg_txt"
+                android:drawablePadding="10dp"
+                android:ems="10"
+                android:hint="Tên tác giả"
                 android:inputType="textPersonName"
                 android:padding="10dp"
                 android:textColor="@color/black"
@@ -107,7 +127,7 @@
                 android:background="@drawable/bg_txt"
                 android:drawablePadding="10dp"
                 android:ems="10"
-                android:hint="Product Price"
+                android:hint="Giá sản phẩm"
                 android:inputType="number"
                 android:padding="10dp"
                 android:textColor="@color/black"
@@ -121,14 +141,14 @@
 
 
             <EditText
-                android:id="@+id/add_product_txt_quantity"
+                android:id="@+id/add_product_txt_stock_quantity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:background="@drawable/bg_txt"
                 android:drawablePadding="10dp"
                 android:ems="10"
-                android:hint="Product Quantity"
+                android:hint="Số lượng sản phẩm"
                 android:inputType="number"
                 android:padding="10dp"
                 android:textColor="@color/black"
@@ -139,6 +159,27 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="15dp" />
+
+            <EditText
+                android:id="@+id/add_product_txt_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/bg_txt"
+                android:drawablePadding="10dp"
+                android:ems="10"
+                android:hint="Mô tả sản phẩm"
+                android:inputType="number"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textColorHighlight="#797183EA"
+                android:textColorLink="@color/mainColorLight"
+                android:textSize="20sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -153,8 +194,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:padding="5dp"
-                    android:text="Product Categoty"
-                    android:textColor="@color/black"
+                    android:text="Thể loại"
+                    android:textColor="@color/neutral_900"
                     android:textSize="20sp" />
 
                 <Spinner
@@ -178,7 +219,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/bg_btn_solid"
                 android:padding="5dp"
-                android:text="Add"
+                android:text="Thêm sản phẩm"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="20sp" />

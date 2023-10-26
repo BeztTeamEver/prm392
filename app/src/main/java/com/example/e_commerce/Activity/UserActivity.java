@@ -52,4 +52,5 @@ public class UserActivity extends AppCompatActivity {
             return true;
         }
     };
+
 }

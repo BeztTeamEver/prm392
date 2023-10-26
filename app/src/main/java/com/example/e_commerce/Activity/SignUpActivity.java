@@ -25,12 +25,10 @@ import java.util.Locale;
 public class SignUpActivity extends AppCompatActivity {
 
     final Calendar myCalendar = Calendar.getInstance();
-    EditText txt_birth_date, txt_username, txt_email, txt_password, txt_job;
+    EditText txt_username, txt_email, txt_password, txt_fullname, txt_phone_number;
     TextView tv_login;
     Button btn_signup;
     Spinner spinner_gender;
-
-    String birth_date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,35 +38,11 @@ public class SignUpActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         Database db = new Database(this);
 
-        txt_birth_date = findViewById(R.id.signup_txt_birth_date);
-
         txt_username = findViewById(R.id.signup_txt_username);
         txt_email = findViewById(R.id.signup_txt_email);
         txt_password = findViewById(R.id.signup_txt_password);
-        txt_job = findViewById(R.id.signup_txt_job);
-        spinner_gender = findViewById(R.id.signup_spinner_gender);
-
-        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int day) {
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, month);
-                myCalendar.set(Calendar.DAY_OF_MONTH, day);
-
-                String myFormat = "dd/MM/yyyy";
-                SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.US);
-                birth_date = dateFormat.format(myCalendar.getTime()).toString();
-                txt_birth_date.setText(dateFormat.format(myCalendar.getTime()));
-            }
-        };
-
-        txt_birth_date.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new DatePickerDialog(SignUpActivity.this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
-
+        txt_fullname = findViewById(R.id.signup_txt_fullname);
+        txt_phone_number = findViewById(R.id.signup_txt_phone_number);
 
         tv_login = (TextView) findViewById(R.id.signup_tv_login);
         tv_login.setOnClickListener(new View.OnClickListener() {
@@ -86,24 +60,23 @@ public class SignUpActivity extends AppCompatActivity {
 
                 String username = txt_username.getText().toString(),
                         email = txt_email.getText().toString(),
-                        job = txt_job.getText().toString(),
-                        password = txt_password.getText().toString();
-                if(!username.isEmpty() && !email.isEmpty() && !job.isEmpty() && !job.isEmpty() && !password.isEmpty() && !birth_date.isEmpty()){
+                        password = txt_password.getText().toString(),
+                        fullname = txt_fullname.getText().toString(),
+                        phone_number = txt_phone_number.getText().toString();
+                if(!username.isEmpty() && !email.isEmpty() && !password.isEmpty() && !fullname.isEmpty() && !phone_number.isEmpty()) {
                     User user = User.getInstance();
-                    user.setName(username);
+                    user.setFullname(fullname);
                     user.setEmail(email);
-                    user.setJob(job);
+                    user.setPhone_number(phone_number);
+                    user.setUsername(username);
                     user.setPassword(password);
-                    user.setBirthdate(birth_date);
-                    user.setGender(spinner_gender.getSelectedItem().toString());
                     db.insert_user(user);
-                    Toast.makeText(getApplicationContext(), "Signup done", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Đăng ký thành công", Toast.LENGTH_SHORT).show();
 
                     startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
                 }else{
-                    Toast.makeText(getApplicationContext(), "Fill your data first", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Hãy điền hết thông tin", Toast.LENGTH_SHORT).show();
                 }
-
                 startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
             }
         });

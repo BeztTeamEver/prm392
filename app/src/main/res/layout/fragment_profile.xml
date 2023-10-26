@@ -18,17 +18,17 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:padding="5dp"
-            android:text="Username: "
+            android:text="Họ và tên: "
             android:textColor="@color/black"
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/profile_tv_username"
+            android:id="@+id/profile_tv_fullname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:padding="5dp"
-            android:text="Username"
+            android:text="họ và tên"
             android:textColor="@color/black"
             android:textSize="20sp" />
     </LinearLayout>
@@ -58,6 +58,57 @@
             android:textSize="20sp" />
     </LinearLayout>
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:text="Sđt: "
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/profile_tv_phone_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:text="Số điện thoại"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:text="Username: "
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/profile_tv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:text="Username"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -73,7 +124,7 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/profile_tv_paswword"
+            android:id="@+id/profile_tv_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -83,82 +134,6 @@
             android:textSize="20sp" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp">
-
-        <TextView
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
-            android:text="Birthdate: "
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/profile_tv_birthdate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
-            android:text="Birthdate"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp">
-
-        <TextView
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
-            android:text="Job: "
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/profile_tv_job"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
-            android:text="Job"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-    </LinearLayout>
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp">
-
-        <TextView
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
-            android:text="Gender: "
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/profile_tv_gender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
-            android:text="Gender"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-    </LinearLayout>
 
     <Button
         android:id="@+id/profile_btn_logout"
@@ -167,7 +142,7 @@
         android:layout_margin="5dp"
         android:background="@drawable/bg_btn_solid"
         android:padding="5dp"
-        android:text="Logout"
+        android:text="Đăng xuất"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="20sp" />

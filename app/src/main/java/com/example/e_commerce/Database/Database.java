@@ -5,17 +5,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.example.e_commerce.Model.Book;
 import com.example.e_commerce.Model.Cart;
 import com.example.e_commerce.Model.Category;
 import com.example.e_commerce.Model.Order;
 import com.example.e_commerce.Model.OrderDetails;
-import com.example.e_commerce.Model.Product;
 import com.example.e_commerce.Model.User;
-import com.google.android.gms.common.util.ArrayUtils;
 
 import java.util.ArrayList;
 
@@ -31,24 +29,24 @@ public class Database extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table  user (id integer primary key  autoincrement , " +
-                "name text not null, " +
+                "fullname text not null, " +
                 "email text not null," +
                 "password text not null, " +
-                "gender text not null, " +
-                "birthdate text , " +
-                "job text )");
+                "phone_number text not null, " +
+                "username text not null)");
 
         db.execSQL("create table category (id integer primary key  autoincrement , " +
                 "name text not null," +
                 "image text not null)");
 
         db.execSQL("create table product (id integer primary key autoincrement, " +
-                "name text not null ," +
-                "image text ," +
+                "title text not null ," +
+                "author text not null ," +
+                "description text not null ," +
+                "image_url text ," +
                 "price real not null , " +
-                "selled integer , " +
-                "quantity integer not null , " +
-                "cate_id integer not null ," +
+                "stock_quantity integer not null , " +
+                "book_type_id integer not null ," +
                 "foreign key (cate_id)references category (id))");
 
         db.execSQL("create table cart (product_id integer primary key, " +
@@ -94,20 +92,19 @@ public class Database extends SQLiteOpenHelper {
 
         database = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("name", user.getName());
+        values.put("fullname", user.getFullname());
         values.put("email", user.getEmail());
+        values.put("phone_number", user.getPhone_number());
+        values.put("username", user.getUsername());
         values.put("password", user.getPassword());
-        values.put("gender", user.getGender());
-        values.put("birthdate", user.getBirthdate());
-        values.put("job", user.getJob());
 
         database.insert("user", null, values);
         database.close();
     }
 
-    public Cursor user_login(String username, String pass) {
+    public Cursor user_login(String name, String pass) {
         database = getReadableDatabase();
-        String[] args = {username, pass};
+        String[] args = {name, pass};
         Cursor cursor = database.rawQuery("select * from user where name =? and  password =? ", args);
 
         if (cursor != null)
@@ -133,28 +130,28 @@ public class Database extends SQLiteOpenHelper {
     }
 
     public void some_product() {
-        Product product = new Product();
-        product.setImage("https://m.media-amazon.com/images/W/WEBP_402378-T1/images/I/51tbWVPtckL._AC_UY327_FMwebp_QL65_.jpg");
-        product.setName("Sony PlayStation");
+        Book product = new Book();
+        product.setImage_url("https://m.media-amazon.com/images/W/WEBP_402378-T1/images/I/51tbWVPtckL._AC_UY327_FMwebp_QL65_.jpg");
+        product.setTitle("Sony PlayStation");
         product.setPrice(4000);
-        product.setQuantity(2);
-        product.setCat_id(1);
+        product.setStock_quantity(2);
+        product.setBook_type_id(1);
         add_product(product);
 
-        product = new Product();
-        product.setImage("https://m.media-amazon.com/images/W/WEBP_402378-T1/images/I/71rbwmEdSSL._AC_UY327_FMwebp_QL65_.jpg");
-        product.setName("Lenovo laptop");
+        product = new Book();
+        product.setImage_url("https://m.media-amazon.com/images/W/WEBP_402378-T1/images/I/71rbwmEdSSL._AC_UY327_FMwebp_QL65_.jpg");
+        product.setTitle("Lenovo laptop");
         product.setPrice(15000);
-        product.setQuantity(5);
-        product.setCat_id(2);
+        product.setStock_quantity(5);
+        product.setBook_type_id(2);
         add_product(product);
 
-        product = new Product();
-        product.setImage("https://m.media-amazon.com/images/W/WEBP_402378-T1/images/I/811wZEP2oxL._AC_UL480_FMwebp_QL65_.jpg");
-        product.setName("Sweatshirt");
+        product = new Book();
+        product.setImage_url("https://m.media-amazon.com/images/W/WEBP_402378-T1/images/I/811wZEP2oxL._AC_UL480_FMwebp_QL65_.jpg");
+        product.setTitle("Sweatshirt");
         product.setPrice(500);
-        product.setQuantity(10);
-        product.setCat_id(3);
+        product.setStock_quantity(10);
+        product.setBook_type_id(3);
         add_product(product);
     }
 
@@ -169,61 +166,64 @@ public class Database extends SQLiteOpenHelper {
         database.close();
     }
 
-    public void add_product(Product product) {
+    public void add_product(Book product) {
 
         database = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("name", product.getName());
-        values.put("image", product.getImage());
+        values.put("name", product.getTitle());
+        values.put("image", product.getImage_url());
         values.put("price", product.getPrice());
         values.put("selled", 0);
-        values.put("quantity", product.getQuantity());
-        values.put("cate_id", product.getCat_id());
+        values.put("quantity", product.getStock_quantity());
+        values.put("cate_id", product.getBook_type_id());
 
         database.insert("product", null, values);
         database.close();
     }
 
-    public ArrayList<Product> get_products() {
+    public ArrayList<Book> get_products() {
         database = getReadableDatabase();
         Cursor cursor = database.rawQuery("select * from product", null);
-        ArrayList<Product> arrayList = new ArrayList<>();
+        ArrayList<Book> arrayList = new ArrayList<>();
 
         cursor.moveToFirst();
 
         while (cursor.isAfterLast() == false) {
 //            (id "name "image "price "selled "quantity "cate_id integer
-            arrayList.add(new Product(
+// int id, int stock_quantity, int book_type_id, String title, String author, String image_url, String description, double price
+            /*arrayList.add(new Book(
                     cursor.getInt(0),
-                    cursor.getString(1),
-                    cursor.getString(2),
-                    cursor.getDouble(3),
-                    cursor.getInt(4),
-                    cursor.getInt(5),
-                    cursor.getInt(6)));
+                    cursor.getInt(1),
+                    cursor.getInt(2),
+                    cursor.getString(3),
+                    cursor.getString(4),
+                    cursor.getString(5),
+                    cursor.getString(6),
+                    cursor.getDouble(7)));*/
             cursor.moveToNext();
         }
         database.close();
         return arrayList;
     }
 
-    public ArrayList<Product> get_category_products(int id) {
+    public ArrayList<Book> get_category_products(int id) {
         database = getReadableDatabase();
         Cursor cursor = database.rawQuery("select * from product where id = '" + id + "'", null);
-        ArrayList<Product> arrayList = new ArrayList<>();
+        ArrayList<Book> arrayList = new ArrayList<>();
 
         cursor.moveToFirst();
 
         while (cursor.isAfterLast() == false) {
 //            (id "name "image "price "selled "quantity "cate_id integer
-            arrayList.add(new Product(
+            /*arrayList.add(new Book(
                     cursor.getInt(0),
-                    cursor.getString(1),
-                    cursor.getString(2),
-                    cursor.getDouble(3),
-                    cursor.getInt(4),
-                    cursor.getInt(5),
-                    cursor.getInt(6)));
+                    cursor.getInt(1),
+                    cursor.getInt(2),
+                    cursor.getString(3),
+                    cursor.getString(4),
+                    cursor.getString(5),
+                    cursor.getString(6),
+                    cursor.getDouble(7)));*/
             cursor.moveToNext();
         }
         database.close();
@@ -249,21 +249,22 @@ public class Database extends SQLiteOpenHelper {
         return arrayList;
     }
 
-    public ArrayList<Product> search_product(String name) {
+    public ArrayList<Book> search_product(String name) {
         database = getReadableDatabase();
         String[] args = {"%" + name + "%"};
         Cursor cursor = database.rawQuery("select * from Product where name like?", args);
-        ArrayList<Product> arrayList = new ArrayList<>();
+        ArrayList<Book> arrayList = new ArrayList<>();
         cursor.moveToFirst();
         while (cursor.isAfterLast() == false) {
-            arrayList.add(new Product(
+            /*arrayList.add(new Book(
                     cursor.getInt(0),
-                    cursor.getString(1),
-                    cursor.getString(2),
-                    cursor.getDouble(3),
-                    cursor.getInt(4),
-                    cursor.getInt(5),
-                    cursor.getInt(6)));
+                    cursor.getInt(1),
+                    cursor.getInt(2),
+                    cursor.getString(3),
+                    cursor.getString(4),
+                    cursor.getString(5),
+                    cursor.getString(6),
+                    cursor.getDouble(7)));*/
             cursor.moveToNext();
         }
         database.close();
@@ -283,18 +284,18 @@ public class Database extends SQLiteOpenHelper {
         return password;
     }
 
-    public void add_to_cart(Product product, int user_id) {
+    public void add_to_cart(Book product, int user_id) {
 
         database = getWritableDatabase();
         ContentValues values = new ContentValues();
 
         values.put("product_id", product.getId());
         values.put("user_id", user_id);
-        values.put("product_name", product.getName());
-        values.put("product_image", product.getImage());
+        values.put("product_name", product.getTitle());
+        values.put("product_image", product.getImage_url());
         values.put("product_price", product.getPrice());
-        values.put("product_quantity", product.getQuantity());
-        values.put("product_cat_id", product.getCat_id());
+        values.put("product_quantity", product.getStock_quantity());
+        values.put("product_cat_id", product.getBook_type_id());
 
         database.insert("cart", null, values);
         database.close();
@@ -345,16 +346,15 @@ public class Database extends SQLiteOpenHelper {
         database.close();
     }
 
-    public void edit_product(Product product) {
+    public void edit_product(Book product) {
         database = getWritableDatabase();
         ContentValues row = new ContentValues();
         row.put("id", product.getId());
-        row.put("name", product.getName());
-        row.put("image", product.getImage());
+        row.put("name", product.getTitle());
+        row.put("image", product.getImage_url());
         row.put("price", product.getPrice());
-        row.put("selled", product.getSold());
-        row.put("quantity", product.getQuantity());
-        row.put("cate_id", product.getCat_id());
+        row.put("quantity", product.getStock_quantity());
+        row.put("cate_id", product.getBook_type_id());
 
         database.update("product", row, "id = '" + product.getId() + "'", null);
         database.close();
@@ -478,14 +478,14 @@ public class Database extends SQLiteOpenHelper {
         return arrayList;
     }
 
-    public ArrayList<Product> get_order_details(int order_id){
+    public ArrayList<Book> get_order_details(int order_id){
         database = getReadableDatabase();
         Cursor cursor = database.rawQuery("select * from order_details where order_id = '" + order_id + "'", null);
-        ArrayList<Product> arrayList = new ArrayList<>();
+        ArrayList<Book> arrayList = new ArrayList<>();
         cursor.moveToFirst();
 
         while (cursor.isAfterLast() == false) {
-            arrayList.add(new Product(cursor.getInt(3), cursor.getString(2)));
+            arrayList.add(new Book(cursor.getInt(3), cursor.getString(2)));
             cursor.moveToNext();
         }
         database.close();

@@ -1,15 +1,13 @@
 package com.example.e_commerce.Model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class OrderDetails {
     private int order_id;
 //    List<String> product_name;
 //    List<Integer> product_quantity;
 
-    ArrayList<Product> products;
+    ArrayList<Book> products;
 
     public OrderDetails() {
     }
@@ -18,7 +16,7 @@ public class OrderDetails {
         this.order_id = order_id;
 //        this.product_name = new ArrayList<String>();
 //        this.product_quantity = new ArrayList<Integer>();
-        this.products = new ArrayList<Product>();
+        this.products = new ArrayList<Book>();
     }
 
     public int getOrder_id() {
@@ -46,11 +44,11 @@ public class OrderDetails {
 //    }
 
 
-    public ArrayList<Product> getProducts() {
+    public ArrayList<Book> getProducts() {
         return products;
     }
 
-    public void setProducts(ArrayList<Product> products) {
+    public void setProducts(ArrayList<Book> products) {
         this.products = products;
     }
 }

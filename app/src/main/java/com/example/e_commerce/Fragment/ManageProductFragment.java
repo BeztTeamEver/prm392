@@ -18,9 +18,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.e_commerce.Activity.EditProductActivity;
-import com.example.e_commerce.Activity.ProductActivity;
 import com.example.e_commerce.Database.Database;
-import com.example.e_commerce.Model.Product;
+import com.example.e_commerce.Model.Book;
 import com.example.e_commerce.R;
 
 import java.util.ArrayList;
@@ -33,7 +32,7 @@ import java.util.ArrayList;
 public class ManageProductFragment extends Fragment {
 
     ListView list_products;
-    ArrayList<Product> products = new ArrayList<>();
+    ArrayList<Book> products = new ArrayList<>();
 
     // Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -97,9 +96,9 @@ public class ManageProductFragment extends Fragment {
 
     class AdminManageProductAdapter extends BaseAdapter {
 
-        ArrayList<Product> products = new ArrayList<>();
+        ArrayList<Book> products = new ArrayList<>();
 
-        public AdminManageProductAdapter(ArrayList<Product> products) {
+        public AdminManageProductAdapter(ArrayList<Book> products) {
             this.products = products;
         }
 
@@ -115,7 +114,7 @@ public class ManageProductFragment extends Fragment {
 
         @Override
         public Object getItem(int i) {
-            return products.get(i).getName();
+            return products.get(i).getTitle();
         }
 
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -131,9 +130,9 @@ public class ManageProductFragment extends Fragment {
             Button btn_edit = item.findViewById(R.id.admin_product_btn_edit);
             Button btn_del = item.findViewById(R.id.admin_product_btn_delete);
 
-            product_name.setText(products.get(i).getName());
+            product_name.setText(products.get(i).getTitle());
             product_price.setText(products.get(i).getPrice() + "");
-            String url = products.get(i).getImage();
+            String url = products.get(i).getTitle();
             Glide.with(getContext()).load(url).into(product_image);
 
             btn_edit.setOnClickListener(new View.OnClickListener() {
@@ -143,12 +142,11 @@ public class ManageProductFragment extends Fragment {
                     intent = new Intent(getActivity(), EditProductActivity.class);
 
                     intent.putExtra("id", products.get(i).getId());
-                    intent.putExtra("quantity", products.get(i).getQuantity());
-                    intent.putExtra("cat_id", products.get(i).getCat_id());
-                    intent.putExtra("sold", products.get(i).getSold());
-                    intent.putExtra("name", products.get(i).getName());
+                    intent.putExtra("quantity", products.get(i).getStock_quantity());
+                    intent.putExtra("cat_id", products.get(i).getBook_type_id());
+                    intent.putExtra("name", products.get(i).getTitle());
                     intent.putExtra("price", products.get(i).getPrice());
-                    intent.putExtra("image", products.get(i).getImage());
+                    intent.putExtra("image", products.get(i).getImage_url());
 
                     getActivity().startActivity(intent);
                 }
