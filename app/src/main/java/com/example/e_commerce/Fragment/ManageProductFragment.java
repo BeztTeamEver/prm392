@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +18,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.e_commerce.Activity.CategoryProductsActivity;
 import com.example.e_commerce.Activity.EditProductActivity;
 import com.example.e_commerce.Database.Database;
 import com.example.e_commerce.Model.Book;
 import com.example.e_commerce.R;
+import com.example.e_commerce.Repository.RepositoryBase;
+import com.example.e_commerce.Service.IBookService;
+import com.example.e_commerce.Service.IBookTypeService;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,6 +52,8 @@ public class ManageProductFragment extends Fragment {
     // Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private IBookService bookService = RepositoryBase.getBookService();
 
     public ManageProductFragment() {
         // Required empty public constructor
@@ -82,16 +94,41 @@ public class ManageProductFragment extends Fragment {
 
         // TODO: get products from database and show it in listView
 
-        fill_list();
+        //fill_list();
+        getAllBook();
         return v;
     }
 
-    public void fill_list() {
-        Database dp = new Database(getContext());
-        products = dp.get_products();
-        ManageProductFragment.AdminManageProductAdapter adminManageProductAdapter = new ManageProductFragment.AdminManageProductAdapter(products);
-        list_products.setAdapter(adminManageProductAdapter);
+    private void getAllBook(){
 
+        try{
+            Call<List<Book>> call = bookService.getAll();
+            call.enqueue(new Callback<List<Book>>() {
+                @Override
+                public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
+                    List<Book> books = response.body();
+                    if (books == null){
+                        return;
+                    }
+
+                    for (Book book : books){
+                        products.add(book);
+                    }
+
+                    ManageProductFragment.AdminManageProductAdapter adminManageProductAdapter
+                            = new ManageProductFragment.AdminManageProductAdapter(products);
+                    list_products.setAdapter(adminManageProductAdapter);
+                }
+
+                @Override
+                public void onFailure(Call<List<Book>> call, Throwable t) {
+
+                }
+            });
+
+        } catch (Exception e){
+            Log.d("Error", e.getMessage());
+        }
     }
 
     class AdminManageProductAdapter extends BaseAdapter {
@@ -158,7 +195,7 @@ public class ManageProductFragment extends Fragment {
                     Database db = new Database(getContext());
                     db.delete_product(products.get(i).getId());
 
-                    fill_list();
+                    getAllBook();
                 }
             });
             return item;

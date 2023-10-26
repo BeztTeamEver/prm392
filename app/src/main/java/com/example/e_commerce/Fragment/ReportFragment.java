@@ -23,7 +23,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.e_commerce.Database.Database;
-import com.example.e_commerce.Model.OrderDetails;
+import com.example.e_commerce.Model.OrderItem;
 import com.example.e_commerce.Activity.OrderReportActivity;
 import com.example.e_commerce.R;
 
@@ -45,7 +45,7 @@ public class ReportFragment extends Fragment {
     Spinner spinner_user_id;
     ListView listView;
 
-    ArrayList<OrderDetails> orderDetails = new ArrayList<>();
+    ArrayList<OrderItem> orderDetails = new ArrayList<>();
     // Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -173,9 +173,9 @@ public class ReportFragment extends Fragment {
 
     class ReportAdapter extends BaseAdapter {
 
-        ArrayList<OrderDetails> orderDetails = new ArrayList<>();
+        ArrayList<OrderItem> orderDetails = new ArrayList<>();
 
-        public ReportAdapter(ArrayList<OrderDetails> orderDetails) {
+        public ReportAdapter(ArrayList<OrderItem> orderDetails) {
             this.orderDetails = orderDetails;
         }
 

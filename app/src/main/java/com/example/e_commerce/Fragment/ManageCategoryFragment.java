@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +19,18 @@ import com.bumptech.glide.Glide;
 import com.example.e_commerce.Activity.EditCategoryActivity;
 import com.example.e_commerce.Activity.EditProductActivity;
 import com.example.e_commerce.Database.Database;
+import com.example.e_commerce.Model.BookType;
 import com.example.e_commerce.Model.Category;
 import com.example.e_commerce.R;
+import com.example.e_commerce.Repository.RepositoryBase;
+import com.example.e_commerce.Service.IBookTypeService;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,7 +40,7 @@ import java.util.ArrayList;
 public class ManageCategoryFragment extends Fragment {
 
     ListView manage_category_list;
-    ArrayList<Category> categories = new ArrayList<>();
+    ArrayList<BookType> bookTypes = new ArrayList<>();
 
     // Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -41,6 +50,8 @@ public class ManageCategoryFragment extends Fragment {
     // Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private IBookTypeService bookTypeService = RepositoryBase.getBookTypeService();
 
     public ManageCategoryFragment() {
         // Required empty public constructor
@@ -81,32 +92,60 @@ public class ManageCategoryFragment extends Fragment {
         // TODO: get categories from database and show it in listView
 //        Database dp = new Database(getContext());
 //        categories = dp.get_categories();
-//        ManageCategoryFragment.AdminCategoryAdapter adminCategoryAdapter = new ManageCategoryFragment.AdminCategoryAdapter(categories);
+//        ManageCategoryFragment.AdminCategoryAdapter adminCategoryAdapter
+//        = new ManageCategoryFragment.AdminCategoryAdapter(categories);
 //        manage_category_list.setAdapter(adminCategoryAdapter);
-        fill_list();
+        getAllBookType();
         return v;
     }
 
-    public void fill_list(){
-        Database dp = new Database(getContext());
-        categories = dp.get_categories();
-        ManageCategoryFragment.AdminCategoryAdapter adminCategoryAdapter = new ManageCategoryFragment.AdminCategoryAdapter(categories);
-        manage_category_list.setAdapter(adminCategoryAdapter);
+    private void getAllBookType(){
+
+        try{
+            Call<List<BookType>> call = bookTypeService.getAll();
+            call.enqueue(new Callback<List<BookType>>() {
+                @Override
+                public void onResponse(Call<List<BookType>> call, Response<List<BookType>> response) {
+                    List<BookType> resList = response.body();
+                    if (resList == null){
+                        return;
+                    }
+
+                    for (BookType bookType : resList){
+                        bookTypes.add(bookType);
+                    }
+
+                    ManageCategoryFragment.AdminCategoryAdapter adminCategoryAdapter
+                            = new ManageCategoryFragment.AdminCategoryAdapter(bookTypes);
+                    manage_category_list.setAdapter(adminCategoryAdapter);
+
+
+                }
+
+                @Override
+                public void onFailure(Call<List<BookType>> call, Throwable t) {
+
+                }
+            });
+
+        } catch (Exception e){
+            Log.d("Error", e.getMessage());
+        }
     }
 
     class AdminCategoryAdapter extends BaseAdapter {
 
         // This adapter will used in user home and search.
 
-        ArrayList<Category> categories = new ArrayList<>();
+        ArrayList<BookType> bookTypes = new ArrayList<>();
 
-        public AdminCategoryAdapter(ArrayList<Category> category) {
-            this.categories = category;
+        public AdminCategoryAdapter(ArrayList<BookType> bookTypes) {
+            this.bookTypes = bookTypes;
         }
 
         @Override
         public int getCount() {
-            return categories.size();
+            return bookTypes.size();
         }
 
         @Override
@@ -116,7 +155,7 @@ public class ManageCategoryFragment extends Fragment {
 
         @Override
         public Object getItem(int i) {
-            return categories.get(i).getName();
+            return bookTypes.get(i).getType_name();
         }
 
         @Override
@@ -132,8 +171,8 @@ public class ManageCategoryFragment extends Fragment {
             Button btn_del= item.findViewById(R.id.admin_category_btn_delete);
 
 
-            category_name.setText(categories.get(i).getName());
-            String url = categories.get(i).getImage();
+            category_name.setText(bookTypes.get(i).getType_name());
+            String url = bookTypes.get(i).getImage_url();
             Glide.with(getContext()).load(url).into(category_image);
 
             btn_edit.setOnClickListener(new View.OnClickListener() {
@@ -142,9 +181,9 @@ public class ManageCategoryFragment extends Fragment {
                     Intent intent = new Intent(getActivity().getBaseContext(), EditCategoryActivity.class);
                     intent = new Intent(getActivity(), EditCategoryActivity.class);
 
-                    intent.putExtra("id",categories.get(i).getId());
-                    intent.putExtra("name",categories.get(i).getName());
-                    intent.putExtra("image",categories.get(i).getImage());
+                    intent.putExtra("id",bookTypes.get(i).getId());
+                    intent.putExtra("name",bookTypes.get(i).getType_name());
+                    intent.putExtra("image",bookTypes.get(i).getImage_url());
 
                     getActivity().startActivity(intent);
                 }
@@ -154,9 +193,9 @@ public class ManageCategoryFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Database db = new Database(getContext());
-                    db.delete_category(categories.get(i).getId());
+                    db.delete_category(bookTypes.get(i).getId());
 
-                    fill_list();
+                    getAllBookType();
                 }
             });
 

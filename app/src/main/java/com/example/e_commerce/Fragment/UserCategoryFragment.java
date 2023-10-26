@@ -2,6 +2,7 @@ package com.example.e_commerce.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,19 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.example.e_commerce.Activity.CategoryProductsActivity;
 import com.example.e_commerce.Database.Database;
+import com.example.e_commerce.Model.Book;
+import com.example.e_commerce.Model.BookType;
 import com.example.e_commerce.Model.Category;
 import com.example.e_commerce.R;
+import com.example.e_commerce.Repository.RepositoryBase;
+import com.example.e_commerce.Service.IBookTypeService;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,7 +39,8 @@ import java.util.ArrayList;
 public class UserCategoryFragment extends Fragment {
 
     ListView list_categories;
-    ArrayList<Category> categories = new ArrayList<>();
+
+    ArrayList<BookType> bookTypes = new ArrayList<>();
     // Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -38,6 +49,8 @@ public class UserCategoryFragment extends Fragment {
     // Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private IBookTypeService bookTypeService = RepositoryBase.getBookTypeService();
 
     public UserCategoryFragment() {
         // Required empty public constructor
@@ -78,10 +91,12 @@ public class UserCategoryFragment extends Fragment {
 
         // TODO: get categories from database and show it in listView
 
-        Database dp = new Database(getContext());
+        /*Database dp = new Database(getContext());
         categories = dp.get_categories();
-        UserCategoryFragment.UserCategoryAdapter userCategoryAdapter = new UserCategoryFragment.UserCategoryAdapter(categories);
-        list_categories.setAdapter(userCategoryAdapter);
+        UserCategoryFragment.UserCategoryAdapter userCategoryAdapter
+                = new UserCategoryFragment.UserCategoryAdapter(categories);
+        list_categories.setAdapter(userCategoryAdapter);*/
+        getAllBookType();
 
         list_categories.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -89,26 +104,60 @@ public class UserCategoryFragment extends Fragment {
 
                 Intent intent = new Intent(getActivity().getBaseContext(), CategoryProductsActivity.class);
                 intent = new Intent(getActivity(), CategoryProductsActivity.class);
-                intent.putExtra("id",categories.get(i).getId());
+                intent.putExtra("id",bookTypes.get(i).getId());
                 getActivity().startActivity(intent);
             }
         });
 
         return v;
     }
+
+    private void getAllBookType(){
+
+        try{
+            Call<List<BookType>> call = bookTypeService.getAll();
+            call.enqueue(new Callback<List<BookType>>() {
+                @Override
+                public void onResponse(Call<List<BookType>> call, Response<List<BookType>> response) {
+                    List<BookType> resList = response.body();
+                    if (resList == null){
+                        return;
+                    }
+
+                    for (BookType bookType : resList){
+                        bookTypes.add(bookType);
+                    }
+
+                    UserCategoryFragment.UserCategoryAdapter userCategoryAdapter
+                            = new UserCategoryFragment.UserCategoryAdapter(bookTypes);
+                    list_categories.setAdapter(userCategoryAdapter);
+
+
+                }
+
+                @Override
+                public void onFailure(Call<List<BookType>> call, Throwable t) {
+
+                }
+            });
+
+        } catch (Exception e){
+            Log.d("Error", e.getMessage());
+        }
+    }
     class UserCategoryAdapter extends BaseAdapter {
 
         // This adapter will used in user home and search.
 
-        ArrayList<Category> categories = new ArrayList<>();
+        ArrayList<BookType> bookTypes = new ArrayList<>();
 
-        public UserCategoryAdapter(ArrayList<Category> category) {
-            this.categories = category;
+        public UserCategoryAdapter(ArrayList<BookType> bookType) {
+            this.bookTypes = bookType;
         }
 
         @Override
         public int getCount() {
-            return categories.size();
+            return bookTypes.size();
         }
 
         @Override
@@ -118,7 +167,7 @@ public class UserCategoryFragment extends Fragment {
 
         @Override
         public Object getItem(int i) {
-            return categories.get(i).getName();
+            return bookTypes.get(i).getType_name();
         }
 
         @Override
@@ -131,9 +180,9 @@ public class UserCategoryFragment extends Fragment {
             TextView category_name = (TextView) item.findViewById(R.id.user_category_tv_category_name);
 
 
-            category_name.setText(categories.get(i).getName());
-            String url = categories.get(i).getImage();
-            Glide.with(getContext()).load(url).into(category_image);
+            category_name.setText(bookTypes.get(i).getType_name());
+            String url = bookTypes.get(i).getImage_url();
+            //Glide.with(getContext()).load(url).into(category_image);
 
             return item;
         }

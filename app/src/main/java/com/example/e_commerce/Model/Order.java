@@ -4,11 +4,38 @@ import java.util.Date;
 
 public class Order {
 
-    private int order_id, user_id;
-    private String date, address, feedback;
+    private int id, user_id, total_amount;
+    private String date, address, feedback, payment_method;
     private double rate;
 
+    private Date created_at;
+    private String status;
+
     public Order() {
+    }
+
+    public Order(int id, int user_id, int total_amount, String payment_method
+            , Date created_at, String status) {
+        this.id = id;
+        this.user_id = user_id;
+        this.total_amount = total_amount;
+        this.payment_method = payment_method;
+        this.created_at = created_at;
+        this.status = status;
+    }
+
+    public Order(int id, int user_id, int total_amount, String date, String address
+            , String feedback, String payment_method, double rate, Date created_at, String status) {
+        this.id = id;
+        this.user_id = user_id;
+        this.total_amount = total_amount;
+        this.date = date;
+        this.address = address;
+        this.feedback = feedback;
+        this.payment_method = payment_method;
+        this.rate = rate;
+        this.created_at = created_at;
+        this.status = status;
     }
 
     public Order(int user_id, String date, String address, String feedback, double rate) {
@@ -20,7 +47,7 @@ public class Order {
     }
 
     public Order(int order_id, int user_id, String date, String address, String feedback, double rate) {
-        this.order_id = order_id;
+        this.id = order_id;
         this.user_id = user_id;
         this.date = date;
         this.address = address;
@@ -29,11 +56,11 @@ public class Order {
     }
 
     public int getOrder_id() {
-        return order_id;
+        return id;
     }
 
     public void setOrder_id(int order_id) {
-        this.order_id = order_id;
+        this.id = order_id;
     }
 
     public int getUser_id() {
@@ -74,5 +101,37 @@ public class Order {
 
     public void setRate(double rate) {
         this.rate = rate;
+    }
+
+    public int getTotal_amount() {
+        return total_amount;
+    }
+
+    public void setTotal_amount(int total_amount) {
+        this.total_amount = total_amount;
+    }
+
+    public String getPayment_method() {
+        return payment_method;
+    }
+
+    public void setPayment_method(String payment_method) {
+        this.payment_method = payment_method;
+    }
+
+    public Date getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(Date created_at) {
+        this.created_at = created_at;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

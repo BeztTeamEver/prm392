@@ -1,9 +1,11 @@
 package com.example.e_commerce.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +18,20 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.e_commerce.Database.Database;
+import com.example.e_commerce.Model.BookType;
 import com.example.e_commerce.Model.Category;
 import com.example.e_commerce.Model.Book;
 import com.example.e_commerce.R;
+import com.example.e_commerce.Repository.RepositoryBase;
+import com.example.e_commerce.Service.IBookService;
+import com.example.e_commerce.Service.IBookTypeService;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,7 +44,9 @@ public class AddProductFragment extends Fragment {
     Button btn_show, btn_add;
     Spinner spinner_categoty;
     ImageView iv_product_image;
-    ArrayList<Category> categories= new ArrayList<Category>();
+    ArrayList<BookType> bookTypes = new ArrayList<BookType>();
+    IBookTypeService bookTypeService = RepositoryBase.getBookTypeService();
+    IBookService bookService = RepositoryBase.getBookService();
 
     // Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -90,17 +103,7 @@ public class AddProductFragment extends Fragment {
         btn_show = v.findViewById(R.id.add_product_btn_show_image);
         btn_add = v.findViewById(R.id.add_product_btn_add);
 
-        Database db = new Database(getContext());
-
-        categories = db.get_categories();
-        ArrayList<String> category_name = new ArrayList<String>();
-        for(int i = 0 ; i < categories.size() ; i++){
-            category_name.add(categories.get(i).getName());
-        }
-
-        ArrayAdapter aa = new ArrayAdapter(getContext(),android.R.layout.simple_spinner_item,category_name);
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_categoty.setAdapter(aa);
+        showNameBookType(); // sprint
 
         btn_show.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,12 +127,12 @@ public class AddProductFragment extends Fragment {
                 price = Double.parseDouble(txt_price.getText().toString());
                 int stock_quantity = -1;
                 stock_quantity = Integer.parseInt(txt_stock_quantity.getText().toString());
-                String category = spinner_categoty.getSelectedItem().toString();
+                String book_type_name = spinner_categoty.getSelectedItem().toString();
                 int cat_id = 0;
                 if(!image_url.isEmpty() && !title.isEmpty() && !author.isEmpty() && !description.isEmpty() && price!=-1 && stock_quantity!=-1){
-                    for(int i = 0 ; i < categories.size() ; i++){
-                        if(categories.get(i).getName() == category){
-                            cat_id = categories.get(i).getId();
+                    for(int i = 0 ; i < bookTypes.size() ; i++){
+                        if(bookTypes.get(i).getType_name().equals(book_type_name)){
+                            cat_id = bookTypes.get(i).getId();
                             break;
                         }
                     }
@@ -141,8 +144,9 @@ public class AddProductFragment extends Fragment {
                     product.setBook_type_id(cat_id);
                     product.setAuthor(author);
                     product.setDescription(description);
+                    product.setStatus(1);
 
-                    db.add_product(product);
+                    createBook(product);
 
                     txt_image_url.setText("");
                     txt_title.setText("");
@@ -159,5 +163,67 @@ public class AddProductFragment extends Fragment {
         });
 
         return v;
+    }
+
+    private void createBook(Book book){
+        try{
+            Call<Book> call = bookService.create(book);
+
+            call.enqueue(new Callback<Book>() {
+                @Override
+                public void onResponse(Call<Book> call, Response<Book> response) {
+                    if (response.body() != null){
+
+                        return;
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Book> call, Throwable t) {
+
+                }
+            });
+        } catch (Exception e){
+            Log.d("Error", e.getMessage());
+        }
+    }
+    private void showNameBookType(){
+        try{
+            Call<List<BookType>> call = bookTypeService.getAll();
+            call.enqueue(new Callback<List<BookType>>() {
+                @Override
+                public void onResponse(Call<List<BookType>> call, Response<List<BookType>> response) {
+                    List<BookType> resList = response.body();
+                    if (resList == null){
+                        return;
+                    }
+
+                    for (BookType bookType : resList){
+                        bookTypes.add(bookType);
+                    }
+
+                    ArrayList<String> book_type_name = new ArrayList<String>();
+                    for(int i = 0 ; i < bookTypes.size() ; i++){
+                        book_type_name.add(bookTypes.get(i).getType_name());
+                    }
+
+                    ArrayAdapter aa = new ArrayAdapter(getContext()
+                            ,android.R.layout.simple_spinner_item,book_type_name);
+                    aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_categoty.setAdapter(aa);
+
+
+                }
+
+                @Override
+                public void onFailure(Call<List<BookType>> call, Throwable t) {
+
+                }
+            });
+
+        } catch (Exception e){
+            Log.d("Error", e.getMessage());
+        }
     }
 }

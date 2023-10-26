@@ -25,7 +25,8 @@ public class AdminActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
-        getSupportFragmentManager().beginTransaction().replace(R.id.admin_container, new ManageProductFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.admin_container
+                , new ManageProductFragment()).commit();
     }
 
 
@@ -38,19 +39,32 @@ public class AdminActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.nav_manage_product) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.admin_container, new ManageProductFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.admin_container
+                    , new ManageProductFragment()).commit();
+
         } else if (item.getItemId() == R.id.nav_add_product) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.admin_container, new AddProductFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.admin_container
+                    , new AddProductFragment()).commit();
+
         } else if (item.getItemId() == R.id.nav_manage_category) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.admin_container, new ManageCategoryFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.admin_container
+                    , new ManageCategoryFragment()).commit();
+
         } else if (item.getItemId() == R.id.nav_add_category) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.admin_container, new AddCategoryFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.admin_container
+                    , new AddCategoryFragment()).commit();
+
         } else if (item.getItemId() == R.id.nav_report) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.admin_container, new ReportFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.admin_container
+                    , new ReportFragment()).commit();
+
         } else if (item.getItemId() == R.id.nav_feedback) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.admin_container, new FeedbackFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.admin_container
+                    , new FeedbackFragment()).commit();
+
         } else if (item.getItemId() == R.id.nav_chart) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.admin_container, new ChartFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.admin_container
+                    , new ChartFragment()).commit();
         }
         return true;
     }

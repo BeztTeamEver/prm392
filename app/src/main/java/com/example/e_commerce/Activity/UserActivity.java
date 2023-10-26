@@ -32,7 +32,8 @@ public class UserActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.user_container, new UserHomeFragment()).commit();
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment selected_fragment = null;
