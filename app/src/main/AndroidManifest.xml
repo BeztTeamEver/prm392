@@ -7,6 +7,8 @@
 
     <uses-feature android:name="android.hardware.camera" />
 
+
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -15,9 +17,23 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.Ecommerce"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        
+        <activity
+            android:name=".Activity.NotificationActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
         <activity
             android:name=".Activity.OrderReportActivity"
             android:exported="false">
@@ -90,20 +106,7 @@
         </activity>
         <activity
             android:name=".Activity.LoginActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-
-        <activity
-            android:name=".Activity.SplashScreenActivity"
-            android:exported="true">
+            android:exported="false">
             <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -114,7 +117,22 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:name=".Activity.SplashScreenActivity"
+            android:exported="true">
 
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
+
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".Barcode.CaptuerAct"
             android:screenOrientation="portrait"
