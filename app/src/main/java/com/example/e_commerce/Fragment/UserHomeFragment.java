@@ -17,6 +17,9 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.constants.ScaleTypes;
+import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.e_commerce.Activity.CategoryProductsActivity;
 import com.example.e_commerce.Activity.ProductActivity;
 import com.example.e_commerce.Database.Database;
@@ -90,6 +93,16 @@ public class UserHomeFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_user_home, container, false);
 
         user_list_products = v.findViewById(R.id.user_home_list_products);
+
+        //Carousel
+        ImageSlider imageSlider = v.findViewById(R.id.imageSlider);
+        ArrayList<SlideModel> slideModels = new ArrayList<>();
+        slideModels.add(new SlideModel(R.drawable.cover_1, ScaleTypes.FIT));
+        slideModels.add(new SlideModel(R.drawable.cover_2, ScaleTypes.FIT));
+        slideModels.add(new SlideModel(R.drawable.cover_3, ScaleTypes.FIT));
+        slideModels.add(new SlideModel(R.drawable.cover_4, ScaleTypes.FIT));
+        imageSlider.setImageList(slideModels, ScaleTypes.FIT);
+
 
         // TODO: get products from database and show it in listView
 

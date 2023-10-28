@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.CategoryProductsActivity">
+    tools:context=".Activity.CategoryProductsActivity"
+    android:background="@color/primary_050">
 
     <ListView
         android:id="@+id/user_category_list_products"

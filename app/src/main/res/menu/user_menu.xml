@@ -3,31 +3,30 @@
 
     <item
         android:id="@+id/user_nav_home"
-        android:title="Home"
+        android:title="Trang chủ"
         android:icon="@drawable/tabler_icon_home"
         />
     <item
         android:id="@+id/user_nav_category"
-        android:title="Category"
+        android:title="Sách"
         android:icon="@drawable/tabler_icon_category"
         />
 
     <item
-        android:id="@+id/user_nav_search"
-        android:title="Search"
-        android:icon="@drawable/tabler_icon_shopping_cart"
-        />
-
-
-    <item
         android:id="@+id/user_nav_cart"
-        android:title="Cart"
+        android:title="Nhắn tin"
         android:icon="@drawable/tabler_icon_message_dots"
         />
 
     <item
+        android:id="@+id/user_nav_search"
+        android:title="Giỏ hàng"
+        android:icon="@drawable/tabler_icon_shopping_cart"
+        />
+
+    <item
         android:id="@+id/user_nav_profile"
-        android:title="Profile"
+        android:title="Tài khoản"
         android:icon="@drawable/tabler_icon_user_circle"/>
 
 </menu>

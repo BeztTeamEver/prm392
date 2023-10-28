@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.UserActivity">
+    tools:context=".Activity.UserActivity"
+    android:background="@color/primary_050">
 
         <FrameLayout
             android:id="@+id/user_container"
@@ -19,5 +20,7 @@
             android:layout_alignParentBottom="true"
             android:background="@color/white"
             app:menu="@menu/user_menu"/>
+
+
 
 </RelativeLayout>

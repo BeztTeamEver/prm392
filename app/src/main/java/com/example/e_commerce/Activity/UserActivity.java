@@ -7,6 +7,9 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.constants.ScaleTypes;
+import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.e_commerce.Fragment.CartFragment;
 import com.example.e_commerce.Fragment.ProfileFragment;
 import com.example.e_commerce.R;
@@ -14,6 +17,8 @@ import com.example.e_commerce.Fragment.SearchFragment;
 import com.example.e_commerce.Fragment.UserCategoryFragment;
 import com.example.e_commerce.Fragment.UserHomeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
 
 public class UserActivity extends AppCompatActivity {
 
@@ -30,6 +35,7 @@ public class UserActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.user_bottom_nav);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         getSupportFragmentManager().beginTransaction().replace(R.id.user_container, new UserHomeFragment()).commit();
+
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener

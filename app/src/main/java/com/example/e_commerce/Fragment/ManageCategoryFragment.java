@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -168,7 +169,7 @@ public class ManageCategoryFragment extends Fragment {
             TextView category_name = (TextView) item.findViewById(R.id.admin_category_tv_name);
 
             Button btn_edit = item.findViewById(R.id.admin_category_btn_edit);
-            Button btn_del= item.findViewById(R.id.admin_category_btn_delete);
+            ImageButton btn_del= item.findViewById(R.id.admin_category_btn_delete);
 
 
             category_name.setText(bookTypes.get(i).getType_name());
