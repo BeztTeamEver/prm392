@@ -122,8 +122,8 @@ public class SignUpActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {
-                    /*Toast.makeText(MainActivity.this, "Save fail"
-                            , Toast.LENGTH_LONG).show();*/
+                    Toast.makeText(SignUpActivity.this, "Save fail"
+                            , Toast.LENGTH_LONG).show();
                 }
             });
         } catch (Exception e){

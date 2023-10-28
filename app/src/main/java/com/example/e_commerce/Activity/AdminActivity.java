@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,9 +25,15 @@ public class AdminActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent n = getIntent();
+        int id =  n.getExtras().getInt("adminGate") ;
         setContentView(R.layout.activity_admin);
-        getSupportFragmentManager().beginTransaction().replace(R.id.admin_container
+        if(id == 1)
+            getSupportFragmentManager().beginTransaction().replace(R.id.admin_container
                 , new ManageProductFragment()).commit();
+        else if (id == 2)
+            getSupportFragmentManager().beginTransaction().replace(R.id.admin_container
+                    , new ManageCategoryFragment()).commit();
     }
 
 

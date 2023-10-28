@@ -104,10 +104,11 @@ public class LoginActivity extends AppCompatActivity {
                         myEdit.putString("current_user", userJson);
                         myEdit.apply();
 
-                        if (username.equals("admin") && password.equals("admin"))
-                            startActivity(new Intent(LoginActivity.this
-                                    , AdminActivity.class));
-                        else
+                        if (username.equals("admin") && password.equals("admin")) {
+                            Intent myIntent = new Intent(LoginActivity.this, AdminActivity.class);
+                            myIntent.putExtra("adminGate",1);
+                            startActivity(myIntent);
+                        } else
                             startActivity(new Intent(LoginActivity.this
                                 , UserActivity.class));
                     } else {

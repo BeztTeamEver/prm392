@@ -10,6 +10,7 @@ public class BookType implements Serializable {
     private String image_url;
     private Date created_at;
     private int Status;
+    private static BookType bookType = null;
 
     public BookType(){}
 
@@ -21,6 +22,14 @@ public class BookType implements Serializable {
         Status = status;
     }
 
+    public BookType(int id, String type_name, String image_url) {
+        this.id = id;
+        this.type_name = type_name;
+        this.image_url = image_url;
+        this.created_at = null;
+        Status = 222;
+    }
+
     public BookType(String type_name, String image_url, Date created_at, int status) {
         this.type_name = type_name;
         this.image_url = image_url;
@@ -28,6 +37,12 @@ public class BookType implements Serializable {
         Status = status;
     }
 
+
+    public static BookType getInstance(){
+        if(bookType == null)
+            bookType = new BookType();
+        return bookType;
+    }
     public int getId() {
         return id;
     }

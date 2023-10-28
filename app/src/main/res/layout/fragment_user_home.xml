@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/primary_050"
     tools:context=".Fragment.UserHomeFragment">
 
@@ -13,7 +13,10 @@
         <com.denzcoskun.imageslider.ImageSlider
             android:layout_width="match_parent"
             android:layout_height="270dp"
-            android:id="@+id/imageSlider">
+            android:id="@+id/imageSlider"
+            app:iss_auto_cycle="true"
+            app:iss_delay="1000"
+            >
         </com.denzcoskun.imageslider.ImageSlider>
     </androidx.cardview.widget.CardView>
 
