@@ -54,7 +54,7 @@
                 android:layout_height="20dp" />
 
             <EditText
-                android:id="@+id/login_txt_username"
+                android:id="@+id/login_txt_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -62,8 +62,8 @@
                 android:drawableStart="@drawable/ic_baseline_person_24"
                 android:drawablePadding="10dp"
                 android:ems="10"
-                android:hint="Username"
-                android:inputType="textPersonName"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
                 android:padding="10dp"
                 android:textColor="@color/black"
                 android:textColorHighlight="#797183EA"

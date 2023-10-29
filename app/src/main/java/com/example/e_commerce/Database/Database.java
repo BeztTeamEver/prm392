@@ -102,6 +102,15 @@ public class Database extends SQLiteOpenHelper {
         database.close();
     }
 
+    public boolean checkEmailExistence(String email) {
+        database = getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM user WHERE email=?", new String[]{email});
+        boolean exists = (cursor.getCount() > 0);
+        cursor.close();
+        return exists;
+    }
+
+
     public Cursor user_login(String name, String pass) {
         database = getReadableDatabase();
         String[] args = {name, pass};
