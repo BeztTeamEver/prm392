@@ -9,8 +9,9 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        app:cardCornerRadius="5dp">
+        android:layout_marginBottom="8dp"
+        app:cardCornerRadius="5dp"
+        android:elevation="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -44,7 +45,7 @@
                     android:padding="5dp"
                     android:text="Product Name"
                     android:textColor="#000000"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -61,36 +62,31 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="40dp"
                     android:padding="3dp">
+
+                    <ImageButton
+                        android:id="@+id/admin_product_btn_delete"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="64dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="12dp"
+                        android:background="@drawable/bg_btn_solid_red"
+                        android:src="@drawable/ic_baseline_delete_24" />
+
 
                     <Button
                         android:id="@+id/admin_product_btn_edit"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="Edit"
+                        android:text="Chỉnh sửa"
                         android:padding="5dp"
-                        android:layout_margin="5dp"
-                        android:drawableLeft="@drawable/ic_baseline_edit_24"
-                        android:background="@color/mainColor"
+                        android:background="@drawable/bg_btn_solid"
                         android:textColor="@color/white"
-                        android:textSize="20dp"
+                        android:textSize="16dp"
                         android:textAllCaps="false"/>
 
-                    <Button
-                        android:id="@+id/admin_product_btn_delete"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Delete"
-                        android:padding="5dp"
-                        android:layout_margin="5dp"
-                        android:drawableLeft="@drawable/ic_baseline_delete_24"
-                        android:background="#F80909"
-                        android:textColor="@color/white"
-                        android:textSize="20dp"
-                        android:textAllCaps="false"/>
 
                 </LinearLayout>
 

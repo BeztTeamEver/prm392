@@ -1,24 +1,43 @@
 package com.example.e_commerce.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.e_commerce.Database.Database;
+import com.example.e_commerce.Fragment.CartFragment;
+import com.example.e_commerce.Fragment.ManageCategoryFragment;
+import com.example.e_commerce.Fragment.ManageProductFragment;
+import com.example.e_commerce.Fragment.ProfileFragment;
+import com.example.e_commerce.Fragment.SearchFragment;
+import com.example.e_commerce.Fragment.UserCategoryFragment;
+import com.example.e_commerce.Fragment.UserHomeFragment;
+import com.example.e_commerce.Repository.RepositoryBase;
+import com.example.e_commerce.Service.IBookTypeService;
+import com.example.e_commerce.Model.BookType;
 import com.example.e_commerce.Model.Category;
 import com.example.e_commerce.R;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class EditCategoryActivity extends AppCompatActivity {
 
     EditText txt_name, txt_image;
     Button btn_show, btn_edit;
     ImageView iv_image;
+    IBookTypeService bookTypeService = RepositoryBase.getBookTypeService();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +77,30 @@ public class EditCategoryActivity extends AppCompatActivity {
                 // TODO: edit category
                 String name = txt_name.getText().toString(),
                         image = txt_image.getText().toString();
-                Category category = new Category(id, name, image);
-                db.edit_category(category);
+                BookType bookType = new BookType(id, name, image);
+
+                try{
+                    Call<BookType> call = bookTypeService.update(id, bookType);
+                    call.enqueue(new Callback<BookType>() {
+                        @Override
+                        public void onResponse(Call<BookType> call, Response<BookType> response) {
+                            if (response.body() != null){
+                                Toast.makeText(EditCategoryActivity.this, "Save successfully"
+                                    , Toast.LENGTH_LONG).show();
+                                Intent myIntent = new Intent(EditCategoryActivity.this, AdminActivity.class);
+                                myIntent.putExtra("adminGate",2);
+                                EditCategoryActivity.this.startActivity(myIntent);
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<BookType> call, Throwable t) {
+                            Toast.makeText(EditCategoryActivity.this, "Save fail"
+                            , Toast.LENGTH_LONG).show();
+                        }
+                    });
+                } catch (Exception e){
+                    Log.d("Error", e.getMessage());
+                }
             }
         });
 

@@ -60,7 +60,6 @@ public class CategoryProductsActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 Intent intent = new Intent(getApplicationContext(), ProductActivity.class);
-                intent = new Intent(getApplicationContext(), ProductActivity.class);
 
                 intent.putExtra("id",products.get(i).getId());
                 intent.putExtra("stock_quantity",products.get(i).getStock_quantity());

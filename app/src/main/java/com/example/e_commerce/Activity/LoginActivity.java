@@ -76,8 +76,9 @@ public class LoginActivity extends AppCompatActivity {
 
     public void authenticate(String email, String password) {
         if (email.equals("admin") && password.equals("admin")) {
-            startActivity(new Intent(LoginActivity.this
-                    , AdminActivity.class));
+            Intent myIntent = new Intent(LoginActivity.this, AdminActivity.class);
+                            myIntent.putExtra("adminGate",1);
+                            startActivity(myIntent);
         }else {
             Call<List<User>> call = userService.getUserByEmailAndPassword(email, password);
 

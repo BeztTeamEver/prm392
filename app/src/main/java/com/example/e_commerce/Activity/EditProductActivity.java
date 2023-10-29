@@ -23,7 +23,7 @@ public class EditProductActivity extends AppCompatActivity {
 
     EditText txt_image_url, txt_title, txt_author, txt_price, txt_stock_quantity, txt_description;
     Button btn_show, btn_edit;
-    Spinner spinner_categoty;
+    Spinner spinner_category;
     ImageView iv_product_image;
     ArrayList<Category> categories= new ArrayList<Category>();
 
@@ -43,7 +43,7 @@ public class EditProductActivity extends AppCompatActivity {
         iv_product_image = findViewById(R.id.edit_product_iv_image);
         btn_show = findViewById(R.id.edit_product_btn_show_image);
         btn_edit = findViewById(R.id.edit_product_btn_edit);
-        spinner_categoty = findViewById(R.id.edit_product_spinner_category);
+        spinner_category = findViewById(R.id.edit_product_spinner_category);
 
         Database db = new Database(this);
 
@@ -74,9 +74,9 @@ public class EditProductActivity extends AppCompatActivity {
 
         ArrayAdapter aa = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_spinner_item,category_name);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_categoty.setAdapter(aa);
+        spinner_category.setAdapter(aa);
 
-        spinner_categoty.setSelection(i);
+        spinner_category.setSelection(i);
         Glide.with(getApplicationContext()).load(image_url).into(iv_product_image);
         txt_image_url.setText(image_url);
         txt_title.setText(title);
@@ -103,7 +103,7 @@ public class EditProductActivity extends AppCompatActivity {
                 String title = txt_title.getText().toString();
                 Double price = Double.parseDouble(txt_price.getText().toString());
                 int stock_quantity = Integer.parseInt(txt_stock_quantity.getText().toString());
-                String book_type_name = spinner_categoty.getSelectedItem().toString();
+                String book_type_name = spinner_category.getSelectedItem().toString();
                 String image_url = txt_image_url.getText().toString();
                 String author = txt_author.getText().toString();
                 String description = txt_description.getText().toString();

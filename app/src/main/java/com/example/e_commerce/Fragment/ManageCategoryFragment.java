@@ -11,11 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.e_commerce.Activity.AdminActivity;
+import com.example.e_commerce.Activity.CategoryProductsActivity;
 import com.example.e_commerce.Activity.EditCategoryActivity;
 import com.example.e_commerce.Activity.EditProductActivity;
 import com.example.e_commerce.Database.Database;
@@ -90,16 +94,13 @@ public class ManageCategoryFragment extends Fragment {
 
         manage_category_list = v.findViewById(R.id.manage_category_list);
         // TODO: get categories from database and show it in listView
-//        Database dp = new Database(getContext());
-//        categories = dp.get_categories();
-//        ManageCategoryFragment.AdminCategoryAdapter adminCategoryAdapter
-//        = new ManageCategoryFragment.AdminCategoryAdapter(categories);
-//        manage_category_list.setAdapter(adminCategoryAdapter);
         getAllBookType();
         return v;
     }
 
     private void getAllBookType(){
+
+        bookTypes.clear();
 
         try{
             Call<List<BookType>> call = bookTypeService.getAll();
@@ -118,10 +119,7 @@ public class ManageCategoryFragment extends Fragment {
                     ManageCategoryFragment.AdminCategoryAdapter adminCategoryAdapter
                             = new ManageCategoryFragment.AdminCategoryAdapter(bookTypes);
                     manage_category_list.setAdapter(adminCategoryAdapter);
-
-
                 }
-
                 @Override
                 public void onFailure(Call<List<BookType>> call, Throwable t) {
 
@@ -168,7 +166,7 @@ public class ManageCategoryFragment extends Fragment {
             TextView category_name = (TextView) item.findViewById(R.id.admin_category_tv_name);
 
             Button btn_edit = item.findViewById(R.id.admin_category_btn_edit);
-            Button btn_del= item.findViewById(R.id.admin_category_btn_delete);
+            ImageButton btn_del= item.findViewById(R.id.admin_category_btn_delete);
 
 
             category_name.setText(bookTypes.get(i).getType_name());
@@ -184,7 +182,6 @@ public class ManageCategoryFragment extends Fragment {
                     intent.putExtra("id",bookTypes.get(i).getId());
                     intent.putExtra("name",bookTypes.get(i).getType_name());
                     intent.putExtra("image",bookTypes.get(i).getImage_url());
-
                     getActivity().startActivity(intent);
                 }
             });
@@ -192,15 +189,30 @@ public class ManageCategoryFragment extends Fragment {
             btn_del.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Database db = new Database(getContext());
-                    db.delete_category(bookTypes.get(i).getId());
-
-                    getAllBookType();
+                    try{
+                        Call<BookType> call = bookTypeService.delete(bookTypes.get(i).getId());
+                        call.enqueue(new Callback<BookType>() {
+                            @Override
+                            public void onResponse(Call<BookType> call, Response<BookType> response) {
+                                if (response.body() != null){
+//                                Toast.makeText(CategoryProductsActivity.this, "Save successfully"
+//                                , Toast.LENGTH_LONG).show();
+                                    getAllBookType();
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<BookType> call, Throwable t) {
+//                    Toast.makeText(AddProductFragment.this, "Save fail"
+//                            , Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    } catch (Exception e){
+                        Log.d("Error", e.getMessage());
+                    }
                 }
             });
 
             return item;
         }
     }
-
 }

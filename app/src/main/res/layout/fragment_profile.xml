@@ -6,6 +6,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:padding="16dp"
+    android:background="@color/primary_050"
     tools:context=".Fragment.ProfileFragment">
 
     <LinearLayout
