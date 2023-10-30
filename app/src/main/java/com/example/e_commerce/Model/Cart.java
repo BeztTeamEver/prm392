@@ -1,29 +1,62 @@
 package com.example.e_commerce.Model;
 
 public class Cart {
-    private int product_id, quantity, cat_id, user_id;
+    private int id, book_id, book_type_id, user_id, quantity, price;
     private String name, image;
-    private int price;
+    public Cart(){
 
-    public Cart() {
     }
-
-    public Cart(int product_id, String name, String image, int price, int user_id, int quantity, int cat_id) {
-        this.product_id = product_id;
-        this.quantity = quantity;
-        this.cat_id = cat_id;
+    public Cart(int id, int book_id, int book_type_id, int user_id, int quantity, String name, int price, String image) {
+        this.id = id;
+        this.book_id = book_id;
+        this.book_type_id = book_type_id;
         this.user_id = user_id;
+        this.quantity = quantity;
         this.name = name;
-        this.image = image;
         this.price = price;
+        this.image = image;
     }
 
-    public int getProduct_id() {
-        return product_id;
+    public Cart(int book_id, int book_type_id, int user_id, int quantity, String name, int price, String image) {
+        this.book_id = book_id;
+        this.book_type_id = book_type_id;
+        this.user_id = user_id;
+        this.quantity = quantity;
+        this.name = name;
+        this.price = price;
+        this.image = image;
     }
 
-    public void setProduct_id(int product_id) {
-        this.product_id = product_id;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getBook_id() {
+        return book_id;
+    }
+
+    public void setBook_id(int book_id) {
+        this.book_id = book_id;
+    }
+
+    public int getBook_type_id() {
+        return book_type_id;
+    }
+
+    public void setBook_type_id(int book_type_id) {
+        this.book_type_id = book_type_id;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     public int getQuantity() {
@@ -34,20 +67,12 @@ public class Cart {
         this.quantity = quantity;
     }
 
-    public int getCat_id() {
-        return cat_id;
+    public int getPrice() {
+        return price;
     }
 
-    public void setCat_id(int cat_id) {
-        this.cat_id = cat_id;
-    }
-
-    public int getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public String getName() {
@@ -64,13 +89,5 @@ public class Cart {
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
     }
 }

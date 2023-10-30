@@ -9,10 +9,10 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="270dp">
+        android:layout_height="255dp">
         <com.denzcoskun.imageslider.ImageSlider
             android:layout_width="match_parent"
-            android:layout_height="270dp"
+            android:layout_height="255dp"
             android:id="@+id/imageSlider"
             app:iss_auto_cycle="true"
             app:iss_delay="1000"

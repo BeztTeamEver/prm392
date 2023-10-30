@@ -145,8 +145,8 @@ public class CategoryProductsActivity extends AppCompatActivity {
 
             product_name.setText(products.get(i).getTitle());
             product_price.setText(products.get(i).getPrice()+"");
-            //String url = products.get(i).getImage_url();
-            //Glide.with(getApplicationContext()).load(url).into(product_image);
+            String url = products.get(i).getImage_url();
+            Glide.with(getApplicationContext()).load(url).into(product_image);
 
             return item;
         }

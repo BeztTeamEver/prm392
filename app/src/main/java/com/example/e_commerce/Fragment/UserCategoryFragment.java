@@ -182,7 +182,7 @@ public class UserCategoryFragment extends Fragment {
 
             category_name.setText(bookTypes.get(i).getType_name());
             String url = bookTypes.get(i).getImage_url();
-            //Glide.with(getContext()).load(url).into(category_image);
+            Glide.with(getContext()).load(url).into(category_image);
 
             return item;
         }

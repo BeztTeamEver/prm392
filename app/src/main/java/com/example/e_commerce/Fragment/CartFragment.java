@@ -125,15 +125,15 @@ public class CartFragment extends Fragment {
 
     class UserCartAdapter extends BaseAdapter {
 
-        ArrayList<Cart> cart_products = new ArrayList<>();
+        ArrayList<Cart> cart_books = new ArrayList<>();
 
-        public UserCartAdapter(ArrayList<Cart> cart_products) {
-            this.cart_products = cart_products;
+        public UserCartAdapter(ArrayList<Cart> cart_books) {
+            this.cart_books = cart_books;
         }
 
         @Override
         public int getCount() {
-            return cart_products.size();
+            return cart_books.size();
         }
 
         @Override
@@ -143,7 +143,7 @@ public class CartFragment extends Fragment {
 
         @Override
         public Object getItem(int i) {
-            return cart_products.get(i).getName();
+            return cart_books.get(i).getName();
         }
 
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -167,7 +167,7 @@ public class CartFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     User user = User.getInstance();
-                    int product_id = cart_products.get(i).getProduct_id();
+                    int product_id = cart_products.get(i).getBook_id();
                     Database db = new Database(getContext());
                     db.delete_from_cart(product_id, user.getId());
 
@@ -192,7 +192,7 @@ public class CartFragment extends Fragment {
                     quantity++;
                     product_quantity.setText(quantity+"");
                     Database db = new Database(getContext());
-                    db.change_cart_quantity(cart_products.get(i).getProduct_id(), user.getId(), quantity);
+                    db.change_cart_quantity(cart_products.get(i).getBook_id(), user.getId(), quantity);
                 }
             });
 
@@ -206,7 +206,7 @@ public class CartFragment extends Fragment {
                         quantity--;
                         product_quantity.setText(quantity+"");
                         Database db = new Database(getContext());
-                        db.change_cart_quantity(cart_products.get(i).getProduct_id(), user.getId(), quantity);
+                        db.change_cart_quantity(cart_products.get(i).getBook_id(), user.getId(), quantity);
                     }
 
                 }

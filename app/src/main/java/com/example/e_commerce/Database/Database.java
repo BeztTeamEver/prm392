@@ -102,6 +102,15 @@ public class Database extends SQLiteOpenHelper {
         database.close();
     }
 
+    public boolean checkEmailExistence(String email) {
+        database = getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM user WHERE email=?", new String[]{email});
+        boolean exists = (cursor.getCount() > 0);
+        cursor.close();
+        return exists;
+    }
+
+
     public Cursor user_login(String name, String pass) {
         database = getReadableDatabase();
         String[] args = {name, pass};
@@ -307,15 +316,15 @@ public class Database extends SQLiteOpenHelper {
         ArrayList<Cart> arrayList = new ArrayList<>();
         cursor.moveToFirst();
         while (cursor.isAfterLast() == false) {
-            arrayList.add(new Cart(
-                    cursor.getInt(0),
-                    cursor.getString(2),
-                    cursor.getString(3),
-                    cursor.getInt(4),
-                    cursor.getInt(1),
-                    cursor.getInt(5),
-                    cursor.getInt(6)));
-            cursor.moveToNext();
+//            arrayList.add(new Cart(
+//                    cursor.getInt(0),
+//                    cursor.getString(2),
+//                    cursor.getString(3),
+//                    cursor.getInt(4),
+//                    cursor.getInt(1),
+//                    cursor.getInt(5),
+//                    cursor.getInt(6)));
+//            cursor.moveToNext();
         }
         database.close();
         return arrayList;
@@ -403,15 +412,15 @@ public class Database extends SQLiteOpenHelper {
         database.close();
 
         for (int i = 0; i < carts.size(); i++) {
-            SQLiteDatabase database2 = getWritableDatabase();
-            ContentValues values2 = new ContentValues();
-            values2.put("order_id", order_id);
-            values2.put("product_id", carts.get(i).getProduct_id());
-            values2.put("product_name", carts.get(i).getName());
-            values2.put("quantity", carts.get(i).getQuantity());
-            database2.insert("order_details", null, values2);
-            increase_selled(carts.get(i).getProduct_id(), carts.get(i).getQuantity());
-            database2.close();
+//            SQLiteDatabase database2 = getWritableDatabase();
+//            ContentValues values2 = new ContentValues();
+//            values2.put("order_id", order_id);
+//            values2.put("product_id", carts.get(i).getProduct_id());
+//            values2.put("product_name", carts.get(i).getName());
+//            values2.put("quantity", carts.get(i).getQuantity());
+//            database2.insert("order_details", null, values2);
+//            increase_selled(carts.get(i).getProduct_id(), carts.get(i).getQuantity());
+//            database2.close();
         }
 
 

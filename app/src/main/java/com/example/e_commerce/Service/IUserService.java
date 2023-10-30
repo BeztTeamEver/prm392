@@ -35,6 +35,11 @@ public interface IUserService {
     Call<User> delete(@Path("id") Object id);
 
     @GET(resource)
-    Call<List<User>> getUserByUsernameAndPassword(@Query("username") String username
+    Call<List<User>> getUserByEmailAndPassword(@Query("email") String email
             , @Query("password") String password);
+    @GET(resource)
+    Call<List<User>>  checkEmailAvailability(@Query("email") String email);
+
+    @GET(resource)
+    Call<List<User>> findUsersByUsername(@Query("username") String username);
 }

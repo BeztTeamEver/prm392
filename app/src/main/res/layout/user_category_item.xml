@@ -9,14 +9,13 @@
         android:id="@+id/user_category_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:backgroundTint="@color/primary_100"
+        android:layout_margin="4dp"
         app:cardCornerRadius="10dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
+            android:layout_margin="8dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -27,8 +26,8 @@
 
                 <ImageView
                     android:id="@+id/user_category_iv_category_image"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     app:srcCompat="@drawable/image_placeholder" />
 
             </androidx.cardview.widget.CardView>
@@ -43,7 +42,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/neutral_900"
                 android:textSize="25sp"
-                android:fontFamily="@font/nunito_bold"/>
+                android:fontFamily="@font/nunito_medium"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
