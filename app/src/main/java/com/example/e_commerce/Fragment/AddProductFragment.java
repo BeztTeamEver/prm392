@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.e_commerce.Activity.AdminActivity;
 import com.example.e_commerce.Database.Database;
 import com.example.e_commerce.Model.BookType;
 import com.example.e_commerce.Model.Category;
@@ -103,6 +104,9 @@ public class AddProductFragment extends Fragment {
         btn_show = v.findViewById(R.id.add_product_btn_show_image);
         btn_add = v.findViewById(R.id.add_product_btn_add);
 
+        bookService = RepositoryBase.getBookService();
+        bookTypeService = RepositoryBase.getBookTypeService();
+
         showNameBookType(); // sprint
 
         btn_show.setOnClickListener(new View.OnClickListener() {
@@ -123,16 +127,16 @@ public class AddProductFragment extends Fragment {
                 String title = txt_title.getText().toString();
                 String author = txt_author.getText().toString();
                 String description = txt_description.getText().toString();
-                double price = -1;
-                price = Double.parseDouble(txt_price.getText().toString());
+                int price = -1;
+                price = Integer.parseInt(txt_price.getText().toString());
                 int stock_quantity = -1;
                 stock_quantity = Integer.parseInt(txt_stock_quantity.getText().toString());
                 String book_type_name = spinner_categoty.getSelectedItem().toString();
-                int cat_id = 0;
+                int bookType_id = 0;
                 if(!image_url.isEmpty() && !title.isEmpty() && !author.isEmpty() && !description.isEmpty() && price!=-1 && stock_quantity!=-1){
                     for(int i = 0 ; i < bookTypes.size() ; i++){
                         if(bookTypes.get(i).getType_name().equals(book_type_name)){
-                            cat_id = bookTypes.get(i).getId();
+                            bookType_id = bookTypes.get(i).getId();
                             break;
                         }
                     }
@@ -141,7 +145,7 @@ public class AddProductFragment extends Fragment {
                     product.setPrice(price);
                     product.setStock_quantity(stock_quantity);
                     product.setImage_url(image_url);
-                    product.setBook_type_id(cat_id);
+                    product.setBook_type_id(bookType_id);
                     product.setAuthor(author);
                     product.setDescription(description);
                     product.setStatus(1);
@@ -155,6 +159,10 @@ public class AddProductFragment extends Fragment {
                     txt_author.setText("");
                     txt_description.setText("");
                     iv_product_image.setImageResource(R.drawable.image_placeholder);
+
+                    Intent myIntent = new Intent(getActivity().getBaseContext(), AdminActivity.class);
+                    myIntent.putExtra("adminGate",5);
+                    getActivity().startActivity(myIntent);
 
                 }else{
                     Toast.makeText(getContext(), "Fill all data first", Toast.LENGTH_SHORT).show();
@@ -175,7 +183,6 @@ public class AddProductFragment extends Fragment {
                     if (response.body() != null){
 
                         return;
-
                     }
                 }
 
@@ -208,8 +215,7 @@ public class AddProductFragment extends Fragment {
                         book_type_name.add(bookTypes.get(i).getType_name());
                     }
 
-                    ArrayAdapter aa = new ArrayAdapter(getContext()
-                            ,android.R.layout.simple_spinner_item,book_type_name);
+                    ArrayAdapter aa = new ArrayAdapter(getContext(),android.R.layout.simple_spinner_item,book_type_name);
                     aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner_categoty.setAdapter(aa);
 

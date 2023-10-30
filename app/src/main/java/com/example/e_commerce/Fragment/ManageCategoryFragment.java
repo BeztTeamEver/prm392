@@ -30,17 +30,13 @@ import com.example.e_commerce.Repository.RepositoryBase;
 import com.example.e_commerce.Service.IBookTypeService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ManageCategoryFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ManageCategoryFragment extends Fragment {
 
     ListView manage_category_list;
@@ -111,7 +107,7 @@ public class ManageCategoryFragment extends Fragment {
                     if (resList == null){
                         return;
                     }
-
+                    Collections.reverse(resList);
                     for (BookType bookType : resList){
                         bookTypes.add(bookType);
                     }
@@ -195,8 +191,7 @@ public class ManageCategoryFragment extends Fragment {
                             @Override
                             public void onResponse(Call<BookType> call, Response<BookType> response) {
                                 if (response.body() != null){
-//                                Toast.makeText(CategoryProductsActivity.this, "Save successfully"
-//                                , Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getActivity(),"Xóa thể loại thành công",Toast.LENGTH_SHORT).show();
                                     getAllBookType();
                                 }
                             }

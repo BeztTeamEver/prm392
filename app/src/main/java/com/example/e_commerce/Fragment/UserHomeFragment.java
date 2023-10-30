@@ -26,7 +26,6 @@ import com.example.e_commerce.Database.Database;
 import com.example.e_commerce.Model.Book;
 import com.example.e_commerce.R;
 import com.example.e_commerce.Repository.RepositoryBase;
-import com.example.e_commerce.Service.BookService.BookService;
 import com.example.e_commerce.Service.IBookService;
 
 import java.io.IOException;
@@ -206,11 +205,13 @@ public class UserHomeFragment extends Fragment {
             ImageView product_image = (ImageView) item.findViewById(R.id.user_home_iv_product_image);
             TextView product_name = (TextView) item.findViewById(R.id.user_home_tv_product_name);
             TextView product_price = (TextView) item.findViewById(R.id.user_home_tv_product_price);
+            TextView product_author = (TextView) item.findViewById(R.id.user_home_tv_product_author);
 
             product_name.setText(products.get(i).getTitle());
-            product_price.setText(products.get(i).getPrice()+"");
-            //String url = products.get(i).getImage_url();
-            //Glide.with(getContext()).load(url).into(product_image);
+            product_price.setText("Giá: " + products.get(i).getPrice()+"");
+            String url = products.get(i).getImage_url();
+            product_author.setText("Tác giả: " + + products.get(i).getPrice());
+            Glide.with(getContext()).load(url).into(product_image);
 
             return item;
         }

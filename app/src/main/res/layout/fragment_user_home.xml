@@ -24,9 +24,8 @@
         android:id="@+id/user_home_list_products"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="300dp"
-        android:layout_marginBottom="20dp"
-        android:background="@color/grey1"
+        android:layout_marginTop="280dp"
         android:divider="@null"
-        android:dividerHeight="0dp" />
+        android:dividerHeight="0dp"
+        />
 </RelativeLayout>

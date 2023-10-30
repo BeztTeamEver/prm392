@@ -13,21 +13,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.e_commerce.Activity.CategoryProductsActivity;
 import com.example.e_commerce.Activity.EditProductActivity;
 import com.example.e_commerce.Database.Database;
 import com.example.e_commerce.Model.Book;
+import com.example.e_commerce.Model.BookType;
 import com.example.e_commerce.R;
 import com.example.e_commerce.Repository.RepositoryBase;
 import com.example.e_commerce.Service.IBookService;
 import com.example.e_commerce.Service.IBookTypeService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -100,7 +104,7 @@ public class ManageProductFragment extends Fragment {
     }
 
     private void getAllBook(){
-
+        products.clear();
         try{
             Call<List<Book>> call = bookService.getAll();
             call.enqueue(new Callback<List<Book>>() {
@@ -110,11 +114,10 @@ public class ManageProductFragment extends Fragment {
                     if (books == null){
                         return;
                     }
-
+                    Collections.reverse(books);
                     for (Book book : books){
                         products.add(book);
                     }
-
                     ManageProductFragment.AdminManageProductAdapter adminManageProductAdapter
                             = new ManageProductFragment.AdminManageProductAdapter(products);
                     list_products.setAdapter(adminManageProductAdapter);
@@ -164,12 +167,12 @@ public class ManageProductFragment extends Fragment {
             ImageView product_image = (ImageView) item.findViewById(R.id.admin_product_iv_product_image);
             TextView product_name = (TextView) item.findViewById(R.id.admin_tv_product_name);
             TextView product_price = (TextView) item.findViewById(R.id.admin_product_tv_product_price);
+            ImageButton btn_del = item.findViewById(R.id.admin_product_btn_delete);
             Button btn_edit = item.findViewById(R.id.admin_product_btn_edit);
-            Button btn_del = item.findViewById(R.id.admin_product_btn_delete);
 
             product_name.setText(products.get(i).getTitle());
-            product_price.setText(products.get(i).getPrice() + "");
-            String url = products.get(i).getTitle();
+            product_price.setText("Giá: " + products.get(i).getPrice() + "");
+            String url = products.get(i).getImage_url();
             Glide.with(getContext()).load(url).into(product_image);
 
             btn_edit.setOnClickListener(new View.OnClickListener() {
@@ -179,11 +182,14 @@ public class ManageProductFragment extends Fragment {
                     intent = new Intent(getActivity(), EditProductActivity.class);
 
                     intent.putExtra("id", products.get(i).getId());
-                    intent.putExtra("quantity", products.get(i).getStock_quantity());
-                    intent.putExtra("cat_id", products.get(i).getBook_type_id());
-                    intent.putExtra("name", products.get(i).getTitle());
+                    intent.putExtra("stock_quantity", products.get(i).getStock_quantity());
+                    intent.putExtra("book_type_id", products.get(i).getBook_type_id());
+                    intent.putExtra("title", products.get(i).getTitle());
                     intent.putExtra("price", products.get(i).getPrice());
-                    intent.putExtra("image", products.get(i).getImage_url());
+                    intent.putExtra("description", products.get(i).getDescription());
+                    intent.putExtra("author", products.get(i).getAuthor());
+                    intent.putExtra("image_url", products.get(i).getImage_url());
+                    intent.putExtra("book_type_id", products.get(i).getBook_type_id());
 
                     getActivity().startActivity(intent);
                 }
@@ -192,10 +198,25 @@ public class ManageProductFragment extends Fragment {
             btn_del.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Database db = new Database(getContext());
-                    db.delete_product(products.get(i).getId());
-
-                    getAllBook();
+                    try{
+                        Call<Book> call = bookService.delete(products.get(i).getId());
+                        call.enqueue(new Callback<Book>() {
+                            @Override
+                            public void onResponse(Call<Book> call, Response<Book> response) {
+                                if (response.body() != null){
+                                    Toast.makeText(getActivity(),"Xóa sách thành công",Toast.LENGTH_SHORT).show();
+                                    getAllBook();
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<Book> call, Throwable t) {
+//                    Toast.makeText(AddProductFragment.this, "Save fail"
+//                            , Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    } catch (Exception e){
+                        Log.d("Error", e.getMessage());
+                    }
                 }
             });
             return item;

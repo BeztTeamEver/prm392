@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.e_commerce.Fragment.AddCategoryFragment;
 import com.example.e_commerce.Fragment.AddProductFragment;
@@ -30,10 +31,28 @@ public class AdminActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin);
         if(id == 1)
             getSupportFragmentManager().beginTransaction().replace(R.id.admin_container
-                , new ManageProductFragment()).commit();
-        else if (id == 2)
+                    , new ManageProductFragment()).commit();
+        else if (id == 2) {
             getSupportFragmentManager().beginTransaction().replace(R.id.admin_container
                     , new ManageCategoryFragment()).commit();
+            Toast.makeText(AdminActivity.this, "Chỉnh sửa thể loại thành công"
+                    , Toast.LENGTH_LONG).show();
+        } else if (id == 3) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.admin_container
+                    , new ManageCategoryFragment()).commit();
+            Toast.makeText(AdminActivity.this, "Tạo thể loại thành công"
+                    , Toast.LENGTH_LONG).show();
+        } else if (id == 4) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.admin_container
+                    , new ManageProductFragment()).commit();
+            Toast.makeText(AdminActivity.this, "Chỉnh sửa sách thành công"
+                    , Toast.LENGTH_LONG).show();
+        }  else if (id == 5) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.admin_container
+                    , new ManageProductFragment()).commit();
+            Toast.makeText(AdminActivity.this, "Tạo sách thành công"
+                    , Toast.LENGTH_LONG).show();
+        }
     }
 
 

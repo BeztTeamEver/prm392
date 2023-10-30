@@ -32,11 +32,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AddCategoryFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class AddCategoryFragment extends Fragment {
 
     EditText txt_name, txt_image;
@@ -128,7 +123,7 @@ public class AddCategoryFragment extends Fragment {
                     iv_image.setImageResource(R.drawable.image_placeholder);
 
                     Intent myIntent = new Intent(getActivity().getBaseContext(),AdminActivity.class);
-                    myIntent.putExtra("adminGate",2);
+                    myIntent.putExtra("adminGate",3);
                     getActivity().startActivity(myIntent);
 
                 }else{

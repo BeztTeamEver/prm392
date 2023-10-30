@@ -8,7 +8,7 @@ public class OrderItem {
     private int order_id;
     private int book_id;
     private int quantity;
-    private double price;
+    private int price;
     private Date created_at;
     private int status;
 
@@ -18,7 +18,7 @@ public class OrderItem {
     }
 
     public OrderItem(int id, int order_id, int book_id, int quantity
-            , double price, Date created_at, int status, ArrayList<Book> products) {
+            , int price, Date created_at, int status, ArrayList<Book> products) {
         this.id = id;
         this.order_id = order_id;
         this.book_id = book_id;
@@ -29,7 +29,7 @@ public class OrderItem {
         this.products = products;
     }
 
-    public OrderItem(int order_id, int book_id, int quantity, double price
+    public OrderItem(int order_id, int book_id, int quantity, int price
             , Date created_at, int status, ArrayList<Book> products) {
         this.order_id = order_id;
         this.book_id = book_id;

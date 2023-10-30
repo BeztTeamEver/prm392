@@ -44,8 +44,6 @@ public class EditCategoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_category);
 
-        Database db = new Database(this);
-
         Intent n = getIntent();
         int id =  n.getExtras().getInt("id") ;
         String name =  n.getExtras().getString("name") ;
@@ -85,8 +83,6 @@ public class EditCategoryActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<BookType> call, Response<BookType> response) {
                             if (response.body() != null){
-                                Toast.makeText(EditCategoryActivity.this, "Save successfully"
-                                    , Toast.LENGTH_LONG).show();
                                 Intent myIntent = new Intent(EditCategoryActivity.this, AdminActivity.class);
                                 myIntent.putExtra("adminGate",2);
                                 EditCategoryActivity.this.startActivity(myIntent);

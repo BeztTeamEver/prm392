@@ -49,7 +49,7 @@ public class UserHomeCategoryBooksAdapter extends BaseAdapter {
         TextView product_price = (TextView) item.findViewById(R.id.user_home_tv_product_price);
 
         product_name.setText(bookList.get(i).getTitle());
-        product_price.setText(bookList.get(i).getPrice()+"");
+        product_price.setText(bookList.get(i).getPrice());
         String url = bookList.get(i).getImage_url();
         Glide.with(context.getApplicationContext()).load(url).into(product_image);
 

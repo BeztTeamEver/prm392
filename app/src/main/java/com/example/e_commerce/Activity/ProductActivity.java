@@ -41,7 +41,7 @@ public class ProductActivity extends AppCompatActivity {
         int stock_quantity = n.getExtras().getInt("stock_quantity") ;
         int book_type_id = n.getExtras().getInt("book_type_id") ;
         String title =  n.getExtras().getString("title") ;
-        double price =  n.getExtras().getDouble("price") ;
+        int price =  n.getExtras().getInt("price") ;
         String description =  n.getExtras().getString("description") ;
         String image_url =  n.getExtras().getString("image_url") ;
         String author =  n.getExtras().getString("author") ;

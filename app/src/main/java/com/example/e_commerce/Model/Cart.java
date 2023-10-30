@@ -3,12 +3,12 @@ package com.example.e_commerce.Model;
 public class Cart {
     private int product_id, quantity, cat_id, user_id;
     private String name, image;
-    private double price;
+    private int price;
 
     public Cart() {
     }
 
-    public Cart(int product_id, String name, String image, double price, int user_id, int quantity, int cat_id) {
+    public Cart(int product_id, String name, String image, int price, int user_id, int quantity, int cat_id) {
         this.product_id = product_id;
         this.quantity = quantity;
         this.cat_id = cat_id;
@@ -66,11 +66,11 @@ public class Cart {
         this.image = image;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 }

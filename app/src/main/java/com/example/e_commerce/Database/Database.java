@@ -311,7 +311,7 @@ public class Database extends SQLiteOpenHelper {
                     cursor.getInt(0),
                     cursor.getString(2),
                     cursor.getString(3),
-                    cursor.getDouble(4),
+                    cursor.getInt(4),
                     cursor.getInt(1),
                     cursor.getInt(5),
                     cursor.getInt(6)));
