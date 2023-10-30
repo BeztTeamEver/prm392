@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -87,30 +88,37 @@ public class LoginActivity extends AppCompatActivity {
                              public void onResponse(Call<List<User>> call, Response<List<User>> response) {
                                  if (response.isSuccessful()) {
                                      List<User> users = response.body();
-                                     if (users == null || users.size() == 0) {
-                                         Toast.makeText(getApplicationContext(), "Thông tin đăng nhập không chính xác!"
-                                                 , Toast.LENGTH_SHORT).show();
-                                         return;
-                                     } else {
-                                         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                                     if(users != null && users.size() > 0) {
+                                         if (users.get(0).getEmail().equals(email) && users.get(0).getPassword().equals(password)) {
+                                             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
                                              firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener((task) -> {
                                                  if (task.isSuccessful()) {
                                                      if (firebaseAuth.getCurrentUser().isEmailVerified()) {
                                                          startActivity(new Intent(LoginActivity.this
                                                                  , UserActivity.class));
+
                                                      } else {
                                                          Toast.makeText(LoginActivity.this, "Xin hãy xác thực email trước khi đăng nhập.",
                                                                  Toast.LENGTH_SHORT).show();
                                                      }
 
                                                  } else {
-                                                     Toast.makeText(getApplicationContext(), "Thông tin đăng nhập không chính xác!"
+                                                     Toast.makeText(getApplicationContext(), "Đã có lỗi ở FireBase!"
                                                              , Toast.LENGTH_SHORT).show();
                                                  }
                                              });
-
+                                         } else {
+                                             Toast.makeText(getApplicationContext(), "Thông tin đăng nhập không chính xác!"
+                                                     , Toast.LENGTH_SHORT).show();
+                                         }
+                                     }else {
+                                         Toast.makeText(getApplicationContext(), "Thông tin đăng nhập không chính xác!"
+                                                 , Toast.LENGTH_SHORT).show();
                                      }
+                                 }else {
+                                     Toast.makeText(getApplicationContext(), "Đã có lỗi ở server!"
+                                             , Toast.LENGTH_SHORT).show();
                                  }
                              }
 

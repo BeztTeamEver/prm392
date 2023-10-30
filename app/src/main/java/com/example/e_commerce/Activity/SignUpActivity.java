@@ -76,8 +76,8 @@ public class SignUpActivity extends AppCompatActivity {
 
                 if (username.isEmpty() || email.isEmpty() || password.isEmpty() || fullname.isEmpty() || phone_number.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Hãy điền hết thông tin!", Toast.LENGTH_SHORT).show();
-                } else if (!email.matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")) {
-                    Toast.makeText(getApplicationContext(), "Email nên có định dạng: abc@gmail.com!", Toast.LENGTH_SHORT).show();
+                } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    Toast.makeText(getApplicationContext(), "Vui lòng nhập email hợp lệ!", Toast.LENGTH_SHORT).show();
                 } else if (!phone_number.matches("^0\\d{9}$")) {
                     Toast.makeText(getApplicationContext(), "Số điện thoại phải bắt đầu bằng số 0 và có độ dài là 10 chữ số!", Toast.LENGTH_SHORT).show();
                 } else if (!(password.length() >= 6 && password.matches(".*[A-Z].*") && password.matches(".*\\d.*") && password.matches(".*\\W.*"))) {
