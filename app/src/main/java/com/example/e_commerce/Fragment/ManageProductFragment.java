@@ -198,6 +198,7 @@ public class ManageProductFragment extends Fragment {
                     getAllBook();
                 }
             });
+
             return item;
         }
     }
