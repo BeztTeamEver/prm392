@@ -3,8 +3,8 @@ package com.example.e_commerce.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +17,7 @@ import com.example.e_commerce.Repository.RepositoryBase;
 import com.example.e_commerce.Service.IUserService;
 import com.google.gson.Gson;
 
+import com.google.firebase.auth.FirebaseAuth;
 import java.util.List;
 
 import retrofit2.Call;
@@ -26,10 +27,8 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
 
     Button btn_login;
-    EditText txt_username, txt_password;
+    EditText txt_email, txt_password;
     TextView textView_forgot_password, textView_signup;
-    SharedPreferences.Editor myEdit;
-    SharedPreferences sharedPreferences;
 
     IUserService userService;
 
@@ -41,33 +40,26 @@ public class LoginActivity extends AppCompatActivity {
         //Hide ActionBar
         getSupportActionBar().hide();
 
-        ///// Kill /////
-        ////////////////////////////////////////
 
         userService = RepositoryBase.getUserService();
 
-
-        txt_username = findViewById(R.id.login_txt_username);
+        txt_email = findViewById(R.id.login_txt_email);
         txt_password = findViewById(R.id.login_txt_password);
         btn_login = (Button) findViewById(R.id.login_btn_login);
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
-                myEdit = sharedPreferences.edit();
-                myEdit.commit();
-
                 // TODO: login
-                String username = txt_username.getText().toString(),
+                String email = txt_email.getText().toString(),
                         password = txt_password.getText().toString();
 
-                if(!username.isEmpty() && !password.isEmpty()){
+                if(!email.isEmpty() && !password.isEmpty()){
 
-                    authenticate(username, password);
+                    authenticate(email, password);
 
                 }else{
-                    Toast.makeText(getApplicationContext(), "Fill your data first"
+                    Toast.makeText(getApplicationContext(), "Hãy điền đầy đủ thông tin!"
                             , Toast.LENGTH_SHORT).show();
                 }
             }
@@ -83,47 +75,61 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void authenticate(String username, String password) {
-        Call<List<User>> call = userService.getUserByUsernameAndPassword(username, password);
-
-        call.enqueue(new Callback<List<User>>() {
-            @Override
-            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                if (response.isSuccessful()) {
-                    List<User> users = response.body();
-                    if (users == null || users.size() == 0) return ;
-                    User user = users.get(0);
-                    if (user != null) {
-                        myEdit.putInt("id", user.getId());
-                        myEdit.putString("username", user.getUsername());
-                        myEdit.putString("email", user.getEmail());
-                        myEdit.putString("phone_number", user.getPhone_number());
-                        myEdit.putString("password", user.getPassword());
-                        Gson gson = new Gson();
-                        String userJson = gson.toJson(user);
-                        myEdit.putString("current_user", userJson);
-                        myEdit.apply();
-
-                        if (username.equals("admin") && password.equals("admin")) {
-                            Intent myIntent = new Intent(LoginActivity.this, AdminActivity.class);
+    public void authenticate(String email, String password) {
+        if (email.equals("admin") && password.equals("admin")) {
+            Intent myIntent = new Intent(LoginActivity.this, AdminActivity.class);
                             myIntent.putExtra("adminGate",1);
                             startActivity(myIntent);
-                        } else
-                            startActivity(new Intent(LoginActivity.this
-                                , UserActivity.class));
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Make sure from your data"
-                                , Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    // Handle API error
-                }
-            }
+        }else {
+            Call<List<User>> call = userService.getUserByEmailAndPassword(email, password);
 
-            @Override
-            public void onFailure(Call<List<User>> call, Throwable t) {
-                // Handle network or other errors
-            }
-        });
+            call.enqueue(new Callback<List<User>>() {
+                             @Override
+                             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                                 if (response.isSuccessful()) {
+                                     List<User> users = response.body();
+                                     if(users != null && users.size() > 0) {
+                                         if (users.get(0).getEmail().equals(email) && users.get(0).getPassword().equals(password)) {
+                                             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
+                                             firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener((task) -> {
+                                                 if (task.isSuccessful()) {
+                                                     if (firebaseAuth.getCurrentUser().isEmailVerified()) {
+                                                         startActivity(new Intent(LoginActivity.this
+                                                                 , UserActivity.class));
+
+                                                     } else {
+                                                         Toast.makeText(LoginActivity.this, "Xin hãy xác thực email trước khi đăng nhập.",
+                                                                 Toast.LENGTH_SHORT).show();
+                                                     }
+
+                                                 } else {
+                                                     Toast.makeText(getApplicationContext(), "Đã có lỗi ở FireBase!"
+                                                             , Toast.LENGTH_SHORT).show();
+                                                 }
+                                             });
+                                         } else {
+                                             Toast.makeText(getApplicationContext(), "Thông tin đăng nhập không chính xác!"
+                                                     , Toast.LENGTH_SHORT).show();
+                                         }
+                                     }else {
+                                         Toast.makeText(getApplicationContext(), "Thông tin đăng nhập không chính xác!"
+                                                 , Toast.LENGTH_SHORT).show();
+                                     }
+                                 }else {
+                                     Toast.makeText(getApplicationContext(), "Đã có lỗi ở server!"
+                                             , Toast.LENGTH_SHORT).show();
+                                 }
+                             }
+
+                             @Override
+                             public void onFailure(Call<List<User>> call, Throwable t) {
+
+                             }
+                         }
+            );
+        }
     }
+
+
 }
