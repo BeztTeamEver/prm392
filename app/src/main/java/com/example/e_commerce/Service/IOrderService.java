@@ -1,6 +1,6 @@
 package com.example.e_commerce.Service;
 
-import com.example.e_commerce.Model.Cart;
+import com.example.e_commerce.Model.Order;
 
 import java.util.List;
 
@@ -11,26 +11,23 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
-public interface ICartService {
-
-    String resource = "cart";
+public interface IOrderService {
+    String resource = "order";
 
 
     @GET(resource)
-    Call<List<Cart>> getAll();
+    Call<List<Order>> getAll();
 
     @GET(resource + "/{id}")
-    Call<Cart> getById(@Path("id") Object id);
+    Call<Order> getById(@Path("id") Object id);
 
     @POST(resource)
-    Call<Cart> create(@Body Cart item);
+    Call<Order> create(@Body Order item);
 
     @PUT(resource + "/{id}")
-    Call<Cart> update(@Path("id") Object id, @Body Cart item);
+    Call<Order> update(@Path("id") Object id, @Body Order item);
 
     @DELETE(resource + "/{id}")
-    Call<Cart> delete(@Path("id") Object id);
-
+    Call<Order> delete(@Path("id") Object id);
 }

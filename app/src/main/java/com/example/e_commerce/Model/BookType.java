@@ -5,38 +5,29 @@ import java.util.Date;
 
 public class BookType implements Serializable {
 
-    private int id;
+    private int id, quantity;
     private String type_name;
     private String image_url;
-    private Date created_at;
-    private int Status;
     private static BookType bookType = null;
 
     public BookType(){}
-
-    public BookType(int id, String type_name, String image_url, Date created_at, int status) {
-        this.id = id;
-        this.type_name = type_name;
-        this.image_url = image_url;
-        this.created_at = created_at;
-        Status = status;
-    }
-
     public BookType(int id, String type_name, String image_url) {
         this.id = id;
         this.type_name = type_name;
         this.image_url = image_url;
-        this.created_at = null;
-        Status = 222;
+        this.quantity = 0;
     }
 
-    public BookType(String type_name, String image_url, Date created_at, int status) {
+    public BookType(String type_name, String image_url) {
         this.type_name = type_name;
         this.image_url = image_url;
-        this.created_at = created_at;
-        Status = status;
+        this.quantity = 0;
     }
 
+    public BookType(int id, int quantity) {
+        this.id = id;
+        this.quantity = quantity;
+    }
 
     public static BookType getInstance(){
         if(bookType == null)
@@ -67,19 +58,11 @@ public class BookType implements Serializable {
         this.image_url = image_url;
     }
 
-    public Date getCreated_at() {
-        return created_at;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setCreated_at(Date created_at) {
-        this.created_at = created_at;
-    }
-
-    public int getStatus() {
-        return Status;
-    }
-
-    public void setStatus(int status) {
-        Status = status;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

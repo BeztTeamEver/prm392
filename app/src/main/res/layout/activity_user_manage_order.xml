@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.CategoryProductsActivity"
+    tools:context=".Activity.UserManageOrderActivity"
     android:background="@color/primary_050">
 
     <LinearLayout
@@ -30,7 +30,7 @@
     </LinearLayout>
 
     <ListView
-        android:id="@+id/user_category_list_products"
+        android:id="@+id/user_manage_order"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@null"
