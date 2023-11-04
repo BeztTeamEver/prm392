@@ -19,6 +19,31 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".Activity.message.ChatMessageActivity"
+            android:exported="false" />
+
+
+        <activity
+            android:name=".Activity.RegisterChatActivity"
+            android:exported="true">
+
+
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Activity.message.MainChatActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Activity.NotificationActivity"
+            android:exported="false"></activity>
+
+        <activity
             android:name=".Activity.UserManageOrderActivity"
             android:exported="false" />
         <activity
@@ -125,6 +150,14 @@
             android:screenOrientation="portrait"
             android:stateNotNeeded="true"
             android:theme="@style/zxing_CaptureTheme" />
+
+        <service
+            android:name=".Network.PushNotificationService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

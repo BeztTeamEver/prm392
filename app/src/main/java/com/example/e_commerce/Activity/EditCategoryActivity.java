@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.e_commerce.Database.Database;
 import com.example.e_commerce.Fragment.CartFragment;
 import com.example.e_commerce.Fragment.ManageCategoryFragment;
 import com.example.e_commerce.Fragment.ManageProductFragment;
