@@ -38,4 +38,9 @@
         android:title="Thống kê"
         android:icon="@drawable/ic_baseline_bar_chart_24"/>
 
+    <item
+        android:id="@+id/nav_chat"
+        android:title="Nhắn tin"
+        android:icon="@drawable/ic_baseline_bar_chart_24"/>
+
 </menu>

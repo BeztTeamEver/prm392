@@ -24,7 +24,7 @@
 
 
         <activity
-            android:name=".Activity.RegisterChatActivity"
+            android:name=".Activity.message.RegisterChatActivity"
             android:exported="true">
 
 

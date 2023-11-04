@@ -1,4 +1,4 @@
-package com.example.e_commerce.Activity;
+package com.example.e_commerce.Activity.message;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.e_commerce.Activity.message.MainChatActivity;
 import com.example.e_commerce.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
