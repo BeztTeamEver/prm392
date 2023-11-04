@@ -1,6 +1,8 @@
 package com.example.e_commerce.Model;
 
-public class Cart {
+import java.io.Serializable;
+
+public class Cart implements Serializable {
     private int id, book_id, book_type_id, user_id, quantity, price;
     private String name, image;
     public Cart(){
@@ -25,6 +27,9 @@ public class Cart {
         this.name = name;
         this.price = price;
         this.image = image;
+    }
+
+    public Cart(int bookTypeId, int userId, int amount, String title, int i, String imageUrl) {
     }
 
     public int getId() {

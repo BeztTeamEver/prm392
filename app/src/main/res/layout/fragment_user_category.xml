@@ -7,10 +7,11 @@
     android:background="@color/primary_050"
     tools:context=".Fragment.UserCategoryFragment">
 
-    <ListView
+    <GridView
         android:id="@+id/user_category_list_categories"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@null"
-        android:dividerHeight="0dp"/>
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:numColumns="2"/>
 </RelativeLayout>

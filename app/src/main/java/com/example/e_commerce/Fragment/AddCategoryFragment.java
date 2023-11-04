@@ -146,10 +146,8 @@ public class AddCategoryFragment extends Fragment {
                         Intent intent = new Intent(MainActivity.this
                                 , TraineeListActivity.class);
                         startActivity(intent);*/
-
                     }
                 }
-
                 @Override
                 public void onFailure(Call<BookType> call, Throwable t) {
 //                    Toast.makeText(AddProductFragment.this, "Save fail"

@@ -44,7 +44,7 @@ public class EditProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_product);
 
-        getSupportActionBar().hide();
+//        getSupportActionBar().hide();
 
         txt_image_url = findViewById(R.id.edit_product_txt_image_url);
         txt_title = findViewById(R.id.edit_product_txt_title);

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -20,15 +21,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.e_commerce.Activity.CategoryProductsActivity;
 import com.example.e_commerce.Activity.EditProductActivity;
-import com.example.e_commerce.Database.Database;
 import com.example.e_commerce.Model.Book;
 import com.example.e_commerce.Model.BookType;
 import com.example.e_commerce.R;
 import com.example.e_commerce.Repository.RepositoryBase;
 import com.example.e_commerce.Service.IBookService;
 import com.example.e_commerce.Service.IBookTypeService;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,7 +46,9 @@ import retrofit2.Response;
 public class ManageProductFragment extends Fragment {
 
     ListView list_products;
+    FloatingActionButton btn_manage_product_add;
     ArrayList<Book> products = new ArrayList<>();
+    ArrayList<BookType> bookTypes = new ArrayList<>();
 
     // Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -58,6 +60,7 @@ public class ManageProductFragment extends Fragment {
     private String mParam2;
 
     private IBookService bookService = RepositoryBase.getBookService();
+    private IBookTypeService bookTypeService = RepositoryBase.getBookTypeService();
 
     public ManageProductFragment() {
         // Required empty public constructor
@@ -95,8 +98,7 @@ public class ManageProductFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_manage_product, container, false);
 
         list_products = v.findViewById(R.id.manage_product_list);
-
-        // TODO: get products from database and show it in listView
+       // TODO: get products from database and show it in listView
 
         //fill_list();
         getAllBook();
@@ -198,6 +200,7 @@ public class ManageProductFragment extends Fragment {
             btn_del.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    //--------DELETE book------------
                     try{
                         Call<Book> call = bookService.delete(products.get(i).getId());
                         call.enqueue(new Callback<Book>() {
@@ -217,9 +220,58 @@ public class ManageProductFragment extends Fragment {
                     } catch (Exception e){
                         Log.d("Error", e.getMessage());
                     }
+
+                    //------GET quantity BookType--------------
+                    try{
+                        Call<List<BookType>> callBT = bookTypeService.getAll();
+                        callBT.enqueue(new Callback<List<BookType>>() {
+                            @Override
+                            public void onResponse(Call<List<BookType>> call, Response<List<BookType>> response) {
+                                List<BookType> resList = response.body();
+                                if (resList == null){
+                                    return;
+                                }
+                                int bookType_Quantity = 0;
+                                for (BookType item : resList){
+                                    if(item.getId() == products.get(i).getId()){
+                                        bookType_Quantity = item.getQuantity();
+                                        break;
+                                    }
+                                }
+                                //--------Decrease quantity bookType------------
+                                BookType bookType = new BookType(products.get(i).getId(), bookType_Quantity);
+                                try{
+                                    Call<BookType> callBTU = bookTypeService.update(products.get(i).getId(), bookType );
+                                    callBTU.enqueue(new Callback<BookType>() {
+                                        @Override
+                                        public void onResponse(Call<BookType> call, Response<BookType> response) {
+                                            BookType resList = response.body();
+                                            if (resList == null){
+                                            }
+                                        }
+                                        @Override
+                                        public void onFailure(Call<BookType> call, Throwable t) {
+                                        }
+                                    });
+                                } catch (Exception e){
+                                    Log.d("Error", e.getMessage());
+                                }
+                                //--------END decrease quantity bookType------------
+                            }
+                            @Override
+                            public void onFailure(Call<List<BookType>> call, Throwable t) {
+                            }
+                        });
+
+                    } catch (Exception e){
+                        Log.d("Error", e.getMessage());
+                    }
+                    //------END get quantity BookType--------------
                 }
+                //--------END delete book------------
             });
             return item;
         }
     }
+
 }

@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.example.e_commerce.Activity.LoginActivity;
 import com.example.e_commerce.Activity.SplashScreenActivity;
+import com.example.e_commerce.Activity.UserManageOrderActivity;
 import com.example.e_commerce.Model.User;
 import com.example.e_commerce.R;
 import com.google.gson.Gson;
@@ -34,7 +35,7 @@ import java.util.ResourceBundle;
 public class ProfileFragment extends Fragment {
 
     TextView tv_username, tv_email, tv_password, tv_fullname, tv_phone_number;
-    Button btn_logout;
+    Button btn_logout, btn_check_order;
 
     // Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -103,6 +104,7 @@ public class ProfileFragment extends Fragment {
         tv_password.setText(user.getPassword());
 
         btn_logout = v.findViewById(R.id.profile_btn_logout);
+        btn_check_order = v.findViewById(R.id.profile_btn_check_order);
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,6 +115,12 @@ public class ProfileFragment extends Fragment {
                 myEdit.commit();
                 getActivity().finish();
                 startActivity(new Intent(getContext(), LoginActivity.class));
+            }
+        });
+        btn_check_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), UserManageOrderActivity.class));
             }
         });
 

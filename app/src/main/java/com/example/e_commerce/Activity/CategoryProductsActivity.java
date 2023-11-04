@@ -13,11 +13,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.e_commerce.Database.Database;
+import com.example.e_commerce.Fragment.CartFragment;
 import com.example.e_commerce.Model.Book;
 import com.example.e_commerce.R;
 import com.example.e_commerce.Repository.RepositoryBase;
@@ -32,6 +34,7 @@ import retrofit2.Response;
 
 public class CategoryProductsActivity extends AppCompatActivity {
     ListView user_list_category_products;
+    LinearLayout embty;
     ArrayList<Book> products = new ArrayList<>();
     Intent n;
     IBookService bookService;
@@ -42,12 +45,9 @@ public class CategoryProductsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_products);
 
-        //n = getIntent();
-        //int id =  n.getExtras().getInt("id") ;
-
         bookService = RepositoryBase.getBookService();
-
         user_list_category_products = findViewById(R.id.user_category_list_products);
+        embty = findViewById(R.id.embty);
 
 
         //Database dp = new Database(getApplicationContext());
@@ -76,7 +76,6 @@ public class CategoryProductsActivity extends AppCompatActivity {
     }
 
     private void getAllBook(){
-
         try{
             Call<List<Book>> call = bookService.getAll();
             call.enqueue(new Callback<List<Book>>() {
@@ -86,18 +85,25 @@ public class CategoryProductsActivity extends AppCompatActivity {
                     if (books == null){
                         return;
                     }
+                    n = getIntent();
+                    int id =  n.getExtras().getInt("id") ;
 
                     for (Book book : books){
-                        products.add(book);
+                        if (book.getBook_type_id() == id)  products.add(book);
+                    }
+                    if (products.size() == 0) {
+                        embty.setVisibility(View.VISIBLE);
+                        user_list_category_products.setVisibility(View.GONE);
+                    } else {
+                        embty.setVisibility(View.GONE);
+                        user_list_category_products.setVisibility(View.VISIBLE);
+
+                        CategoryProductsActivity.UserHomeCategoryProductsAdapter userHomeCategoryProductsAdapter
+                                = new CategoryProductsActivity.UserHomeCategoryProductsAdapter(products);
+                        user_list_category_products.setAdapter(userHomeCategoryProductsAdapter);
                     }
 
-                    CategoryProductsActivity.UserHomeCategoryProductsAdapter userHomeCategoryProductsAdapter
-                            = new CategoryProductsActivity.UserHomeCategoryProductsAdapter(products);
-                    user_list_category_products.setAdapter(userHomeCategoryProductsAdapter);
-
-
                 }
-
                 @Override
                 public void onFailure(Call<List<Book>> call, Throwable t) {
 
