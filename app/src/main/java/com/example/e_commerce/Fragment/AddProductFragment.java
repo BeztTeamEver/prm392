@@ -133,13 +133,16 @@ public class AddProductFragment extends Fragment {
                 stock_quantity = Integer.parseInt(txt_stock_quantity.getText().toString());
                 String book_type_name = spinner_categoty.getSelectedItem().toString();
                 int bookType_id = 0;
+                int bookType_quantity = 0;
                 if(!image_url.isEmpty() && !title.isEmpty() && !author.isEmpty() && !description.isEmpty() && price!=-1 && stock_quantity!=-1){
                     for(int i = 0 ; i < bookTypes.size() ; i++){
                         if(bookTypes.get(i).getType_name().equals(book_type_name)){
                             bookType_id = bookTypes.get(i).getId();
+                            bookType_quantity = bookTypes.get(i).getQuantity();
                             break;
                         }
                     }
+                    BookType temp = new BookType(bookType_id, bookType_quantity + 1);
                     Book product = new Book();
                     product.setTitle(title);
                     product.setPrice(price);
@@ -150,7 +153,7 @@ public class AddProductFragment extends Fragment {
                     product.setDescription(description);
                     product.setStatus(1);
 
-                    createBook(product);
+                    createBook(product, temp);
 
                     txt_image_url.setText("");
                     txt_title.setText("");
@@ -173,7 +176,7 @@ public class AddProductFragment extends Fragment {
         return v;
     }
 
-    private void createBook(Book book){
+    private void createBook(Book book, BookType temp){
         try{
             Call<Book> call = bookService.create(book);
 
@@ -181,11 +184,25 @@ public class AddProductFragment extends Fragment {
                 @Override
                 public void onResponse(Call<Book> call, Response<Book> response) {
                     if (response.body() != null){
+                        //Update bookTyep quantity
+                        try{
+                            Call<BookType> callBT = bookTypeService.update(temp.getId(), temp);
+                            callBT.enqueue(new Callback<BookType>() {
+                                @Override
+                                public void onResponse(Call<BookType> call, Response<BookType> response) {
+                                    if (response.body() != null){
+                                    }
+                                }
+                                @Override
+                                public void onFailure(Call<BookType> call, Throwable t) {
 
-                        return;
+                                }
+                            });
+                        } catch (Exception e){
+                            Log.d("Error", e.getMessage());
+                        }
                     }
                 }
-
                 @Override
                 public void onFailure(Call<Book> call, Throwable t) {
 

@@ -30,6 +30,7 @@ public class AdminActivity extends AppCompatActivity {
         Intent n = getIntent();
         int id =  n.getExtras().getInt("adminGate") ;
         setContentView(R.layout.activity_admin);
+
         if(id == 1)
             getSupportFragmentManager().beginTransaction().replace(R.id.admin_container
                     , new ManageProductFragment()).commit();
