@@ -119,7 +119,7 @@ public class UserCategoryFragment extends Fragment {
                     }
 
                     for (BookType bookType : resList){
-                        if(bookType.getQuantity() > 0)
+                        if (bookType.getQuantity() > 0)
                         bookTypes.add(bookType);
                     }
                     UserCategoryFragment.UserCategoryAdapter userCategoryAdapter

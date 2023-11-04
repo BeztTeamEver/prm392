@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.e_commerce.Model.Book;
 import com.example.e_commerce.Model.BookType;
+import com.example.e_commerce.Model.Cart;
 import com.example.e_commerce.R;
 import com.example.e_commerce.Repository.RepositoryBase;
 import com.example.e_commerce.Service.IBookService;
@@ -60,13 +61,13 @@ public class EditProductActivity extends AppCompatActivity {
         Intent n = getIntent();
         int id =  n.getExtras().getInt("id") ;
         int stock_quantity = n.getExtras().getInt("stock_quantity") ;
-        int book_type_id = n.getExtras().getInt("book_type_id") ;
+        int old_book_type_id = n.getExtras().getInt("book_type_id") ;
         String title =  n.getExtras().getString("title") ;
         int price =  n.getExtras().getInt("price") ;
         String description =  n.getExtras().getString("description") ;
         String image_url =  n.getExtras().getString("image_url") ;
         String author =  n.getExtras().getString("author") ;
-        showNameBookType(book_type_id);
+        showNameBookType(old_book_type_id);
 
 
         btn_show.setOnClickListener(new View.OnClickListener() {
@@ -94,20 +95,69 @@ public class EditProductActivity extends AppCompatActivity {
                 String title = txt_title.getText().toString();
                 int price = Integer.parseInt(txt_price.getText().toString());
                 int stock_quantity = Integer.parseInt(txt_stock_quantity.getText().toString());
-                String book_type_name = spinner_book_type.getSelectedItem().toString();
+                String new_book_type_name = spinner_book_type.getSelectedItem().toString();
                 String image_url = txt_image_url.getText().toString();
                 String author = txt_author.getText().toString();
                 String description = txt_description.getText().toString();
 
-                int book_type_id = 0;
-                for(int i = 0 ; i < bookTypes.size() ; i++){
-                   if(bookTypes.get(i).getType_name() == book_type_name){
-                       book_type_id = bookTypes.get(i).getId();
-                       break;
-                   }
-                }
-                Book book = new Book(stock_quantity, book_type_id, title, author, image_url, description, price);
+                int new_book_type_id = 0;
+                int new_book_type_quantity = 0;
+                int old_book_type_quantity = 0;
 
+                for(int i = 0 ; i < bookTypes.size() ; i++){
+                   if(bookTypes.get(i).getType_name() == new_book_type_name){
+                       new_book_type_quantity = bookTypes.get(i).getQuantity();
+                       new_book_type_id =  bookTypes.get(i).getId();
+                   }
+
+                    if(bookTypes.get(i).getId() == old_book_type_id){
+                       old_book_type_quantity = bookTypes.get(i).getQuantity();
+                    }
+                }
+                //-----INCREASE QUANTITY BOOK TYPE ---------------
+                BookType bookTypeNew = new BookType(new_book_type_id,new_book_type_quantity + 1);
+                try{
+                    Call<BookType> callBTN = bookTypeService.update(new_book_type_id, bookTypeNew);
+                    callBTN.enqueue(new Callback<BookType>() {
+                        @Override
+                        public void onResponse(Call<BookType> call, Response<BookType> response) {
+                            if (response.body() != null){
+
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<BookType> call, Throwable t) {
+                            Toast.makeText(EditProductActivity.this, "Save fail"
+                                    , Toast.LENGTH_LONG).show();
+                        }
+                    });
+                } catch (Exception e){
+                    Log.d("Error", e.getMessage());
+                }
+
+                //-----DECREASE QUANTITY BOOK TYPE ---------------
+                BookType bookTypeOld= new BookType(old_book_type_id, old_book_type_quantity - 1);
+                try{
+                    Call<BookType> callBTO = bookTypeService.update(old_book_type_id, bookTypeOld);
+                    callBTO.enqueue(new Callback<BookType>() {
+                        @Override
+                        public void onResponse(Call<BookType> call, Response<BookType> response) {
+                            if (response.body() != null){
+
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<BookType> call, Throwable t) {
+                            Toast.makeText(EditProductActivity.this, "Save fail"
+                                    , Toast.LENGTH_LONG).show();
+                        }
+                    });
+                } catch (Exception e){
+                    Log.d("Error", e.getMessage());
+                }
+
+                //-----UPDATE BOOK ---------------
+                Book book = new Book(stock_quantity, new_book_type_id, title, author, image_url, description, price);
                 try{
                     Call<Book> call = bookService.update(id, book);
                     call.enqueue(new Callback<Book>() {
@@ -128,6 +178,8 @@ public class EditProductActivity extends AppCompatActivity {
                 } catch (Exception e){
                     Log.d("Error", e.getMessage());
                 }
+                //-----END CREATE BOOK ---------------
+
             }
         });
     }
