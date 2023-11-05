@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.e_commerce.Common.ApplicationUser;
 import com.example.e_commerce.Model.User;
 import com.example.e_commerce.R;
 import com.example.e_commerce.Repository.RepositoryBase;
@@ -54,9 +55,11 @@ public class LoginActivity extends AppCompatActivity {
                 sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
                 myEdit = sharedPreferences.edit();
                 myEdit.commit();
+
                 // TODO: login
                 String email = txt_email.getText().toString().trim().toLowerCase(),
                         password = txt_password.getText().toString();
+
                 if(!email.isEmpty() && !password.isEmpty()){
                     authenticate(email, password);
                 } else {
@@ -78,8 +81,12 @@ public class LoginActivity extends AppCompatActivity {
 
     public void authenticate(String email, String password) {
         if (email.equals("admin") && password.equals("admin")) {
+
+            User admin = ApplicationUser.parseUserFromJsonInAsset(this, "appsettings.json");
+            ApplicationUser.saveCurrentUser(this, admin);
             Intent myIntent = new Intent(LoginActivity.this, AdminActivity.class);
                             myIntent.putExtra("adminGate",1);
+                            ApplicationUser.registerUserToFireBase(admin);
                             startActivity(myIntent);
         }else {
             Call<List<User>> call = userService.getUserByEmailAndPassword(email, password);
@@ -102,10 +109,14 @@ public class LoginActivity extends AppCompatActivity {
                                              myEdit.putString("current_user", userJson);
                                              myEdit.apply();
 
+
+
                                              FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                                              firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener((task) -> {
                                                  if (task.isSuccessful()) {
                                                      if (firebaseAuth.getCurrentUser().isEmailVerified()) {
+                                                         ApplicationUser.saveCurrentUser(LoginActivity.this, user);
+                                                         ApplicationUser.registerUserToFireBase(user);
                                                          startActivity(new Intent(LoginActivity.this
                                                                  , UserActivity.class));
 
@@ -141,6 +152,8 @@ public class LoginActivity extends AppCompatActivity {
             );
         }
     }
+
+
 
 
 }

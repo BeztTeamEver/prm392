@@ -24,7 +24,7 @@
 
 
         <activity
-            android:name=".Activity.RegisterChatActivity"
+            android:name=".Activity.message.RegisterChatActivity"
             android:exported="true">
 
 
@@ -41,11 +41,14 @@
         </activity>
         <activity
             android:name=".Activity.NotificationActivity"
-            android:exported="false"></activity>
+            android:exported="false">
+      </activity>
 
-        <activity
+            <activity
             android:name=".Activity.UserManageOrderActivity"
             android:exported="false" />
+        
+
         <activity
             android:name=".Activity.OrderReportActivity"
             android:exported="false">

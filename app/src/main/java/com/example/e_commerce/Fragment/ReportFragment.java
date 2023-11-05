@@ -91,10 +91,10 @@ public class ReportFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_report, container, false);
         spinner_user_id = v.findViewById(R.id.spinner_user_id);
 
-        Database db = new Database(getContext());
+//        Database db = new Database(getContext());
         ArrayList<String> users_ids = new ArrayList<>();
-        users_ids = db.getUsersIds();
-        users_ids.add(0, "All");
+//        users_ids = db.getUsersIds();
+//        users_ids.add(0, "All");
         ArrayAdapter aa = new ArrayAdapter(getContext(),android.R.layout.simple_spinner_item,users_ids);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_user_id.setAdapter(aa);

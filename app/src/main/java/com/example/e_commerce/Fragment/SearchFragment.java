@@ -277,10 +277,11 @@ public class SearchFragment extends Fragment {
                     Collections.reverse(books);
                     products.clear();
                     for (Book book : books){
-                        if(removeAccent(book.getTitle().toLowerCase()).contains(removeAccent(text).toLowerCase()) || removeAccent(book.getAuthor()).contains(removeAccent(text)) )
+                        String tempText = removeAccent(text).toLowerCase();
+                        if (removeAccent(book.getTitle().toLowerCase()).contains(tempText)
+                                || removeAccent(book.getAuthor().toLowerCase()).contains(tempText))
                         products.add(book);
                     };
-
                     SearchFragment.UserSearchProductAdapter userSearchProductAdapter = new SearchFragment.UserSearchProductAdapter(products);
                     list_search.setAdapter(userSearchProductAdapter);
                 }
