@@ -43,4 +43,9 @@
         android:title="Nhắn tin"
         android:icon="@drawable/ic_baseline_bar_chart_24"/>
 
+    <item
+        android:id="@+id/nav_notify"
+        android:title="Gửi thông báo"
+        android:icon="@drawable/ic_baseline_bar_chart_24"/>
+
 </menu>

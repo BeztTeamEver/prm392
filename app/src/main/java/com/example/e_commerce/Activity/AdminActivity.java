@@ -95,6 +95,9 @@ public class AdminActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.nav_chat){
             Intent intent = new Intent(AdminActivity.this, MainChatActivity.class);
             startActivity(intent);
+        } else if (item.getItemId() == R.id.nav_notify){
+            Intent intent = new Intent(AdminActivity.this, NotificationActivity.class);
+            startActivity(intent);
         }
         return true;
     }

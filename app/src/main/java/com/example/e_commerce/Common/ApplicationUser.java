@@ -8,11 +8,14 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.e_commerce.Model.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -35,20 +38,39 @@ public class ApplicationUser {
 
     public static void saveCurrentUser(Context context, User user){
 
-        User existingUser = getUserFromSharedPreferences(context);
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            return;
+                        }
 
-        //if (existingUser != null) return;
+                        // Get new FCM registration token
+                        String token = task.getResult();
 
-        SharedPreferences preferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.clear();
+                        User existingUser = getUserFromSharedPreferences(context);
 
-        // Serialize the User object to a JSON string
-        String userJson = userToJson(user);
+                        //if (existingUser != null) return;
 
-        // Save the JSON string in SharedPreferences
-        editor.putString("userJson", userJson);
-        editor.apply();
+                        SharedPreferences preferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.clear();
+
+                        // Serialize the User object to a JSON string
+                        String userJson = userToJson(user);
+
+                        // Save the JSON string in SharedPreferences
+                        editor.putString("userJson", userJson);
+                        editor.putString("token", token);
+                        editor.apply();
+
+                        // Log and toast
+                        System.out.println("TOKEN " + token);
+                    }
+                });
+
+
     }
 
     public static User getUserFromSharedPreferences(Context context) {
@@ -58,6 +80,19 @@ public class ApplicationUser {
         if (userJson != null) {
             // Deserialize the JSON string to a User object
             return userFromJson(userJson);
+        } else {
+            // Handle the case where the User data doesn't exist in SharedPreferences
+            return null;
+        }
+    }
+
+    public static String getDeviceToken(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        String token = preferences.getString("token", null);
+
+        if (token != null) {
+            // Deserialize the JSON string to a User object
+            return token;
         } else {
             // Handle the case where the User data doesn't exist in SharedPreferences
             return null;
@@ -114,6 +149,7 @@ public class ApplicationUser {
     }
 
     public static void registerUserToFireBase(User user) {
+
         try {
 
             DatabaseReference databaseReference
@@ -142,6 +178,7 @@ public class ApplicationUser {
                         databaseReference.child("users-chat").child(mobileTxt)
                                 .child("profile_pic").setValue(avatarUrl);
                     }
+
                 }
 
                 @Override
