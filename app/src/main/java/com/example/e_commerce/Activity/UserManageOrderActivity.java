@@ -79,14 +79,6 @@ public class UserManageOrderActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), ProductActivity.class);
 
                 intent.putExtra("id",orders.get(i).getOrder_id());
-                intent.putExtra("createAt",orders.get(i).getCreated_at());
-                intent.putExtra("date",orders.get(i).getDate());
-                intent.putExtra("feedBack",orders.get(i).getFeedback());
-                intent.putExtra("address",orders.get(i).getAddress());
-                intent.putExtra("rate",orders.get(i).getRate());
-                intent.putExtra("Status",orders.get(i).getStatus());
-                intent.putExtra("payment_method",orders.get(i).getPayment_method());
-                intent.putExtra("total_amount",orders.get(i).getTotal_amount());
                 startActivity(intent);
             }
         });
@@ -126,10 +118,31 @@ public class UserManageOrderActivity extends AppCompatActivity {
             TextView product_state = (TextView) item.findViewById(R.id.user_manage_order_item_state);
             TextView product_price = (TextView) item.findViewById(R.id.user_manage_order_item_price);
             TextView product_create_at = (TextView) item.findViewById(R.id.user_manage_order_item_date);
+            Button product_detail_btn = (Button) item.findViewById(R.id.user_manage_order_detail);
 
             product_create_at.setText(orders.get(i).getCreated_at() + "");
             product_state.setText(orders.get(i).getStatus());
             product_price.setText(orders.get(i).getTotal_amount() + "");
+
+            product_detail_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent =  new Intent(getApplicationContext(), ProductActivity.class);
+//                    intent = new Intent(getApplicationContext(), ProductActivity.class);
+
+                    intent.putExtra("id", orders.get(i).getOrder_id());
+//                    intent.putExtra("stock_quantity", products.get(i).getStock_quantity());
+//                    intent.putExtra("book_type_id", products.get(i).getBook_type_id());
+//                    intent.putExtra("title", products.get(i).getTitle());
+//                    intent.putExtra("price", products.get(i).getPrice());
+//                    intent.putExtra("description", products.get(i).getDescription());
+//                    intent.putExtra("author", products.get(i).getAuthor());
+//                    intent.putExtra("image_url", products.get(i).getImage_url());
+//                    intent.putExtra("book_type_id", products.get(i).getBook_type_id());
+//
+                   startActivity(intent);
+                }
+            });
 
             return item;
         }
@@ -169,4 +182,6 @@ public class UserManageOrderActivity extends AppCompatActivity {
             Log.d("Error", e.getMessage());
         }
     }
+
+
 }
