@@ -1,36 +1,24 @@
 package com.example.e_commerce.Activity.message;
 
 import android.content.Context;
-<<<<<<< HEAD
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-=======
-import android.content.SharedPreferences;
-import android.os.Bundle;
->>>>>>> 0ac2fa701b53a1e6b3db6b627ebb80a5c45f80f7
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-<<<<<<< HEAD
 import android.widget.Toast;
-=======
->>>>>>> 0ac2fa701b53a1e6b3db6b627ebb80a5c45f80f7
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-<<<<<<< HEAD
 import com.example.e_commerce.Common.ApplicationUser;
 import com.example.e_commerce.Database.Database;
 import com.example.e_commerce.Model.User;
-=======
-import com.example.e_commerce.Database.Database;
->>>>>>> 0ac2fa701b53a1e6b3db6b627ebb80a5c45f80f7
 import com.example.e_commerce.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -48,22 +36,14 @@ import java.util.Locale;
 
 public class ChatMessageActivity extends AppCompatActivity {
 
-<<<<<<< HEAD
     private List<ChatList> chatLists = new ArrayList<>();
-=======
-    private final List<ChatList> chatLists = new ArrayList<>();
->>>>>>> 0ac2fa701b53a1e6b3db6b627ebb80a5c45f80f7
     ImageView btnSendMessage, profilePic;
     EditText messageEditTxt;
     TextView name;
     DatabaseReference databaseReference;
     String chatKey;
     String getUserMobile = "";
-<<<<<<< HEAD
     String receiveMobile = "", receiveName = "", receiveProfilePic = "";
-=======
-    String getMobile = "";
->>>>>>> 0ac2fa701b53a1e6b3db6b627ebb80a5c45f80f7
     RecyclerView chattingRecycleView;
     ChatAdapter chatAdapter;
     private boolean loadingFirstTime = true;
@@ -73,10 +53,7 @@ public class ChatMessageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_message);
 
-<<<<<<< HEAD
         // Initialize database firebase
-=======
->>>>>>> 0ac2fa701b53a1e6b3db6b627ebb80a5c45f80f7
         databaseReference
                 = FirebaseDatabase
                 .getInstance()
@@ -84,7 +61,6 @@ public class ChatMessageActivity extends AppCompatActivity {
 
         binding();
 
-<<<<<<< HEAD
         receiveName
                 = getIntent().getStringExtra("name");
         receiveProfilePic = getIntent().getStringExtra("profile_pic");
@@ -105,19 +81,6 @@ public class ChatMessageActivity extends AppCompatActivity {
 
         name.setText(receiveName);
         Picasso.get().load(receiveProfilePic).into(profilePic);
-=======
-        final String getName = getIntent().getStringExtra("name");
-        final String getProfilePic = getIntent().getStringExtra("profile_pic");
-        chatKey = getIntent().getStringExtra("chat_key");
-        getMobile = getIntent().getStringExtra("mobile");
-
-        //get user mobile from memory
-        SharedPreferences preferences = getSharedPreferences("MyPreferencesChat", Context.MODE_PRIVATE);
-        getUserMobile = preferences.getString("mobileChat", null);
-
-        name.setText(getName);
-        Picasso.get().load(getProfilePic).into(profilePic);
->>>>>>> 0ac2fa701b53a1e6b3db6b627ebb80a5c45f80f7
 
         chattingRecycleView.setHasFixedSize(true);
         chattingRecycleView.setLayoutManager(new LinearLayoutManager(ChatMessageActivity.this));
@@ -149,11 +112,7 @@ public class ChatMessageActivity extends AppCompatActivity {
 
                             if (messagesSnapshot.hasChild("msg") && messagesSnapshot.hasChild("mobile")){
                                 final String messageTimestamps = messagesSnapshot.getKey();
-<<<<<<< HEAD
                                 final String receiveMobile = messagesSnapshot.child("mobile").getValue(String.class);
-=======
-                                final String getMobile = messagesSnapshot.child("mobile").getValue(String.class);
->>>>>>> 0ac2fa701b53a1e6b3db6b627ebb80a5c45f80f7
                                 final String getMsg = messagesSnapshot.child("msg").getValue(String.class);
 
                                 Timestamp timestamp = new Timestamp(Long.parseLong(messageTimestamps));
@@ -164,12 +123,8 @@ public class ChatMessageActivity extends AppCompatActivity {
                                 SimpleDateFormat simpleTimeFormat =
                                         new SimpleDateFormat("hh:mm aa", Locale.getDefault());
 
-<<<<<<< HEAD
                                 ChatList chatList = new ChatList(receiveMobile, receiveName
                                         , getMsg
-=======
-                                ChatList chatList = new ChatList(getMobile, getName, getMsg
->>>>>>> 0ac2fa701b53a1e6b3db6b627ebb80a5c45f80f7
                                         , simpleDateFormat.format(date)
                                         , simpleTimeFormat.format(date));
 
@@ -220,11 +175,7 @@ public class ChatMessageActivity extends AppCompatActivity {
                             // Your existing code to populate chatLists
                             if (messagesSnapshot.hasChild("msg") && messagesSnapshot.hasChild("mobile")) {
                                 final String messageTimestamps = messagesSnapshot.getKey();
-<<<<<<< HEAD
                                 final String receiveMobile = messagesSnapshot.child("mobile").getValue(String.class);
-=======
-                                final String getMobile = messagesSnapshot.child("mobile").getValue(String.class);
->>>>>>> 0ac2fa701b53a1e6b3db6b627ebb80a5c45f80f7
                                 final String getMsg = messagesSnapshot.child("msg").getValue(String.class);
 
                                 // Parse timestamp
@@ -236,12 +187,8 @@ public class ChatMessageActivity extends AppCompatActivity {
                                 SimpleDateFormat simpleTimeFormat =
                                         new SimpleDateFormat("hh:mm aa", Locale.getDefault());
 
-<<<<<<< HEAD
                                 ChatList chatList = new ChatList(receiveMobile, receiveName
                                         , getMsg
-=======
-                                ChatList chatList = new ChatList(getMobile, getName, getMsg
->>>>>>> 0ac2fa701b53a1e6b3db6b627ebb80a5c45f80f7
                                         , simpleDateFormat.format(date)
                                         , simpleTimeFormat.format(date));
 
@@ -273,11 +220,7 @@ public class ChatMessageActivity extends AppCompatActivity {
                         .child("user_1").setValue(getUserMobile);
 
                 databaseReference.child("chat").child(chatKey)
-<<<<<<< HEAD
                         .child("user_2").setValue(receiveMobile);
-=======
-                        .child("user_2").setValue(getMobile);
->>>>>>> 0ac2fa701b53a1e6b3db6b627ebb80a5c45f80f7
 
                 databaseReference.child("chat").child(chatKey)
                         .child("messages").child(currentTimestamp)
@@ -294,11 +237,8 @@ public class ChatMessageActivity extends AppCompatActivity {
 
     }
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 0ac2fa701b53a1e6b3db6b627ebb80a5c45f80f7
     private void binding() {
 
         btnSendMessage = findViewById(R.id.btnSendMessage);
