@@ -185,24 +185,29 @@ public class ManageCategoryFragment extends Fragment {
             btn_del.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    try{
-                        Call<BookType> call = bookTypeService.delete(bookTypes.get(i).getId());
-                        call.enqueue(new Callback<BookType>() {
-                            @Override
-                            public void onResponse(Call<BookType> call, Response<BookType> response) {
-                                if (response.body() != null){
-                                    Toast.makeText(getActivity(),"Xóa thể loại thành công",Toast.LENGTH_SHORT).show();
-                                    getAllBookType();
+                    if (bookTypes.get(i).getQuantity() == 0) {
+                        try {
+                            Call<BookType> call = bookTypeService.delete(bookTypes.get(i).getId());
+                            call.enqueue(new Callback<BookType>() {
+                                @Override
+                                public void onResponse(Call<BookType> call, Response<BookType> response) {
+                                    if (response.body() != null) {
+                                        Toast.makeText(getActivity(), "Xóa thể loại thành công", Toast.LENGTH_SHORT).show();
+                                        getAllBookType();
+                                    }
                                 }
-                            }
-                            @Override
-                            public void onFailure(Call<BookType> call, Throwable t) {
-//                    Toast.makeText(AddProductFragment.this, "Save fail"
-//                            , Toast.LENGTH_LONG).show();
-                            }
-                        });
-                    } catch (Exception e){
-                        Log.d("Error", e.getMessage());
+                                @Override
+                                public void onFailure(Call<BookType> call, Throwable t) {
+                                    //                    Toast.makeText(AddProductFragment.this, "Save fail"
+                                    //                            , Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        } catch (Exception e) {
+                            Log.d("Error", e.getMessage());
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), "Không thể xóa! Có sách thuộc thể loại này", Toast.LENGTH_LONG).show();
+                        getAllBookType();
                     }
                 }
             });

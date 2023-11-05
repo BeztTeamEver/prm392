@@ -6,7 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+<<<<<<< HEAD
     tools:context=".Activity.message.RegisterChatActivity">
+=======
+    tools:context=".Activity.RegisterChatActivity">
+>>>>>>> 0ac2fa701b53a1e6b3db6b627ebb80a5c45f80f7
 
     <!-- Name Field -->
     <EditText

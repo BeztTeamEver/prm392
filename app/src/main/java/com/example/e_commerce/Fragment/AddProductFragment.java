@@ -18,9 +18,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.e_commerce.Activity.AdminActivity;
-import com.example.e_commerce.Database.Database;
 import com.example.e_commerce.Model.BookType;
-import com.example.e_commerce.Model.Category;
 import com.example.e_commerce.Model.Book;
 import com.example.e_commerce.R;
 import com.example.e_commerce.Repository.RepositoryBase;

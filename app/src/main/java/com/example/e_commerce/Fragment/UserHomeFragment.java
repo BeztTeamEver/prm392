@@ -99,7 +99,6 @@ public class UserHomeFragment extends Fragment {
         slideModels.add(new SlideModel(R.drawable.cover_1, ScaleTypes.FIT));
         slideModels.add(new SlideModel(R.drawable.cover_2, ScaleTypes.FIT));
         slideModels.add(new SlideModel(R.drawable.cover_3, ScaleTypes.FIT));
-        slideModels.add(new SlideModel(R.drawable.cover_4, ScaleTypes.FIT));
         imageSlider.setImageList(slideModels, ScaleTypes.FIT);
 
 

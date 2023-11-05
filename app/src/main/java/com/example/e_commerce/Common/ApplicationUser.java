@@ -2,6 +2,7 @@ package com.example.e_commerce.Common;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+<<<<<<< HEAD
 import android.content.res.AssetManager;
 import android.util.Log;
 
@@ -190,6 +191,14 @@ public class ApplicationUser {
         } catch (Exception e) {
             Log.d("DatabaseError", e.getMessage());
         }
+=======
+
+public class ApplicationUser {
+
+    public static String getCurrentMobile(Context context){
+        SharedPreferences preferences = context.getSharedPreferences("MyPreferencesChat", Context.MODE_PRIVATE);
+        return preferences.getString("mobileChat", null);
+>>>>>>> 0ac2fa701b53a1e6b3db6b627ebb80a5c45f80f7
     }
 
 }

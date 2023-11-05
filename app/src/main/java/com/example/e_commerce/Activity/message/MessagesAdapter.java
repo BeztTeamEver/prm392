@@ -31,7 +31,10 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
     @NonNull
     @Override
     public MessagesAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0ac2fa701b53a1e6b3db6b627ebb80a5c45f80f7
         return new MyViewHolder(LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.messages_adapter_layout, null));
     }
@@ -40,7 +43,10 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
     public void onBindViewHolder(@NonNull MessagesAdapter.MyViewHolder holder, int position) {
 
         try{
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0ac2fa701b53a1e6b3db6b627ebb80a5c45f80f7
             MessagesList list2 = messageLists.get(position);
 
             if (!list2.getProfilePic().isEmpty()){
@@ -64,7 +70,11 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
                     intent.putExtra("mobile", list2.getMobile());
                     intent.putExtra("name", list2.getName());
                     intent.putExtra("profile_pic", list2.getProfilePic());
+<<<<<<< HEAD
                     intent.putExtra("chat_key", list2.getMobile());
+=======
+                    intent.putExtra("chat_key", list2.getChatKey());
+>>>>>>> 0ac2fa701b53a1e6b3db6b627ebb80a5c45f80f7
                     context.startActivity(intent);
                 }
             });

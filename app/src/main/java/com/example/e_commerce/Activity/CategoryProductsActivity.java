@@ -18,7 +18,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.e_commerce.Database.Database;
 import com.example.e_commerce.Fragment.CartFragment;
 import com.example.e_commerce.Model.Book;
 import com.example.e_commerce.R;
