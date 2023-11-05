@@ -34,7 +34,7 @@ public class MessagesList {
         this.lastMessage = lastMessage;
         this.unssenMessages = unssenMessages;
         this.profilePic = profilePic;
-        this.chatKey = chatKey;
+        this.chatKey = mobile;
     }
 
     public String getName() {

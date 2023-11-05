@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.e_commerce.Activity.message.MainChatActivity;
 import com.example.e_commerce.Fragment.AddCategoryFragment;
 import com.example.e_commerce.Fragment.AddProductFragment;
 import com.example.e_commerce.Fragment.AdminManageOrderFragment;
@@ -91,6 +92,12 @@ public class AdminActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.nav_chart) {
             getSupportFragmentManager().beginTransaction().replace(R.id.admin_container
                     , new ChartFragment()).commit();
+        } else if (item.getItemId() == R.id.nav_chat){
+            Intent intent = new Intent(AdminActivity.this, MainChatActivity.class);
+            startActivity(intent);
+        } else if (item.getItemId() == R.id.nav_notify){
+            Intent intent = new Intent(AdminActivity.this, NotificationActivity.class);
+            startActivity(intent);
         } else if (item.getItemId() == R.id.nav_order) {
             getSupportFragmentManager().beginTransaction().replace(R.id.admin_container
                     , new AdminManageOrderFragment()).commit();

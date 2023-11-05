@@ -1,19 +1,24 @@
 package com.example.e_commerce.Activity.message;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.e_commerce.Common.ApplicationUser;
 import com.example.e_commerce.Database.Database;
+import com.example.e_commerce.Model.User;
 import com.example.e_commerce.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,14 +36,14 @@ import java.util.Locale;
 
 public class ChatMessageActivity extends AppCompatActivity {
 
-    private final List<ChatList> chatLists = new ArrayList<>();
+    private List<ChatList> chatLists = new ArrayList<>();
     ImageView btnSendMessage, profilePic;
     EditText messageEditTxt;
     TextView name;
     DatabaseReference databaseReference;
     String chatKey;
     String getUserMobile = "";
-    String getMobile = "";
+    String receiveMobile = "", receiveName = "", receiveProfilePic = "";
     RecyclerView chattingRecycleView;
     ChatAdapter chatAdapter;
     private boolean loadingFirstTime = true;
@@ -48,6 +53,7 @@ public class ChatMessageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_message);
 
+        // Initialize database firebase
         databaseReference
                 = FirebaseDatabase
                 .getInstance()
@@ -55,17 +61,26 @@ public class ChatMessageActivity extends AppCompatActivity {
 
         binding();
 
-        final String getName = getIntent().getStringExtra("name");
-        final String getProfilePic = getIntent().getStringExtra("profile_pic");
+        receiveName
+                = getIntent().getStringExtra("name");
+        receiveProfilePic = getIntent().getStringExtra("profile_pic");
         chatKey = getIntent().getStringExtra("chat_key");
-        getMobile = getIntent().getStringExtra("mobile");
+        receiveMobile = getIntent().getStringExtra("mobile");
 
         //get user mobile from memory
-        SharedPreferences preferences = getSharedPreferences("MyPreferencesChat", Context.MODE_PRIVATE);
-        getUserMobile = preferences.getString("mobileChat", null);
+        User currentUser = ApplicationUser.getUserFromSharedPreferences(this);
 
-        name.setText(getName);
-        Picasso.get().load(getProfilePic).into(profilePic);
+        if (!currentUser.getEmail().equals("admin")){
+            chatKey = currentUser.getPhone_number();
+            receiveName = "GoodTome";
+            receiveProfilePic = "https://i.pinimg.com/originals/7e/ce/c4/7ecec434137d1fcbe023db38e06c1260.jpg";
+            receiveMobile = "0000000000";
+
+        }
+        getUserMobile = currentUser.getPhone_number();
+
+        name.setText(receiveName);
+        Picasso.get().load(receiveProfilePic).into(profilePic);
 
         chattingRecycleView.setHasFixedSize(true);
         chattingRecycleView.setLayoutManager(new LinearLayoutManager(ChatMessageActivity.this));
@@ -97,7 +112,7 @@ public class ChatMessageActivity extends AppCompatActivity {
 
                             if (messagesSnapshot.hasChild("msg") && messagesSnapshot.hasChild("mobile")){
                                 final String messageTimestamps = messagesSnapshot.getKey();
-                                final String getMobile = messagesSnapshot.child("mobile").getValue(String.class);
+                                final String receiveMobile = messagesSnapshot.child("mobile").getValue(String.class);
                                 final String getMsg = messagesSnapshot.child("msg").getValue(String.class);
 
                                 Timestamp timestamp = new Timestamp(Long.parseLong(messageTimestamps));
@@ -108,7 +123,8 @@ public class ChatMessageActivity extends AppCompatActivity {
                                 SimpleDateFormat simpleTimeFormat =
                                         new SimpleDateFormat("hh:mm aa", Locale.getDefault());
 
-                                ChatList chatList = new ChatList(getMobile, getName, getMsg
+                                ChatList chatList = new ChatList(receiveMobile, receiveName
+                                        , getMsg
                                         , simpleDateFormat.format(date)
                                         , simpleTimeFormat.format(date));
 
@@ -159,7 +175,7 @@ public class ChatMessageActivity extends AppCompatActivity {
                             // Your existing code to populate chatLists
                             if (messagesSnapshot.hasChild("msg") && messagesSnapshot.hasChild("mobile")) {
                                 final String messageTimestamps = messagesSnapshot.getKey();
-                                final String getMobile = messagesSnapshot.child("mobile").getValue(String.class);
+                                final String receiveMobile = messagesSnapshot.child("mobile").getValue(String.class);
                                 final String getMsg = messagesSnapshot.child("msg").getValue(String.class);
 
                                 // Parse timestamp
@@ -171,7 +187,8 @@ public class ChatMessageActivity extends AppCompatActivity {
                                 SimpleDateFormat simpleTimeFormat =
                                         new SimpleDateFormat("hh:mm aa", Locale.getDefault());
 
-                                ChatList chatList = new ChatList(getMobile, getName, getMsg
+                                ChatList chatList = new ChatList(receiveMobile, receiveName
+                                        , getMsg
                                         , simpleDateFormat.format(date)
                                         , simpleTimeFormat.format(date));
 
@@ -203,7 +220,7 @@ public class ChatMessageActivity extends AppCompatActivity {
                         .child("user_1").setValue(getUserMobile);
 
                 databaseReference.child("chat").child(chatKey)
-                        .child("user_2").setValue(getMobile);
+                        .child("user_2").setValue(receiveMobile);
 
                 databaseReference.child("chat").child(chatKey)
                         .child("messages").child(currentTimestamp)
@@ -219,6 +236,8 @@ public class ChatMessageActivity extends AppCompatActivity {
         });
 
     }
+
+
 
     private void binding() {
 

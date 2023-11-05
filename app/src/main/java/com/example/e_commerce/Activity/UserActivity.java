@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +15,8 @@ import android.view.MenuItem;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.example.e_commerce.Activity.message.ChatMessageActivity;
+import com.example.e_commerce.Activity.message.MainChatActivity;
 import com.example.e_commerce.Fragment.AddCategoryFragment;
 import com.example.e_commerce.Fragment.AddProductFragment;
 import com.example.e_commerce.Fragment.CartFragment;
@@ -22,6 +25,7 @@ import com.example.e_commerce.Fragment.FeedbackFragment;
 import com.example.e_commerce.Fragment.ManageCategoryFragment;
 import com.example.e_commerce.Fragment.ManageProductFragment;
 import com.example.e_commerce.Fragment.ProfileFragment;
+import com.example.e_commerce.Fragment.ReceiveNotificationFragment;
 import com.example.e_commerce.Fragment.ReportFragment;
 import com.example.e_commerce.R;
 import com.example.e_commerce.Fragment.SearchFragment;
@@ -52,17 +56,19 @@ public class UserActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.user_header_messenger) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.user_container
-                    , new ManageProductFragment()).commit();
+            Intent intent = new Intent(UserActivity.this, ChatMessageActivity.class);
+            startActivity(intent);
+            finish();
 
         } else if (item.getItemId() == R.id.user_header_notification) {
             getSupportFragmentManager().beginTransaction().replace(R.id.user_container
-                    , new AddProductFragment()).commit();
+                    , new ReceiveNotificationFragment()).commit();
 
         }
         return true;
     }
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment selected_fragment = null;
@@ -78,7 +84,8 @@ public class UserActivity extends AppCompatActivity {
                 selected_fragment = new ProfileFragment();
             }
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.user_container, selected_fragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.user_container
+                    , selected_fragment).commit();
             return true;
         }
     };
