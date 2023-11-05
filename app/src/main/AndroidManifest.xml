@@ -110,6 +110,13 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".Activity.EditProfileActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".Activity.SignUpActivity"
             android:exported="false">
             <meta-data
@@ -136,6 +143,21 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:name=".Activity.StoreAddressActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name="com.example.e_commerce.Activity.UserOrderDetailActivity"
+            android:exported="false">
+        <meta-data
+            android:name="android.app.lib_name"
+            android:value="" />
+        </activity>
+
         <activity
             android:name=".Activity.SplashScreenActivity"
             android:exported="true">

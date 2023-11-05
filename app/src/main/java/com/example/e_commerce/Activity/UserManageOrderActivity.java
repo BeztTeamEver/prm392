@@ -1,18 +1,10 @@
 package com.example.e_commerce.Activity;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,32 +14,19 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.e_commerce.Model.Cart;
 import com.example.e_commerce.Model.Order;
 import com.example.e_commerce.Model.User;
 import com.example.e_commerce.R;
 import com.example.e_commerce.Repository.RepositoryBase;
-import com.example.e_commerce.Service.ICartService;
 import com.example.e_commerce.Service.IOrderService;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
 
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -76,7 +55,7 @@ public class UserManageOrderActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                Intent intent = new Intent(getApplicationContext(), ProductActivity.class);
+                Intent intent = new Intent(getApplicationContext(), UserOrderDetailActivity.class);
 
                 intent.putExtra("id",orders.get(i).getOrder_id());
                 startActivity(intent);
@@ -127,19 +106,9 @@ public class UserManageOrderActivity extends AppCompatActivity {
             product_detail_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent =  new Intent(getApplicationContext(), ProductActivity.class);
-//                    intent = new Intent(getApplicationContext(), ProductActivity.class);
 
+                    Intent intent = new Intent(getApplicationContext(), UserOrderDetailActivity.class);
                     intent.putExtra("id", orders.get(i).getOrder_id());
-//                    intent.putExtra("stock_quantity", products.get(i).getStock_quantity());
-//                    intent.putExtra("book_type_id", products.get(i).getBook_type_id());
-//                    intent.putExtra("title", products.get(i).getTitle());
-//                    intent.putExtra("price", products.get(i).getPrice());
-//                    intent.putExtra("description", products.get(i).getDescription());
-//                    intent.putExtra("author", products.get(i).getAuthor());
-//                    intent.putExtra("image_url", products.get(i).getImage_url());
-//                    intent.putExtra("book_type_id", products.get(i).getBook_type_id());
-//
                    startActivity(intent);
                 }
             });
