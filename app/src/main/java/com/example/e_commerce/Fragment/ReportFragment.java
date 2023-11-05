@@ -148,7 +148,7 @@ public class ReportFragment extends Fragment {
 
                 }else{
                     int user_id = Integer.parseInt(selected_user);
-                    orderDetails = db.get_report(date, user_id);
+//                    orderDetails = db.get_report(date, user_id);
                     listView = v.findViewById(R.id.report_list);
 
                     ReportFragment.ReportAdapter reportAdapter = new ReportFragment.ReportAdapter(orderDetails);
