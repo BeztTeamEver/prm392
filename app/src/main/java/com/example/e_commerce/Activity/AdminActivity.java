@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.e_commerce.Fragment.AddCategoryFragment;
 import com.example.e_commerce.Fragment.AddProductFragment;
+import com.example.e_commerce.Fragment.AdminManageOrderFragment;
 import com.example.e_commerce.Fragment.ChartFragment;
 import com.example.e_commerce.Fragment.FeedbackFragment;
 import com.example.e_commerce.Fragment.ManageCategoryFragment;
@@ -67,7 +68,6 @@ public class AdminActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.nav_manage_product) {
             getSupportFragmentManager().beginTransaction().replace(R.id.admin_container
                     , new ManageProductFragment()).commit();
-
         } else if (item.getItemId() == R.id.nav_add_product) {
             getSupportFragmentManager().beginTransaction().replace(R.id.admin_container
                     , new AddProductFragment()).commit();
@@ -91,6 +91,9 @@ public class AdminActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.nav_chart) {
             getSupportFragmentManager().beginTransaction().replace(R.id.admin_container
                     , new ChartFragment()).commit();
+        } else if (item.getItemId() == R.id.nav_order) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.admin_container
+                    , new AdminManageOrderFragment()).commit();
         }
         return true;
     }
