@@ -2,39 +2,22 @@ package com.example.e_commerce.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.denzcoskun.imageslider.ImageSlider;
-import com.denzcoskun.imageslider.constants.ScaleTypes;
-import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.e_commerce.Activity.message.ChatMessageActivity;
-import com.example.e_commerce.Activity.message.MainChatActivity;
-import com.example.e_commerce.Fragment.AddCategoryFragment;
-import com.example.e_commerce.Fragment.AddProductFragment;
 import com.example.e_commerce.Fragment.CartFragment;
-import com.example.e_commerce.Fragment.ChartFragment;
-import com.example.e_commerce.Fragment.FeedbackFragment;
-import com.example.e_commerce.Fragment.ManageCategoryFragment;
-import com.example.e_commerce.Fragment.ManageProductFragment;
 import com.example.e_commerce.Fragment.ProfileFragment;
 import com.example.e_commerce.Fragment.ReceiveNotificationFragment;
-import com.example.e_commerce.Fragment.ReportFragment;
 import com.example.e_commerce.R;
 import com.example.e_commerce.Fragment.SearchFragment;
 import com.example.e_commerce.Fragment.UserCategoryFragment;
 import com.example.e_commerce.Fragment.UserHomeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
-
-import java.util.ArrayList;
 
 public class UserActivity extends AppCompatActivity {
 

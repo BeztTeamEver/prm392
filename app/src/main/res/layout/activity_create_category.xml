@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     android:background="@color/primary_050"
-    tools:context=".Fragment.AddCategoryFragment">
+    tools:context=".Activity.CreateCategoryActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -98,7 +98,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="15dp" />
 
-
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="15dp" />
@@ -111,12 +110,11 @@
                 android:layout_weight="1"
                 android:background="@drawable/bg_btn_solid"
                 android:padding="5dp"
-                android:text="Thêm sản phẩm"
+                android:text="Thêm thể loại"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
 
         </LinearLayout>
     </ScrollView>
-
 </FrameLayout>

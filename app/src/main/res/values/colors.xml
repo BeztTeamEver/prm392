@@ -8,7 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="mainColor">#3F51B5</color>
-    <color name="mainColorLight">#C43F51B5</color>
+    <color name="mainColorLight">#289688</color>
     <color name="grey1">#FCFCFC</color>
     <color name="grey2">#E4E7EA</color>
 
@@ -33,5 +33,10 @@
     <color name="neutral_700">#5B607C</color>
     <color name="neutral_800">#464C62</color>
     <color name="neutral_900">#252937</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_900">#FF01579B</color>
+    <color name="light_blue_A200">#FF40C4FF</color>
+    <color name="light_blue_A400">#FF00B0FF</color>
+    <color name="black_overlay">#66000000</color>
 
 </resources>

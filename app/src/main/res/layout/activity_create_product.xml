@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/primary_050"
     android:padding="16dp"
-    tools:context=".Fragment.AddProductFragment">
+    tools:context=".Activity.CreateProductActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -14,12 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:orientation="vertical">
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="24dp" />
 
             <TextView
                 android:id="@+id/textView"

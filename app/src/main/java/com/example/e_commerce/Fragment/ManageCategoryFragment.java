@@ -18,13 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.e_commerce.Activity.AdminActivity;
-import com.example.e_commerce.Activity.CategoryProductsActivity;
+import com.example.e_commerce.Activity.CreateCategoryActivity;
 import com.example.e_commerce.Activity.EditCategoryActivity;
-import com.example.e_commerce.Activity.EditProductActivity;
-import com.example.e_commerce.Database.Database;
 import com.example.e_commerce.Model.BookType;
-import com.example.e_commerce.Model.Category;
 import com.example.e_commerce.R;
 import com.example.e_commerce.Repository.RepositoryBase;
 import com.example.e_commerce.Service.IBookTypeService;
@@ -41,6 +37,7 @@ public class ManageCategoryFragment extends Fragment {
 
     ListView manage_category_list;
     ArrayList<BookType> bookTypes = new ArrayList<>();
+    Button btn_create_category;
 
     // Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -89,8 +86,16 @@ public class ManageCategoryFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_manage_category, container, false);
 
         manage_category_list = v.findViewById(R.id.manage_category_list);
+        btn_create_category = v.findViewById(R.id.btn_create_category);
         // TODO: get categories from database and show it in listView
         getAllBookType();
+        btn_create_category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), CreateCategoryActivity.class);
+                startActivity(intent);
+            }
+        });
         return v;
     }
 
@@ -173,7 +178,7 @@ public class ManageCategoryFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getActivity().getBaseContext(), EditCategoryActivity.class);
-                    intent = new Intent(getActivity(), EditCategoryActivity.class);
+                    intent = new Intent(getActivity(),EditCategoryActivity.class);
 
                     intent.putExtra("id",bookTypes.get(i).getId());
                     intent.putExtra("name",bookTypes.get(i).getType_name());

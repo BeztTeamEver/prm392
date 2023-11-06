@@ -11,7 +11,12 @@ public class Order {
     private String status;
     public Order() {
     }
-
+    public Order(String status) {
+        this.status = status;
+    }
+    public Order(int id) {
+        this.id = id;
+    }
     public Order(int id, int user_id, int total_amount, String payment_method
             , Date created_at, String status) {
         this.id = id;

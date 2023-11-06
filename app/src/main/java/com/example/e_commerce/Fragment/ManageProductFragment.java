@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -21,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.e_commerce.Activity.CreateProductActivity;
 import com.example.e_commerce.Activity.EditProductActivity;
 import com.example.e_commerce.Model.Book;
 import com.example.e_commerce.Model.BookType;
@@ -49,6 +49,7 @@ public class ManageProductFragment extends Fragment {
     FloatingActionButton btn_manage_product_add;
     ArrayList<Book> products = new ArrayList<>();
     ArrayList<BookType> bookTypes = new ArrayList<>();
+    Button btn_create_product;
 
     // Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -98,7 +99,14 @@ public class ManageProductFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_manage_product, container, false);
 
         list_products = v.findViewById(R.id.manage_product_list);
-       // TODO: get products from database and show it in listView
+        btn_create_product = v.findViewById(R.id.btn_create_product);
+        btn_create_product.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), CreateProductActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //fill_list();
         getAllBook();

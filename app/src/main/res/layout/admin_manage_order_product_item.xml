@@ -23,8 +23,8 @@
 
             <ImageView
                 android:id="@+id/admin_manage_order_product_image"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_margin="8dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/image_placeholder" />
@@ -48,17 +48,7 @@
                     android:textColor="#000000"
                     android:textSize="18sp"
                     android:fontFamily="@font/nunito_bold"/>
-                <TextView
-                    android:id="@+id/admin_manage_order_product_author"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="4dp"
-                    android:maxLines="1"
-                    android:padding="2dp"
-                    android:text="Author"
-                    android:textColor="#000000"
-                    android:textSize="16sp" />
+
                 <TextView
                     android:id="@+id/admin_manage_order_product_quantity"
                     android:layout_width="wrap_content"

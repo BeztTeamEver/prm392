@@ -9,6 +9,7 @@ public class OrderItem {
     public OrderItem(){
 
     }
+
     public OrderItem(int id, int book_id, int book_type_id, int user_id, int order_id, int quantity, int price, String name, String image, String status) {
         this.id = id;
         this.book_id = book_id;
