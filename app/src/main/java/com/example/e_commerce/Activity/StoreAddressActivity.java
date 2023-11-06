@@ -24,7 +24,7 @@ public class StoreAddressActivity  extends AppCompatActivity  {
         btn_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                startActivity(new Intent(StoreAddressActivity.this, ??.class));
+                startActivity(new Intent(StoreAddressActivity.this, OrderPlaceActivity.class));
             }
         });
 

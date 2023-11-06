@@ -149,7 +149,7 @@ public class OrderActivity extends AppCompatActivity {
         txt_get_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getLastLocation();
+                startActivity(new Intent(OrderActivity.this, OrderPlaceActivity.class));
             }
         });
 

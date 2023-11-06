@@ -13,6 +13,8 @@
         <item>Search by Voice</item>
         <item>Search by Barcode</item>
     </string-array>
+    <string name="title_activity_order_place">OrderPlace</string>
+    <!-- TODO: Remove or change this placeholder text -->
 
     <string-array name="admin_order_array">
         <item>Tất cả</item>
@@ -24,6 +26,5 @@
         <item>Hủy đơn</item>
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
