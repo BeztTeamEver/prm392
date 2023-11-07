@@ -20,15 +20,28 @@
         android:theme="@style/Theme.Ecommerce"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
+        <activity
+            android:name=".Activity.PaymentActivity"
+            android:exported="true"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="goodtome"
+                    android:host="app" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Activity.OrderPlaceActivity"
             android:exported="false"
             android:label="@string/app_name">
-            <!--            <intent-filter>-->
-            <!--                <action android:name="android.intent.action.MAIN" />-->
-            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--            </intent-filter>-->
+
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".Activity.CreateProductActivity"
@@ -46,6 +59,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
+
         <activity
             android:name=".Activity.message.RegisterChatActivity"
             android:exported="true">
@@ -110,7 +124,7 @@
         </activity>
         <activity
             android:name=".Activity.OrderActivity"
-            android:exported="false">
+            android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -146,10 +160,8 @@
         <activity
             android:name=".Activity.LoginActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -157,6 +169,7 @@
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
+
         </activity>
         <activity
             android:name=".Activity.UserProfileActivity"
@@ -173,13 +186,12 @@
                 android:value="" />
         </activity>
         <activity
-            android:name="com.example.e_commerce.Activity.UserOrderDetailActivity"
+            android:name=".Activity.UserOrderDetailActivity"
             android:exported="false">
-        <meta-data
-            android:name="android.app.lib_name"
-            android:value="" />
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
         </activity>
-
         <activity
             android:name=".Activity.SplashScreenActivity"
             android:exported="false">

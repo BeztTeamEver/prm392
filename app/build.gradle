@@ -8,7 +8,7 @@ android {
 
     signingConfigs {
         getByName("debug") {
-            storeFile = file("C:\\Users\\Admin\\.android\\debug.keystore")
+            storeFile = file("C:\\Users\\duybi\\.android\\debug.keystore")
         }
     }
 
@@ -94,6 +94,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging'
     implementation 'com.google.firebase:firebase-database'
 
+    //zalopay
+    implementation files('libs/zpdk-release-v3.1.aar')
 
 
 

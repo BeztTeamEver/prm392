@@ -21,6 +21,7 @@ import com.example.e_commerce.Activity.SplashScreenActivity;
 import com.example.e_commerce.Activity.StoreAddressActivity;
 import com.example.e_commerce.Activity.UserManageOrderActivity;
 import com.example.e_commerce.Activity.UserProfileActivity;
+import com.example.e_commerce.Common.ApplicationUser;
 import com.example.e_commerce.Model.User;
 import com.example.e_commerce.R;
 import com.google.gson.Gson;
@@ -83,14 +84,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        User user = User.getInstance();
-
-        SharedPreferences sharedPreferences = requireActivity()
-                .getSharedPreferences("MySharedPref",MODE_PRIVATE);
-        String userJson = sharedPreferences.getString("current_user", null);
-
-        Gson gson = new Gson();
-        user = gson.fromJson(userJson, User.class);
+        User user = ApplicationUser.getUserFromSharedPreferences(getActivity());
 
 //        tv_username = v.findViewById(R.id.profile_tv_username);
 //        tv_email = v.findViewById(R.id.profile_tv_email);

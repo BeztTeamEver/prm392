@@ -1,8 +1,9 @@
 package com.example.e_commerce.Model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Order {
+public class Order implements Serializable {
 
     private int id, user_id, total_amount;
     private String address, feedback, payment_method;
@@ -146,5 +147,9 @@ public class Order {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public int getId() {
+        return id;
     }
 }
