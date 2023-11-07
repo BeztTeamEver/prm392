@@ -46,8 +46,8 @@ public class UserOrderDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_order_detail);
 
-Intent intent = getIntent();
-id = intent.getExtras().getInt("id") ;
+        Intent intent = getIntent();
+        id = intent.getExtras().getInt("id") ;
         user_order_detail_list = findViewById(R.id.user_order_list);
         txt_total = findViewById(R.id.txt_total);
         getAllOrderItem();

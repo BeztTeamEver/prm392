@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.e_commerce.Common.ApplicationUser;
@@ -40,6 +41,7 @@ import vn.zalopay.sdk.listeners.PayOrderListener;
 
 public class PaymentActivity extends AppCompatActivity {
     ImageButton btnZaloPay;
+    TextView tvTotal;
     String token = "";
     IOrderItemService orderItemService;
     IOrderService orderService;
@@ -107,7 +109,9 @@ public class PaymentActivity extends AppCompatActivity {
     private void init() {
         ZaloPaySDK.init(AppInfo.APP_ID, Environment.SANDBOX);
         btnZaloPay = findViewById(R.id.btnZaloPay);
+        tvTotal = findViewById(R.id.textView_total);
         cost = getIntent().getIntExtra("total", 50_000);
+        tvTotal.setText(cost + "");
         CreateOrder orderApi = new CreateOrder();
         JSONObject data;
         try {
