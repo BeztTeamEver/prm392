@@ -18,7 +18,9 @@ import android.widget.TextView;
 
 import com.example.e_commerce.Activity.LoginActivity;
 import com.example.e_commerce.Activity.SplashScreenActivity;
+import com.example.e_commerce.Activity.StoreAddressActivity;
 import com.example.e_commerce.Activity.UserManageOrderActivity;
+import com.example.e_commerce.Activity.UserProfileActivity;
 import com.example.e_commerce.Model.User;
 import com.example.e_commerce.R;
 import com.google.gson.Gson;
@@ -34,8 +36,8 @@ import java.util.ResourceBundle;
  */
 public class ProfileFragment extends Fragment {
 
-    TextView tv_username, tv_email, tv_password, tv_fullname, tv_phone_number;
-    Button btn_logout, btn_check_order;
+//    TextView tv_username, tv_email, tv_password, tv_fullname, tv_phone_number;
+    Button btn_profile, btn_address, btn_logout, btn_check_order;
 
     // Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -90,21 +92,23 @@ public class ProfileFragment extends Fragment {
         Gson gson = new Gson();
         user = gson.fromJson(userJson, User.class);
 
-        tv_username = v.findViewById(R.id.profile_tv_username);
-        tv_email = v.findViewById(R.id.profile_tv_email);
-        tv_phone_number = v.findViewById(R.id.profile_tv_phone_number);
-        tv_fullname = v.findViewById(R.id.profile_tv_fullname);
-        tv_password = v.findViewById(R.id.profile_tv_password);
+//        tv_username = v.findViewById(R.id.profile_tv_username);
+//        tv_email = v.findViewById(R.id.profile_tv_email);
+//        tv_phone_number = v.findViewById(R.id.profile_tv_phone_number);
+//        tv_fullname = v.findViewById(R.id.profile_tv_fullname);
+//        tv_password = v.findViewById(R.id.profile_tv_password);
 
 //         //TODO: get user info from database and show it
-        tv_username.setText(user.getUsername());
-        tv_email.setText(user.getEmail());
-        tv_phone_number.setText(user.getPhone_number());
-        tv_fullname.setText(user.getFullname());
-        tv_password.setText(user.getPassword());
+//        tv_username.setText(user.getUsername());
+//        tv_email.setText(user.getEmail());
+//        tv_phone_number.setText(user.getPhone_number());
+//        tv_fullname.setText(user.getFullname());
+//        tv_password.setText(user.getPassword());
 
         btn_logout = v.findViewById(R.id.profile_btn_logout);
         btn_check_order = v.findViewById(R.id.profile_btn_check_order);
+        btn_profile = v.findViewById(R.id.profile_btn);
+        btn_address = v.findViewById(R.id.profile_btn_address);
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -123,6 +127,20 @@ public class ProfileFragment extends Fragment {
                 startActivity(new Intent(getContext(), UserManageOrderActivity.class));
             }
         });
+
+        btn_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), UserProfileActivity.class));
+            }
+        });
+        btn_address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), StoreAddressActivity.class));
+            }
+        });
+
 
         return v;
     }

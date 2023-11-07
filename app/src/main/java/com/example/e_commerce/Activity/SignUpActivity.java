@@ -68,8 +68,8 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //TODO: SignUp
 
-                String username = txt_username.getText().toString(),
-                        email = txt_email.getText().toString(),
+                String username = txt_username.getText().toString().trim(),
+                        email = txt_email.getText().toString().trim().toLowerCase(),
                         password = txt_password.getText().toString(),
                         fullname = txt_fullname.getText().toString(),
                         phone_number = txt_phone_number.getText().toString();

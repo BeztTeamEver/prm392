@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
                 myEdit.commit();
 
                 // TODO: login
-                String email = txt_email.getText().toString(),
+                String email = txt_email.getText().toString().trim().toLowerCase(),
                         password = txt_password.getText().toString();
 
                 if(!email.isEmpty() && !password.isEmpty()){
