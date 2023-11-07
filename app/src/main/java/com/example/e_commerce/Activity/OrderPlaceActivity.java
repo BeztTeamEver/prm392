@@ -127,9 +127,9 @@ public class OrderPlaceActivity extends AppCompatActivity implements GoogleMap.O
             @Override
             public void onClick(View v) {
                 //Set intent to go to next activity
-//                Intent intent = new Intent(OrderPlaceActivity.this, ??.class);
-//                intent.putExtra("savedLocation", savedLocation);
-//                startActivity(intent);
+                Intent intent = new Intent(OrderPlaceActivity.this, OrderActivity.class);
+                intent.putExtra("savedLocation", savedLocation);
+                startActivity(intent);
             }
         });
 
@@ -224,7 +224,6 @@ public class OrderPlaceActivity extends AppCompatActivity implements GoogleMap.O
 
             return;
         }
-
         gMap = googleMap;
         getMyLocation();
     }
@@ -328,6 +327,7 @@ public class OrderPlaceActivity extends AppCompatActivity implements GoogleMap.O
         try {
             addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
             Address address = addresses.get(0);
+            savedLocation = address;
         } catch (IOException e) {
             e.printStackTrace();
         }

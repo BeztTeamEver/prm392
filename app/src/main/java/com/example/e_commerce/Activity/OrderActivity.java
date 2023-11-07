@@ -26,6 +26,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.e_commerce.Common.ApplicationUser;
 import com.example.e_commerce.Database.Database;
 import com.example.e_commerce.Fragment.CartFragment;
 import com.example.e_commerce.Model.Cart;
@@ -77,6 +78,9 @@ public class OrderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_order);
 
         int total = 0;
+        Intent n = getIntent();
+        Address address =  n.getExtras().getParcelable("savedLocation");
+
         user_order_list = findViewById(R.id.user_order_list);
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(OrderActivity.this);
         EditText editText_feedback_text = bottomSheetDialog.findViewById(R.id.editText_feedback_text);
@@ -85,7 +89,8 @@ public class OrderActivity extends AppCompatActivity {
         btn_confirm = findViewById(R.id.btn_confirm);
         getAllCart();
 
-
+        if (address != null)
+        txt_get_location.setText(address.getAddressLine(0) + "");
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,7 +106,8 @@ public class OrderActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         // Send to orders table
-                        User user = User.getInstance();
+                        //User user = User.getInstance();
+                        User user = ApplicationUser.getUserFromSharedPreferences(OrderActivity.this);
                         Calendar calendar = Calendar.getInstance();
                         dateFormat = new SimpleDateFormat("MM/dd/yyyy");
                         Date create_at = new Date();
@@ -109,7 +115,9 @@ public class OrderActivity extends AppCompatActivity {
 
                         String feedback = txt_feedback.getText().toString();
                         rate = ratingBar.getRating();
-                        Order order =  new Order(user.getId(), create_at, address, feedback, rate);
+                        int total_price = Integer.parseInt(txt_total.getText().toString());
+
+                        Order order =  new Order(user.getId(), total_price, address, feedback, "ZaloPay", rate, create_at, "Chờ xác nhận");
 
                         if(!txt_feedback.getText().toString().isEmpty() && rate!=-1 && !address.isEmpty()){
 //                            cart_products = db.get_cart(user.getId());

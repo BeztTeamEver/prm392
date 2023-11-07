@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.e_commerce.Activity.AdminActivity;
 import com.example.e_commerce.Activity.OrderActivity;
+import com.example.e_commerce.Activity.OrderPlaceActivity;
 import com.example.e_commerce.Activity.ProductActivity;
 import com.example.e_commerce.Activity.UserActivity;
 import com.example.e_commerce.Database.Database;
@@ -116,7 +117,9 @@ public class CartFragment extends Fragment {
         btn_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            startActivity(new Intent(getContext(), OrderActivity.class));
+                Intent intent = new Intent(getContext(), OrderActivity.class);
+                intent.putExtra("savedLocation","");
+                startActivity(intent);
             }
         });
         return v;

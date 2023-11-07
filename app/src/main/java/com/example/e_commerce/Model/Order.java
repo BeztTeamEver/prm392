@@ -40,6 +40,17 @@ public class Order {
         this.status = status;
     }
 
+    public Order(int user_id, int total_amount, String address, String feedback, String payment_method, double rate, Date created_at, String status) {
+        this.user_id = user_id;
+        this.total_amount = total_amount;
+        this.address = address;
+        this.feedback = feedback;
+        this.payment_method = payment_method;
+        this.rate = rate;
+        this.created_at = created_at;
+        this.status = status;
+    }
+
     public Order(int user_id, Date date, String address, String feedback, double rate) {
         this.user_id = user_id;
         this.date = date;
