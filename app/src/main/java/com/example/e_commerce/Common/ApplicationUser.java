@@ -7,6 +7,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.e_commerce.Model.Cart;
+import com.example.e_commerce.Model.Order;
 import com.example.e_commerce.Model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -22,6 +24,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 
 public class ApplicationUser {
 
@@ -34,6 +37,27 @@ public class ApplicationUser {
         Gson gson = new Gson();
         return gson.fromJson(json, User.class);
     }
+
+    private static String orderToJson(Order order) {
+        Gson gson = new Gson();
+        return gson.toJson(order);
+    }
+
+    public static Order orderFromJson(String json) {
+        Gson gson = new Gson();
+        return gson.fromJson(json, Order.class);
+    }
+
+    private static String cartsToJson(List<Cart> carts) {
+        Gson gson = new Gson();
+        return gson.toJson(carts);
+    }
+
+    public static List<Cart> cartsFromJson(String json) {
+        Gson gson = new Gson();
+        return gson.fromJson(json, List.class);
+    }
+
 
 
     public static void saveCurrentUser(Context context, User user){
@@ -190,6 +214,45 @@ public class ApplicationUser {
         } catch (Exception e) {
             Log.d("DatabaseError", e.getMessage());
         }
+    }
+
+    public static void saveOrder(Context context, Order order) {
+        SharedPreferences preferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("orderJson", orderToJson(order));
+        editor.apply();
+    }
+
+    public static Order getOrder(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        String orderJson = preferences.getString("orderJson", null);
+        return orderFromJson(orderJson);
+    }
+
+    public static void saveCarts(Context context, List<Cart> carts) {
+        SharedPreferences preferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        //editor.clear();
+        editor.putString("cartsJson", cartsToJson(carts));
+        editor.apply();
+    }
+
+    public static List<Cart> getCarts(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        String cartsJson = preferences.getString("cartsJson", null);
+        return cartsFromJson(cartsJson);
+    }
+
+    public static void saveToken(Context context, String token) {
+        SharedPreferences preferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("token", token);
+    }
+
+    public static String getToken(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        String token = preferences.getString("token", null);
+        return token;
     }
 
 }

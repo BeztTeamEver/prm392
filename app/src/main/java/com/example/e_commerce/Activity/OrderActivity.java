@@ -14,6 +14,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,7 @@ import android.widget.Toast;
 import com.example.e_commerce.Common.ApplicationUser;
 import com.example.e_commerce.Database.Database;
 import com.example.e_commerce.Fragment.CartFragment;
+import com.example.e_commerce.Helper.CreateOrder;
 import com.example.e_commerce.Model.Cart;
 import com.example.e_commerce.Model.Order;
 import com.example.e_commerce.Model.User;
@@ -50,6 +52,8 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.gson.Gson;
+
+import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -76,10 +80,13 @@ public class OrderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
-
+//        StrictMode.ThreadPolicy policy = new
+//                StrictMode.ThreadPolicy.Builder().permitAll().build();
+//        StrictMode.setThreadPolicy(policy);
         int total = 0;
         Intent n = getIntent();
-        Address address =  n.getExtras().getParcelable("savedLocation");
+        Address address = null;
+        if (n.getExtras() != null)  address =  n.getExtras().getParcelable("savedLocation");
 
         user_order_list = findViewById(R.id.user_order_list);
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(OrderActivity.this);
@@ -89,8 +96,7 @@ public class OrderActivity extends AppCompatActivity {
         btn_confirm = findViewById(R.id.btn_confirm);
         getAllCart();
 
-        if (address != null)
-        txt_get_location.setText(address.getAddressLine(0) + "");
+        if (address != null) txt_get_location.setText(address.getAddressLine(0) + "");
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -123,26 +129,42 @@ public class OrderActivity extends AppCompatActivity {
 //                            cart_products = db.get_cart(user.getId());
 //                            db.confirm_order(order, cart_products);
                             try {
-                                Call<Order> callO = orderService.create(order);
-                                callO.enqueue(new Callback<Order>() {
-                                    @Override
-                                    public void onResponse(Call<Order> call, Response<Order> response) {
-                                        if (response.body() != null) {
-//                                            Toast.makeText(OrderActivity.this, "Sách đã được thêm vào giỏ hàng"
-//                                                    , Toast.LENGTH_LONG).show();
-                                        }
-                                    }
-                                    @Override
-                                    public void onFailure(Call<Order> call, Throwable t) {
-                                        Toast.makeText(OrderActivity.this, "Save fail"
-                                                , Toast.LENGTH_LONG).show();
-                                    }
-                                });
+//                                Call<Order> callO = orderService.create(order);
+//                                callO.enqueue(new Callback<Order>() {
+//                                    @Override
+//                                    public void onResponse(Call<Order> call, Response<Order> response) {
+//                                        if (response.body() != null) {
+////                                            Toast.makeText(OrderActivity.this, "Sách đã được thêm vào giỏ hàng"
+////                                                    , Toast.LENGTH_LONG).show();
+//                                        }
+//                                    }
+//                                    @Override
+//                                    public void onFailure(Call<Order> call, Throwable t) {
+//                                        Toast.makeText(OrderActivity.this, "Save fail"
+//                                                , Toast.LENGTH_LONG).show();
+//                                    }
+//                                });
                             } catch (Exception e) {
                                 Log.d("Error", e.getMessage());
                             }
                             bottomSheetDialog.dismiss();
-                            startActivity(new Intent(OrderActivity.this, UserActivity.class));
+                            CreateOrder orderApi = new CreateOrder();
+                            JSONObject data;
+                            String token="";
+                            try {
+                                data = orderApi.createOrder(total+"");
+                                token = data.getString("zp_trans_token");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            Intent intent = new Intent(OrderActivity.this, PaymentActivity.class);
+                            intent.putExtra("order", order);
+
+                            ApplicationUser.saveOrder(OrderActivity.this, order);
+                            ApplicationUser.saveToken(OrderActivity.this, token);
+                            intent.putExtra("total", total_price);
+                            intent.putExtra("carts", cart_products);
+                            startActivity(intent);
 
                         } else {
                             Toast.makeText(getApplicationContext(), "Please Enter Location, Feedback and Rateing", Toast.LENGTH_SHORT).show();
@@ -283,5 +305,6 @@ public class OrderActivity extends AppCompatActivity {
             Log.d("Error", e.getMessage());
         }
     }
+
 
 }
