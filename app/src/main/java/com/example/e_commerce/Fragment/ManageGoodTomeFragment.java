@@ -1,5 +1,7 @@
 package com.example.e_commerce.Fragment;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,7 +9,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.example.e_commerce.Activity.LoginActivity;
 import com.example.e_commerce.R;
 
 /**
@@ -16,6 +20,7 @@ import com.example.e_commerce.R;
  * create an instance of this fragment.
  */
 public class ManageGoodTomeFragment extends Fragment {
+    Button btn_goodtome_logout;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,7 +65,22 @@ public class ManageGoodTomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_manage_good_tome, container, false);
+        btn_goodtome_logout = v.findViewById(R.id.btn_goodtome_logout);
+        btn_goodtome_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: logout user
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences("MySharedPref", 0);
+                SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                myEdit.clear();
+                myEdit.commit();
+                getActivity().finish();
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_manage_good_tome, container, false);
+        return v;
     }
 }

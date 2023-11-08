@@ -89,6 +89,7 @@ public class OrderPlaceActivity extends AppCompatActivity implements GoogleMap.O
     FusedLocationProviderClient fusedClient;
     LatLng storeLocation = new LatLng(10.8411276, 106.809883);
     TextView tvDistance;
+    float distance = 0;
     private static final int  REQUEST_CODE = 101;
 //    FrameLayout map;
     private static final String TAG = "activity_order_place";
@@ -129,6 +130,7 @@ public class OrderPlaceActivity extends AppCompatActivity implements GoogleMap.O
                 //Set intent to go to next activity
                 Intent intent = new Intent(OrderPlaceActivity.this, OrderActivity.class);
                 intent.putExtra("savedLocation", savedLocation);
+                intent.putExtra("distance", distance);
                 startActivity(intent);
             }
         });
@@ -221,7 +223,6 @@ public class OrderPlaceActivity extends AppCompatActivity implements GoogleMap.O
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
             return;
         }
         gMap = googleMap;
@@ -343,6 +344,8 @@ public class OrderPlaceActivity extends AppCompatActivity implements GoogleMap.O
         );
 
         tvDistance.setText("Khoảng cách: " + String.format("%.2f",  results[0]/1000) + " km");
+        distance = results[0]/1000;
+
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

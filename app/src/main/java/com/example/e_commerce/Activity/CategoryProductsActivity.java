@@ -47,10 +47,6 @@ public class CategoryProductsActivity extends AppCompatActivity {
         bookService = RepositoryBase.getBookService();
         user_list_category_products = findViewById(R.id.user_category_list_products);
         embty = findViewById(R.id.embty);
-
-
-        //Database dp = new Database(getApplicationContext());
-        //products = dp.get_category_products(id);
         getAllBook();
 
 
@@ -71,7 +67,6 @@ public class CategoryProductsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     private void getAllBook(){
@@ -101,7 +96,6 @@ public class CategoryProductsActivity extends AppCompatActivity {
                                 = new CategoryProductsActivity.UserHomeCategoryProductsAdapter(products);
                         user_list_category_products.setAdapter(userHomeCategoryProductsAdapter);
                     }
-
                 }
                 @Override
                 public void onFailure(Call<List<Book>> call, Throwable t) {

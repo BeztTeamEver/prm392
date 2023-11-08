@@ -29,8 +29,6 @@ public class AdminActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Intent n = getIntent();
-//        int id =  n.getExtras().getInt("adminGate") ;
         setContentView(R.layout.activity_admin);
 //        if(id == 1)
 //            getSupportFragmentManager().beginTransaction().replace(R.id.admin_container

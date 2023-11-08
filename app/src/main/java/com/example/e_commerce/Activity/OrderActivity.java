@@ -63,11 +63,12 @@ public class OrderActivity extends AppCompatActivity {
 
     Button btn_confirm;
     ListView user_order_list;
-    TextView txt_total;
+    TextView txt_total, txt_distance;
     RatingBar ratingBar;
     ArrayList<Cart> cart_products = new ArrayList<>();
     SimpleDateFormat dateFormat;
     float rate = -1;
+    float distance = 0;
 
     //location variables
     EditText txt_get_location;
@@ -86,17 +87,24 @@ public class OrderActivity extends AppCompatActivity {
         int total = 0;
         Intent n = getIntent();
         Address address = null;
-        if (n.getExtras() != null)  address =  n.getExtras().getParcelable("savedLocation");
+        if (n.getExtras() != null)  {
+            address =  n.getExtras().getParcelable("savedLocation");
+            distance =  n.getExtras().getFloat("distance");
+        }
 
         user_order_list = findViewById(R.id.user_order_list);
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(OrderActivity.this);
         EditText editText_feedback_text = bottomSheetDialog.findViewById(R.id.editText_feedback_text);
         txt_get_location = findViewById(R.id.txt_get_location);
         txt_total = findViewById(R.id.txt_total);
+        txt_distance = findViewById(R.id.txt_distance);
         btn_confirm = findViewById(R.id.btn_confirm);
         getAllCart();
 
-        if (address != null) txt_get_location.setText(address.getAddressLine(0) + "");
+        if (address != null) {
+            txt_get_location.setText(address.getAddressLine(0) + "");
+            txt_distance.setText(distance * 2000 + "");
+        }
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -152,7 +160,7 @@ public class OrderActivity extends AppCompatActivity {
                             JSONObject data;
                             String token="";
                             try {
-                                data = orderApi.createOrder(total+"");
+                                data = orderApi.createOrder(total +"");
                                 token = data.getString("zp_trans_token");
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -167,7 +175,7 @@ public class OrderActivity extends AppCompatActivity {
                             startActivity(intent);
 
                         } else {
-                            Toast.makeText(getApplicationContext(), "Please Enter Location, Feedback and Rateing", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Hãy điền hết thông tin trước khi thanh toán!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -289,7 +297,7 @@ public class OrderActivity extends AppCompatActivity {
                     }
                     OrderActivity.UserOrdertAdapter userOrdertAdapter = new OrderActivity.UserOrdertAdapter(cart_products);
                     user_order_list.setAdapter(userOrdertAdapter);
-                    int total = 0;
+                    int total = (int) (distance*2000);
                     for (int i = 0 ; i < cart_products.size() ; i++){
                         total += cart_products.get(i).getPrice()*cart_products.get(i).getQuantity();
                     }
