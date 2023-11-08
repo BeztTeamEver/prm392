@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.e_commerce.Activity.CreateProductActivity;
 import com.example.e_commerce.Activity.EditProductActivity;
+import com.example.e_commerce.Common.ParseHelper;
 import com.example.e_commerce.Model.Book;
 import com.example.e_commerce.Model.BookType;
 import com.example.e_commerce.R;
@@ -180,8 +181,10 @@ public class ManageProductFragment extends Fragment {
             ImageButton btn_del = item.findViewById(R.id.admin_product_btn_delete);
             Button btn_edit = item.findViewById(R.id.admin_product_btn_edit);
 
+            String strPrice = ParseHelper.intToString(products.get(i).getPrice());
+            product_price.setText("Giá: " + strPrice);
             product_name.setText(products.get(i).getTitle());
-            product_price.setText("Giá: " + products.get(i).getPrice() + "");
+            //product_price.setText("Giá: " + products.get(i).getPrice() + "");
             String url = products.get(i).getImage_url();
             Glide.with(getContext()).load(url).into(product_image);
 

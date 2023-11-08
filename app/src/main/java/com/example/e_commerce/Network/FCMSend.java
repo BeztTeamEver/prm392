@@ -10,6 +10,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.e_commerce.Common.GlobalConfig;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,7 +22,7 @@ public class FCMSend {
 
     private static final String BASE_URL = "https://fcm.googleapis.com/fcm/send";
     private static final String SERVER_KEY
-            = "key=AAAAr4A--sA:APA91bE43Z6BXbZiC0HG5hkPKfSKT-519tqvqioll4HtXl_b_DVFcXLkt4qMeAJT4Ou9QqSV0N2qoM_PViUWFBnn8UK1_bTwiTsf1jkImXVjzQakrWoHmjPD9HRCn7DAdyQlj76wQrwM";
+            = GlobalConfig.SERVER_KEY;
 
     public static void pushNotification(Context context, String token, String title, String message){
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();

@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.e_commerce.Common.GlobalConfig;
 import com.example.e_commerce.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,7 +28,7 @@ public class RegisterChatActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference = FirebaseDatabase
             .getInstance()
-            .getReferenceFromUrl("https://prm392-52326-default-rtdb.firebaseio.com/");
+            .getReferenceFromUrl(GlobalConfig.REFERENCE_FROM_URL);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

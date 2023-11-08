@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.e_commerce.Common.ApplicationUser;
+import com.example.e_commerce.Common.GlobalConfig;
 import com.example.e_commerce.Model.NotificationModel;
 import com.example.e_commerce.Model.User;
 import com.example.e_commerce.R;
@@ -55,7 +56,7 @@ public class PushNotificationService extends FirebaseMessagingService {
         User currentUser = ApplicationUser.getUserFromSharedPreferences(this);
 
         try {
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://prm392-52326-default-rtdb.firebaseio.com/");
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl(GlobalConfig.REFERENCE_FROM_URL);
             String mobileTxt = currentUser.getPhone_number();
             String titleTxt = notificationModel.getTitle();
             String contentTxt = notificationModel.getContent();
@@ -85,7 +86,7 @@ public class PushNotificationService extends FirebaseMessagingService {
             DatabaseReference databaseReference
                     = FirebaseDatabase
                     .getInstance()
-                    .getReferenceFromUrl("https://prm392-52326-default-rtdb.firebaseio.com/");
+                    .getReferenceFromUrl(GlobalConfig.REFERENCE_FROM_URL);
 
 
             String mobileTxt = currentUser.getPhone_number();

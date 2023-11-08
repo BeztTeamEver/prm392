@@ -1,5 +1,8 @@
 package com.example.e_commerce.Activity.message;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class ChatList {
 
     private String mobile, name, message, date, time;
@@ -8,8 +11,20 @@ public class ChatList {
         this.mobile = mobile;
         this.name = name;
         this.message = message;
+
+        Date currentDate = new Date();
+
+        // Định dạng ngày
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        date = dateFormat.format(currentDate);
+
+        // Định dạng thời gian
+        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aa");
+        time = timeFormat.format(currentDate);
         this.date = date;
         this.time = time;
+        //this.date = "";
+        //this.time = "";
     }
 
     public String getMobile() {

@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.e_commerce.Common.ApplicationUser;
+import com.example.e_commerce.Common.GlobalConfig;
 import com.example.e_commerce.Database.Database;
 import com.example.e_commerce.Model.User;
 import com.example.e_commerce.R;
@@ -57,7 +58,7 @@ public class ChatMessageActivity extends AppCompatActivity {
         databaseReference
                 = FirebaseDatabase
                 .getInstance()
-                .getReferenceFromUrl("https://prm392-52326-default-rtdb.firebaseio.com/");
+                .getReferenceFromUrl(GlobalConfig.REFERENCE_FROM_URL);
 
         binding();
 

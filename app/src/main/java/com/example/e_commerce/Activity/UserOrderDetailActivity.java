@@ -16,6 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.e_commerce.Common.ParseHelper;
 import com.example.e_commerce.Model.Cart;
 import com.example.e_commerce.Model.OrderItem;
 import com.example.e_commerce.Model.User;
@@ -85,8 +86,11 @@ public class UserOrderDetailActivity extends AppCompatActivity {
             TextView product_price = (TextView) item.findViewById(R.id.order_product_price);
             TextView product_quantity= (TextView) item.findViewById(R.id.order_product_quantity);
 
+            String price = ParseHelper.intToString(order_items.get(i).getPrice());
+            product_price.setText(price);
+
             product_name.setText(order_items.get(i).getName());
-            product_price.setText(order_items.get(i).getPrice()+"");
+            //product_price.setText(order_items.get(i).getPrice()+"");
             product_quantity.setText(order_items.get(i).getQuantity()+"");
 
             return item;
@@ -120,7 +124,9 @@ public class UserOrderDetailActivity extends AppCompatActivity {
                     for (int i = 0 ; i < order_items.size() ; i++){
                         total += order_items.get(i).getPrice() * order_items.get(i).getQuantity();
                     }
-                    txt_total.setText(total+"");
+
+                    String strTotal = ParseHelper.intToString(total);
+                    txt_total.setText(strTotal);
                 }
 
                 @Override

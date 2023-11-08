@@ -179,7 +179,7 @@ public class ApplicationUser {
             DatabaseReference databaseReference
                     = FirebaseDatabase
                     .getInstance()
-                    .getReferenceFromUrl("https://prm392-52326-default-rtdb.firebaseio.com/");
+                    .getReferenceFromUrl(GlobalConfig.REFERENCE_FROM_URL);
 
             String mobileTxt = user.getPhone_number();
             String emailTxt = user.getEmail();
