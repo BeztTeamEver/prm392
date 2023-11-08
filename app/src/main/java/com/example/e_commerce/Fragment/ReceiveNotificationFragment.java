@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.e_commerce.Adapter.NotificationAdapter;
 import com.example.e_commerce.Common.ApplicationUser;
+import com.example.e_commerce.Common.GlobalConfig;
 import com.example.e_commerce.Model.NotificationModel;
 import com.example.e_commerce.Model.User;
 import com.example.e_commerce.R;
@@ -61,7 +62,7 @@ public class ReceiveNotificationFragment extends Fragment {
         databaseReference
                 = FirebaseDatabase
                 .getInstance()
-                .getReferenceFromUrl("https://prm392-52326-default-rtdb.firebaseio.com/");
+                .getReferenceFromUrl(GlobalConfig.REFERENCE_FROM_URL);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);

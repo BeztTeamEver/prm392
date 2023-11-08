@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.e_commerce.Common.GlobalConfig;
 import com.example.e_commerce.Network.FCMSend;
 import com.example.e_commerce.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,7 +36,7 @@ public class NotificationActivity extends AppCompatActivity {
                 String title = etTitle.getText().toString();
                 String message = etMessage.getText().toString();
 
-                String token = "eBUbbGxiRFOZ26cZfj_6tO:APA91bELJ967HtBrBhWFgGjap5gx86X2r7Pf1nsTVVsMofsCDCnfrZBZWvgOgAb1NNfKnSu-V0puINhBb3Fj3e_s-a2_w6xL6wgx5kjGW160qiZM0kFdtzOQW2aINdameMCKDlwyzIfN";
+                String token = GlobalConfig.RECEIVE_TOKEN;
 
                 FCMSend.pushNotification(NotificationActivity.this
                         ,token

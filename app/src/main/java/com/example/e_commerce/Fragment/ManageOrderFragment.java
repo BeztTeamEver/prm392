@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.e_commerce.Activity.AdminDetailOrderItemActivity;
+import com.example.e_commerce.Common.ParseHelper;
 import com.example.e_commerce.Model.Order;
 import com.example.e_commerce.R;
 import com.example.e_commerce.Repository.RepositoryBase;
@@ -182,10 +183,14 @@ public class ManageOrderFragment extends Fragment {
             TextView product_address= (TextView) item.findViewById(R.id.admin_manage_order_address);
             Button btn_detail = (Button) item.findViewById(R.id.btn_detail_order);
 
-            product_create_at.setText(orders.get(i).getCreated_at() + "");
+            String createdAt = ParseHelper.dateTimeToString(orders.get(i).getCreated_at());
+            product_create_at.setText(createdAt);
+            String price = ParseHelper.intToString(orders.get(i).getTotal_amount());
+            product_price.setText(price);
+            //product_create_at.setText(orders.get(i).getCreated_at() + "");
             product_status.setText(orders.get(i).getStatus());
             product_address.setText(orders.get(i).getAddress());
-            product_price.setText(orders.get(i).getTotal_amount() + "");
+            //product_price.setText(orders.get(i).getTotal_amount() + "");
 
            if (orders.get(i).getStatus().equals("Chờ xác nhận")){
                 product_status.setTextColor(Color.rgb(189, 132, 0));

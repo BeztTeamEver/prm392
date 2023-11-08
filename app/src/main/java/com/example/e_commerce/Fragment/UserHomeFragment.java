@@ -22,6 +22,7 @@ import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.e_commerce.Activity.CategoryProductsActivity;
 import com.example.e_commerce.Activity.ProductActivity;
+import com.example.e_commerce.Common.ParseHelper;
 import com.example.e_commerce.Database.Database;
 import com.example.e_commerce.Model.Book;
 import com.example.e_commerce.R;
@@ -196,7 +197,9 @@ public class UserHomeFragment extends Fragment {
             TextView product_author = (TextView) item.findViewById(R.id.user_home_tv_product_author);
 
             product_name.setText(products.get(i).getTitle());
-            product_price.setText("Giá: " + products.get(i).getPrice()+"");
+            String price = ParseHelper.intToString(products.get(i).getPrice());
+            product_price.setText("Giá: " + price);
+            //product_price.setText("Giá: " + products.get(i).getPrice()+"");
             String url = products.get(i).getImage_url();
             product_author.setText("Tác giả: " + products.get(i).getAuthor());
             Glide.with(getContext()).load(url).into(product_image);

@@ -23,8 +23,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.e_commerce.Common.GlobalConfig;
+import com.example.e_commerce.Common.ParseHelper;
 import com.example.e_commerce.Model.Order;
 import com.example.e_commerce.Model.OrderItem;
+import com.example.e_commerce.Network.FCMSend;
 import com.example.e_commerce.R;
 import com.example.e_commerce.Repository.RepositoryBase;
 import com.example.e_commerce.Service.IOrderItemService;
@@ -73,22 +76,38 @@ public class AdminDetailOrderItemActivity extends AppCompatActivity {
 
         product_address.setText(address);
         product_status.setText(status);
-        product_price.setText(price + "");
-        product_create_at.setText(create_at + "");
+        String strPrice = ParseHelper.intToString(price);
+        product_price.setText(strPrice);
+        String strCreateAt = ParseHelper.dateTimeToString(create_at);
+        product_create_at.setText(strCreateAt);
         getAllOrderItem(id);
         btn_confirm_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (status.equals("Chờ xác nhận")){
                     updateStatusOrder(id, "Đã xác nhận");
+                    pushNotification("Thông báo từ GoodTome", "Đơn hàng đã xác nhận");
+
                 } else if (status.equals("Đã xác nhận")){
                     updateStatusOrder(id, "Đang giao hàng");
+                    pushNotification("Thông báo từ GoodTome", "Đơn hàng đang giao");
                 } else if (status.equals("Đang giao hàng")){
                     updateStatusOrder(id, "Giao hàng thành công");
+                    pushNotification("Thông báo từ GoodTome", "Đơn hàng giao thành công");
                 }
             }
         });
 
+    }
+
+    private void pushNotification(String title, String content){
+
+        String token = GlobalConfig.RECEIVE_TOKEN;
+
+        FCMSend.pushNotification(AdminDetailOrderItemActivity.this
+                ,token
+                , title
+                , content);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:textSize="10sp"
-                android:text="20-10-2002 08:10 PM"/>
+                android:text="08-11-2023 10:10 AM"/>
 
         </LinearLayout>
 
@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:textSize="10sp"
-                android:text="20-10-2002 08:10 PM"/>
+                android:text="08-11-2023 10:10 AM"/>
 
         </LinearLayout>
 

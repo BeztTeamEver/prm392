@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.e_commerce.Common.ParseHelper;
 import com.example.e_commerce.Model.Order;
 import com.example.e_commerce.Model.User;
 import com.example.e_commerce.R;
@@ -99,9 +100,14 @@ public class UserManageOrderActivity extends AppCompatActivity {
             TextView product_create_at = (TextView) item.findViewById(R.id.user_manage_order_item_date);
             Button product_detail_btn = (Button) item.findViewById(R.id.user_manage_order_detail);
 
-            product_create_at.setText(orders.get(i).getCreated_at() + "");
+            String date = ParseHelper.dateTimeToString(orders.get(i).getCreated_at());
+            product_create_at.setText(date);
+            String amount = ParseHelper.intToString(orders.get(i).getTotal_amount());
+            product_price.setText(amount);
+
+            //product_create_at.setText(orders.get(i).getCreated_at() + "");
             product_state.setText(orders.get(i).getStatus());
-            product_price.setText(orders.get(i).getTotal_amount() + "");
+            //product_price.setText(orders.get(i).getTotal_amount() + "");
 
             product_detail_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
