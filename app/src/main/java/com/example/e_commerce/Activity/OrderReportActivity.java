@@ -35,8 +35,8 @@ public class OrderReportActivity extends AppCompatActivity {
         textView = findViewById(R.id.order_id);
         textView.setText("Order Id: " + order_id);
         order_details = findViewById(R.id.order_details);
-        Database db = new Database(this);
-        products = db.get_order_details(order_id);
+//        Database db = new Database(this);
+//        products = db.get_order_details(order_id);
         OrderReportActivity.ReportAdapter reportAdapter = new OrderReportActivity.ReportAdapter(products);
         order_details.setAdapter(reportAdapter);
     }

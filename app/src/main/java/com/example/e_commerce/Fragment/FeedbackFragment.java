@@ -77,8 +77,8 @@ public class FeedbackFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_feedback, container, false);
-        Database db = new Database(getContext());
-        orders = db.get_orders();
+//        Database db = new Database(getContext());
+//        orders = db.get_orders();
         feedback_list = v.findViewById(R.id.admin_feedback_list);
 
         // TODO: get all orders with feedback and show itin listView
@@ -124,7 +124,7 @@ public class FeedbackFragment extends Fragment {
             TextView order_feedback= (TextView) item.findViewById(R.id.admin_feedback_order_feedback);
             RatingBar order_rate= (RatingBar) item.findViewById(R.id.admin_frrdback_order_rate);
 
-            order_date.setText(orders.get(i).getDate());
+//            order_date.setText(orders.get(i).getDate());
             order_user_id.setText(orders.get(i).getUser_id()+"");
             order_id.setText(orders.get(i).getOrder_id()+"");
             order_feedback.setText(orders.get(i).getFeedback());

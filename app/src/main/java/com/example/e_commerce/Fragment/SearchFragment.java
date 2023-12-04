@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,11 +32,20 @@ import com.example.e_commerce.Barcode.CaptuerAct;
 import com.example.e_commerce.Database.Database;
 import com.example.e_commerce.Model.Book;
 import com.example.e_commerce.R;
+import com.example.e_commerce.Repository.RepositoryBase;
+import com.example.e_commerce.Service.IBookService;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import java.text.Normalizer;
+import java.util.regex.Pattern;
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link SearchFragment#newInstance} factory method to
@@ -47,7 +57,7 @@ public class SearchFragment extends Fragment {
     ImageButton imageButton_voice, imageButton_barcode;
     EditText txt_search;
     ListView list_search;
-
+    private IBookService bookService = RepositoryBase.getBookService();
     int voiceCode = 1;
 
     ArrayList<Book> products = new ArrayList<>();
@@ -159,11 +169,8 @@ public class SearchFragment extends Fragment {
             public void afterTextChanged(Editable editable) {
                 // TODO: functions for search by text, voicr, or barcode
                 String text = txt_search.getText().toString();
-                Database dp = new Database(getContext());
-                products = dp.search_product(text);
-                SearchFragment.UserSearchProductAdapter userSearchProductAdapter = new SearchFragment.UserSearchProductAdapter(products);
-                list_search.setAdapter(userSearchProductAdapter);
-
+                products.clear();
+                getAllBook_search(text);
                 list_search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -212,7 +219,6 @@ public class SearchFragment extends Fragment {
            txt_search.setText(result.getContents());
     });
 
-
     class UserSearchProductAdapter extends BaseAdapter {
 
         ArrayList<Book> products = new ArrayList<>();
@@ -246,8 +252,10 @@ public class SearchFragment extends Fragment {
             ImageView product_image = (ImageView) item.findViewById(R.id.user_home_iv_product_image);
             TextView product_name = (TextView) item.findViewById(R.id.user_home_tv_product_name);
             TextView product_price = (TextView) item.findViewById(R.id.user_home_tv_product_price);
+            TextView product_author = (TextView) item.findViewById(R.id.user_home_tv_product_author);
 
             product_name.setText(products.get(i).getTitle());
+            product_author.setText(products.get(i).getAuthor());
             product_price.setText(products.get(i).getPrice()+"");
             String url = products.get(i).getImage_url();
             Glide.with(getContext()).load(url).into(product_image);
@@ -255,5 +263,40 @@ public class SearchFragment extends Fragment {
             return item;
         }
     }
+
+    private void getAllBook_search(String text){
+        try{
+            Call<List<Book>> call = bookService.getAll();
+            call.enqueue(new Callback<List<Book>>() {
+                @Override
+                public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
+                    List<Book> books = response.body();
+                    if (books == null){
+                        return;
+                    }
+                    Collections.reverse(books);
+                    products.clear();
+                    for (Book book : books){
+                        String tempText = removeAccent(text).toLowerCase();
+                        if (removeAccent(book.getTitle().toLowerCase()).contains(tempText)
+                                || removeAccent(book.getAuthor().toLowerCase()).contains(tempText))
+                        products.add(book);
+                    };
+                    SearchFragment.UserSearchProductAdapter userSearchProductAdapter = new SearchFragment.UserSearchProductAdapter(products);
+                    list_search.setAdapter(userSearchProductAdapter);
+                }
+
+                @Override
+                public void onFailure(Call<List<Book>> call, Throwable t) {
+
+                }
+            });
+
+        } catch (Exception e){
+            Log.d("Error", e.getMessage());
+        }
+    }
+    public static String removeAccent(String s) { String temp = Normalizer.normalize(s, Normalizer.Form.NFD); Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+"); temp = pattern.matcher(temp).replaceAll("");
+        return temp.replaceAll("đ", "d"); }
 
 }

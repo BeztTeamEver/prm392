@@ -3,6 +3,7 @@ package com.example.e_commerce.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.e_commerce.Common.ApplicationUser;
 import com.example.e_commerce.Model.User;
 import com.example.e_commerce.R;
 import com.example.e_commerce.Repository.RepositoryBase;
@@ -29,8 +31,9 @@ public class LoginActivity extends AppCompatActivity {
     Button btn_login;
     EditText txt_email, txt_password;
     TextView textView_forgot_password, textView_signup;
-
     IUserService userService;
+    SharedPreferences.Editor myEdit;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,23 +45,23 @@ public class LoginActivity extends AppCompatActivity {
 
 
         userService = RepositoryBase.getUserService();
-
         txt_email = findViewById(R.id.login_txt_email);
         txt_password = findViewById(R.id.login_txt_password);
         btn_login = (Button) findViewById(R.id.login_btn_login);
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+                myEdit = sharedPreferences.edit();
+                myEdit.commit();
 
                 // TODO: login
-                String email = txt_email.getText().toString(),
+                String email = txt_email.getText().toString().trim().toLowerCase(),
                         password = txt_password.getText().toString();
 
                 if(!email.isEmpty() && !password.isEmpty()){
-
                     authenticate(email, password);
-
-                }else{
+                } else {
                     Toast.makeText(getApplicationContext(), "Hãy điền đầy đủ thông tin!"
                             , Toast.LENGTH_SHORT).show();
                 }
@@ -77,8 +80,12 @@ public class LoginActivity extends AppCompatActivity {
 
     public void authenticate(String email, String password) {
         if (email.equals("admin") && password.equals("admin")) {
+
+            User admin = ApplicationUser.parseUserFromJsonInAsset(this, "appsettings.json");
+            ApplicationUser.saveCurrentUser(this, admin);
             Intent myIntent = new Intent(LoginActivity.this, AdminActivity.class);
                             myIntent.putExtra("adminGate",1);
+                            ApplicationUser.registerUserToFireBase(admin);
                             startActivity(myIntent);
         }else {
             Call<List<User>> call = userService.getUserByEmailAndPassword(email, password);
@@ -90,11 +97,25 @@ public class LoginActivity extends AppCompatActivity {
                                      List<User> users = response.body();
                                      if(users != null && users.size() > 0) {
                                          if (users.get(0).getEmail().equals(email) && users.get(0).getPassword().equals(password)) {
-                                             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                                             User user = users.get(0);
+                                             myEdit.putInt("id", user.getId());
+                                             myEdit.putString("username", user.getUsername());
+                                             myEdit.putString("email", user.getEmail());
+                                             myEdit.putString("phone_number", user.getPhone_number());
+                                             myEdit.putString("password", user.getPassword());
+                                             Gson gson = new Gson();
+                                             String userJson = gson.toJson(user);
+                                             myEdit.putString("current_user", userJson);
+                                             myEdit.apply();
 
+
+
+                                             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                                              firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener((task) -> {
                                                  if (task.isSuccessful()) {
                                                      if (firebaseAuth.getCurrentUser().isEmailVerified()) {
+                                                         ApplicationUser.saveCurrentUser(LoginActivity.this, user);
+                                                         ApplicationUser.registerUserToFireBase(user);
                                                          startActivity(new Intent(LoginActivity.this
                                                                  , UserActivity.class));
 
@@ -130,6 +151,8 @@ public class LoginActivity extends AppCompatActivity {
             );
         }
     }
+
+
 
 
 }

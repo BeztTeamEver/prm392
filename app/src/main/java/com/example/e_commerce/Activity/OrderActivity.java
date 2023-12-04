@@ -7,12 +7,15 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,57 +27,84 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.e_commerce.Common.ApplicationUser;
 import com.example.e_commerce.Database.Database;
+import com.example.e_commerce.Fragment.CartFragment;
+import com.example.e_commerce.Helper.CreateOrder;
 import com.example.e_commerce.Model.Cart;
 import com.example.e_commerce.Model.Order;
 import com.example.e_commerce.Model.User;
 import com.example.e_commerce.R;
+import com.example.e_commerce.Repository.RepositoryBase;
+import com.example.e_commerce.Service.ICartService;
+import com.example.e_commerce.Service.IOrderService;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class OrderActivity extends AppCompatActivity {
 
     Button btn_confirm;
     ListView user_order_list;
-    TextView txt_total;
+    TextView txt_total, txt_distance;
     RatingBar ratingBar;
     ArrayList<Cart> cart_products = new ArrayList<>();
     SimpleDateFormat dateFormat;
     float rate = -1;
+    float distance = 0;
 
     //location variables
     EditText txt_get_location;
     FusedLocationProviderClient fusedLocationProviderClient;
+    IOrderService orderService = RepositoryBase.getOrderService();
+    ICartService cartService = RepositoryBase.getCartService();
     private final static int REQUEST_CODE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
+//        StrictMode.ThreadPolicy policy = new
+//                StrictMode.ThreadPolicy.Builder().permitAll().build();
+//        StrictMode.setThreadPolicy(policy);
+        int total = 0;
+        Intent n = getIntent();
+        Address address = null;
+        if (n.getExtras() != null)  {
+            address =  n.getExtras().getParcelable("savedLocation");
+            distance =  n.getExtras().getFloat("distance");
+        }
 
-        Double total = 0.0;
         user_order_list = findViewById(R.id.user_order_list);
-        Database db = new Database(getApplicationContext());
-        User user = User.getInstance();
-        cart_products = db.get_cart(user.getId());
-        OrderActivity.UserOrdertAdapter userOrdertAdapter = new OrderActivity.UserOrdertAdapter(cart_products);
-        user_order_list.setAdapter(userOrdertAdapter);
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(OrderActivity.this);
         EditText editText_feedback_text = bottomSheetDialog.findViewById(R.id.editText_feedback_text);
         txt_get_location = findViewById(R.id.txt_get_location);
         txt_total = findViewById(R.id.txt_total);
+        txt_distance = findViewById(R.id.txt_distance);
         btn_confirm = findViewById(R.id.btn_confirm);
+        getAllCart();
 
-
+        if (address != null) {
+            txt_get_location.setText(address.getAddressLine(0) + "");
+            txt_distance.setText(distance * 2000 + "");
+        }
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,42 +120,74 @@ public class OrderActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         // Send to orders table
-                        User user = User.getInstance();
+                        //User user = User.getInstance();
+                        User user = ApplicationUser.getUserFromSharedPreferences(OrderActivity.this);
                         Calendar calendar = Calendar.getInstance();
                         dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-                        String date = dateFormat.format(calendar.getTime());
+                        Date create_at = new Date();
                         String address = txt_get_location.getText().toString();
 
                         String feedback = txt_feedback.getText().toString();
                         rate = ratingBar.getRating();
-                        Order order =  new Order(user.getId(), date, address, feedback, rate);
+                        int total_price = Integer.parseInt(txt_total.getText().toString());
+
+                        Order order =  new Order(user.getId(), total_price, address, feedback, "ZaloPay", rate, create_at, "Chờ xác nhận");
 
                         if(!txt_feedback.getText().toString().isEmpty() && rate!=-1 && !address.isEmpty()){
-                            cart_products = db.get_cart(user.getId());
-                            db.confirm_order(order, cart_products);
+//                            cart_products = db.get_cart(user.getId());
+//                            db.confirm_order(order, cart_products);
+                            try {
+//                                Call<Order> callO = orderService.create(order);
+//                                callO.enqueue(new Callback<Order>() {
+//                                    @Override
+//                                    public void onResponse(Call<Order> call, Response<Order> response) {
+//                                        if (response.body() != null) {
+////                                            Toast.makeText(OrderActivity.this, "Sách đã được thêm vào giỏ hàng"
+////                                                    , Toast.LENGTH_LONG).show();
+//                                        }
+//                                    }
+//                                    @Override
+//                                    public void onFailure(Call<Order> call, Throwable t) {
+//                                        Toast.makeText(OrderActivity.this, "Save fail"
+//                                                , Toast.LENGTH_LONG).show();
+//                                    }
+//                                });
+                            } catch (Exception e) {
+                                Log.d("Error", e.getMessage());
+                            }
                             bottomSheetDialog.dismiss();
-                            startActivity(new Intent(OrderActivity.this, UserActivity.class));
+                            CreateOrder orderApi = new CreateOrder();
+                            JSONObject data;
+                            String token="";
+                            try {
+                                data = orderApi.createOrder(total +"");
+                                token = data.getString("zp_trans_token");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            Intent intent = new Intent(OrderActivity.this, PaymentActivity.class);
+                            intent.putExtra("order", order);
 
-                        }else{
-                            Toast.makeText(getApplicationContext(), "Please Enter Location, Feedback and Rateing", Toast.LENGTH_SHORT).show();
+                            ApplicationUser.saveOrder(OrderActivity.this, order);
+                            ApplicationUser.saveToken(OrderActivity.this, token);
+                            intent.putExtra("total", total_price);
+                            intent.putExtra("carts", cart_products);
+                            startActivity(intent);
+
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Hãy điền hết thông tin trước khi thanh toán!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
             }
         });
 
-
-        for (int i = 0 ; i<cart_products.size() ; i++){
-            total += cart_products.get(i).getPrice()*cart_products.get(i).getQuantity();
-        }
-        txt_total.setText(total+"");
-
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         txt_get_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getLastLocation();
+                startActivity(new Intent(OrderActivity.this, OrderPlaceActivity.class));
             }
         });
 
@@ -211,5 +273,46 @@ public class OrderActivity extends AppCompatActivity {
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
+    public void getAllCart(){
+        try{
+            Call<List<Cart>> call = cartService.getAll();
+            call.enqueue(new Callback<List<Cart>>() {
+                @Override
+                public void onResponse(Call<List<Cart>> call, Response<List<Cart>> response) {
+                    cart_products.clear();
+                    List<Cart> list_carts = response.body();
+                    if (list_carts == null){
+                        return;
+                    }
+                    User user = User.getInstance();
+                    SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+                    String userJson = sharedPreferences.getString("current_user", null);
+                    Gson gson = new Gson();
+                    user = gson.fromJson(userJson, User.class);
+
+                    Collections.reverse(list_carts);
+                    for (Cart item : list_carts) {
+                        if (item.getUser_id() == user.getId())
+                            cart_products.add(item);
+                    }
+                    OrderActivity.UserOrdertAdapter userOrdertAdapter = new OrderActivity.UserOrdertAdapter(cart_products);
+                    user_order_list.setAdapter(userOrdertAdapter);
+                    int total = (int) (distance*2000);
+                    for (int i = 0 ; i < cart_products.size() ; i++){
+                        total += cart_products.get(i).getPrice()*cart_products.get(i).getQuantity();
+                    }
+                    txt_total.setText(total+"");
+                }
+                @Override
+                public void onFailure(Call<List<Cart>> call, Throwable t) {
+
+                }
+            });
+
+        } catch (Exception e){
+            Log.d("Error", e.getMessage());
+        }
+    }
+
 
 }

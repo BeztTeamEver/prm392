@@ -8,13 +8,13 @@
         />
     <item
         android:id="@+id/user_nav_category"
-        android:title="Sách"
+        android:title="Thể loại"
         android:icon="@drawable/tabler_icon_category"
         />
     <item
         android:id="@+id/user_nav_search"
-        android:title="Tin nhăn"
-        android:icon="@drawable/tabler_icon_message_dots"
+        android:title="Kho sách"
+        android:icon="@drawable/tabler_icon_book"
         />
 
     <item

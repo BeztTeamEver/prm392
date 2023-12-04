@@ -22,6 +22,7 @@ import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.e_commerce.Activity.CategoryProductsActivity;
 import com.example.e_commerce.Activity.ProductActivity;
+import com.example.e_commerce.Common.ParseHelper;
 import com.example.e_commerce.Database.Database;
 import com.example.e_commerce.Model.Book;
 import com.example.e_commerce.R;
@@ -44,7 +45,7 @@ import retrofit2.Response;
 public class UserHomeFragment extends Fragment {
 
     ListView user_list_products;
-    ArrayList<Book> products = new ArrayList<>();
+    ArrayList<Book> books = new ArrayList<>();
 
     IBookService bookService = RepositoryBase.getBookService();
     // Rename parameter arguments, choose names that match
@@ -99,19 +100,11 @@ public class UserHomeFragment extends Fragment {
         slideModels.add(new SlideModel(R.drawable.cover_1, ScaleTypes.FIT));
         slideModels.add(new SlideModel(R.drawable.cover_2, ScaleTypes.FIT));
         slideModels.add(new SlideModel(R.drawable.cover_3, ScaleTypes.FIT));
-        slideModels.add(new SlideModel(R.drawable.cover_4, ScaleTypes.FIT));
         imageSlider.setImageList(slideModels, ScaleTypes.FIT);
 
 
         // TODO: get products from database and show it in listView
 
-        //Database dp = new Database(getContext());
-        //products = dp.get_products();
-
-
-
-        /*UserHomeProductAdapter userHomeProductAdapter = new UserHomeProductAdapter(products);
-        user_list_products.setAdapter(userHomeProductAdapter);*/
         getAllBook();
 
         user_list_products.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -121,14 +114,14 @@ public class UserHomeFragment extends Fragment {
                 Intent intent = new Intent(getActivity().getBaseContext(), ProductActivity.class);
                 intent = new Intent(getActivity(), ProductActivity.class);
 
-                intent.putExtra("id",products.get(i).getId());
-                intent.putExtra("stock_quantity",products.get(i).getStock_quantity());
-                intent.putExtra("book_type_id",products.get(i).getBook_type_id());
-                intent.putExtra("title",products.get(i).getTitle());
-                intent.putExtra("author",products.get(i).getAuthor());
-                intent.putExtra("image_url",products.get(i).getImage_url());
-                intent.putExtra("description",products.get(i).getDescription());
-                intent.putExtra("price",products.get(i).getPrice());
+                intent.putExtra("id",books.get(i).getId());
+                intent.putExtra("stock_quantity",books.get(i).getStock_quantity());
+                intent.putExtra("book_type_id",books.get(i).getBook_type_id());
+                intent.putExtra("title",books.get(i).getTitle());
+                intent.putExtra("author",books.get(i).getAuthor());
+                intent.putExtra("image_url",books.get(i).getImage_url());
+                intent.putExtra("description",books.get(i).getDescription());
+                intent.putExtra("price",books.get(i).getPrice());
                 getActivity().startActivity(intent);
             }
         });
@@ -143,21 +136,17 @@ public class UserHomeFragment extends Fragment {
             call.enqueue(new Callback<List<Book>>() {
                 @Override
                 public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
-                    List<Book> books = response.body();
-                    ArrayList bookList = new ArrayList();
+                    List<Book> reqs = response.body();
                     if (books == null){
                         return;
                     }
 
-                    for (Book book : books){
-                        bookList.add(book);
+                    for (Book book : reqs){
+                        books.add(book);
                     }
 
-                    UserHomeProductAdapter userHomeProductAdapter
-                            = new UserHomeProductAdapter(bookList);
+                    UserHomeProductAdapter userHomeProductAdapter = new UserHomeProductAdapter(books);
                     user_list_products.setAdapter(userHomeProductAdapter);
-
-
                 }
 
                 @Override
@@ -208,9 +197,11 @@ public class UserHomeFragment extends Fragment {
             TextView product_author = (TextView) item.findViewById(R.id.user_home_tv_product_author);
 
             product_name.setText(products.get(i).getTitle());
-            product_price.setText("Giá: " + products.get(i).getPrice()+"");
+            String price = ParseHelper.intToString(products.get(i).getPrice());
+            product_price.setText("Giá: " + price);
+            //product_price.setText("Giá: " + products.get(i).getPrice()+"");
             String url = products.get(i).getImage_url();
-            product_author.setText("Tác giả: " + + products.get(i).getPrice());
+            product_author.setText("Tác giả: " + products.get(i).getAuthor());
             Glide.with(getContext()).load(url).into(product_image);
 
             return item;

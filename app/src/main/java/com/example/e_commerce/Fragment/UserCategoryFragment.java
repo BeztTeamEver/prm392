@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -38,7 +39,7 @@ import retrofit2.Response;
  */
 public class UserCategoryFragment extends Fragment {
 
-    ListView list_categories;
+    GridView list_categories;
 
     ArrayList<BookType> bookTypes = new ArrayList<>();
     // Rename parameter arguments, choose names that match
@@ -90,12 +91,6 @@ public class UserCategoryFragment extends Fragment {
         list_categories = v.findViewById(R.id.user_category_list_categories);
 
         // TODO: get categories from database and show it in listView
-
-        /*Database dp = new Database(getContext());
-        categories = dp.get_categories();
-        UserCategoryFragment.UserCategoryAdapter userCategoryAdapter
-                = new UserCategoryFragment.UserCategoryAdapter(categories);
-        list_categories.setAdapter(userCategoryAdapter);*/
         getAllBookType();
 
         list_categories.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -113,7 +108,6 @@ public class UserCategoryFragment extends Fragment {
     }
 
     private void getAllBookType(){
-
         try{
             Call<List<BookType>> call = bookTypeService.getAll();
             call.enqueue(new Callback<List<BookType>>() {
@@ -125,19 +119,16 @@ public class UserCategoryFragment extends Fragment {
                     }
 
                     for (BookType bookType : resList){
+                        if (bookType.getQuantity() > 0)
                         bookTypes.add(bookType);
                     }
-
                     UserCategoryFragment.UserCategoryAdapter userCategoryAdapter
                             = new UserCategoryFragment.UserCategoryAdapter(bookTypes);
                     list_categories.setAdapter(userCategoryAdapter);
-
-
                 }
 
                 @Override
                 public void onFailure(Call<List<BookType>> call, Throwable t) {
-
                 }
             });
 
@@ -178,11 +169,12 @@ public class UserCategoryFragment extends Fragment {
 
             ImageView category_image = (ImageView) item.findViewById(R.id.user_category_iv_category_image);
             TextView category_name = (TextView) item.findViewById(R.id.user_category_tv_category_name);
-
+            TextView category_quantity = (TextView) item.findViewById(R.id.user_category_tv_category_quantity);
 
             category_name.setText(bookTypes.get(i).getType_name());
+            category_quantity.setText(bookTypes.get(i).getQuantity() + " sản phẩm");
             String url = bookTypes.get(i).getImage_url();
-            //Glide.with(getContext()).load(url).into(category_image);
+            Glide.with(getContext()).load(url).into(category_image);
 
             return item;
         }

@@ -24,7 +24,7 @@
                 android:background="@drawable/bg_txt"
                 android:ems="10"
                 android:gravity="start|top"
-                android:hint="Feedback"
+                android:hint="Nhận xét"
                 android:inputType="textMultiLine"
                 android:padding="15dp" />
 
@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_btn_solid"
-                android:text="Send Feedback"
+                android:text="Thanh toán"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="20sp" />

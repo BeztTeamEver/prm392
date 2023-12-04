@@ -316,15 +316,15 @@ public class Database extends SQLiteOpenHelper {
         ArrayList<Cart> arrayList = new ArrayList<>();
         cursor.moveToFirst();
         while (cursor.isAfterLast() == false) {
-            arrayList.add(new Cart(
-                    cursor.getInt(0),
-                    cursor.getString(2),
-                    cursor.getString(3),
-                    cursor.getInt(4),
-                    cursor.getInt(1),
-                    cursor.getInt(5),
-                    cursor.getInt(6)));
-            cursor.moveToNext();
+//            arrayList.add(new Cart(
+//                    cursor.getInt(0),
+//                    cursor.getString(2),
+//                    cursor.getString(3),
+//                    cursor.getInt(4),
+//                    cursor.getInt(1),
+//                    cursor.getInt(5),
+//                    cursor.getInt(6)));
+//            cursor.moveToNext();
         }
         database.close();
         return arrayList;
@@ -394,15 +394,15 @@ public class Database extends SQLiteOpenHelper {
     }
 
     public void confirm_order(Order order, ArrayList<Cart> carts) {
-        SQLiteDatabase db = getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("date", order.getDate());
-        values.put("user_id", order.getUser_id());
-        values.put("address", order.getAddress());
-        values.put("feedback", order.getFeedback());
-        values.put("rate", order.getRate());
-        db.insert("orders", null, values);
-        db.close();
+//        SQLiteDatabase db = getWritableDatabase();
+//        ContentValues values = new ContentValues();
+//        values.put("date", order.getDate());
+//        values.put("user_id", order.getUser_id());
+//        values.put("address", order.getAddress());
+//        values.put("feedback", order.getFeedback());
+//        values.put("rate", order.getRate());
+//        db.insert("orders", null, values);
+//        db.close();
 
         database = getWritableDatabase();
         int order_id = -1;
@@ -412,15 +412,15 @@ public class Database extends SQLiteOpenHelper {
         database.close();
 
         for (int i = 0; i < carts.size(); i++) {
-            SQLiteDatabase database2 = getWritableDatabase();
-            ContentValues values2 = new ContentValues();
-            values2.put("order_id", order_id);
-            values2.put("product_id", carts.get(i).getProduct_id());
-            values2.put("product_name", carts.get(i).getName());
-            values2.put("quantity", carts.get(i).getQuantity());
-            database2.insert("order_details", null, values2);
-            increase_selled(carts.get(i).getProduct_id(), carts.get(i).getQuantity());
-            database2.close();
+//            SQLiteDatabase database2 = getWritableDatabase();
+//            ContentValues values2 = new ContentValues();
+//            values2.put("order_id", order_id);
+//            values2.put("product_id", carts.get(i).getProduct_id());
+//            values2.put("product_name", carts.get(i).getName());
+//            values2.put("quantity", carts.get(i).getQuantity());
+//            database2.insert("order_details", null, values2);
+//            increase_selled(carts.get(i).getProduct_id(), carts.get(i).getQuantity());
+//            database2.close();
         }
 
 
@@ -445,16 +445,16 @@ public class Database extends SQLiteOpenHelper {
 
         cursor.moveToFirst();
 
-        while (cursor.isAfterLast() == false) {
-            arrayList.add(new Order(
-                    cursor.getInt(0),
-                    cursor.getInt(2),
-                    cursor.getString(1),
-                    cursor.getString(3),
-                    cursor.getString(4),
-                    cursor.getDouble(5)));
-            cursor.moveToNext();
-        }
+//        while (cursor.isAfterLast() == false) {
+//            arrayList.add(new Order(
+//                    cursor.getInt(0),
+//                    cursor.getInt(2),
+//                    cursor.getString(1),
+//                    cursor.getString(3),
+//                    cursor.getString(4),
+//                    cursor.getDouble(5)));
+//            cursor.moveToNext();
+//        }
         database.close();
         return arrayList;
     }
@@ -465,27 +465,27 @@ public class Database extends SQLiteOpenHelper {
         ArrayList<OrderItem> arrayList = new ArrayList<>();
         cursor.moveToFirst();
 
-        while (cursor.isAfterLast() == false) {
-            arrayList.add(new OrderItem(cursor.getInt(0)));
-            cursor.moveToNext();
-        }
+//        while (cursor.isAfterLast() == false) {
+//            arrayList.add(new OrderItem(cursor.getInt(0)));
+//            cursor.moveToNext();
+//        }
         database.close();
         return arrayList;
     }
 
-    public ArrayList<OrderItem> get_report(String date, int user_id){
-        database = getReadableDatabase();
-        Cursor cursor = database.rawQuery("select * from orders where date = '" + date + "' and user_id = '" + user_id + "'", null);
-        ArrayList<OrderItem> arrayList = new ArrayList<>();
-        cursor.moveToFirst();
-
-        while (cursor.isAfterLast() == false) {
-            arrayList.add(new OrderItem(cursor.getInt(0)));
-            cursor.moveToNext();
-        }
-        database.close();
-        return arrayList;
-    }
+//    public ArrayList<OrderItem> get_report(String date, int user_id){
+////        database = getReadableDatabase();
+////        Cursor cursor = database.rawQuery("select * from orders where date = '" + date + "' and user_id = '" + user_id + "'", null);
+////        ArrayList<OrderItem> arrayList = new ArrayList<>();
+////        cursor.moveToFirst();
+////
+////        while (cursor.isAfterLast() == false) {
+////            arrayList.add(new OrderItem(cursor.getInt(0)));
+////            cursor.moveToNext();
+////        }
+////        database.close();
+////        return arrayList;
+//    }
 
     public ArrayList<Book> get_order_details(int order_id){
         database = getReadableDatabase();

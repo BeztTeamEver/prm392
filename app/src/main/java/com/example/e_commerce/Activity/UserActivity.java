@@ -4,21 +4,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
-import com.denzcoskun.imageslider.ImageSlider;
-import com.denzcoskun.imageslider.constants.ScaleTypes;
-import com.denzcoskun.imageslider.models.SlideModel;
+import com.example.e_commerce.Activity.message.ChatMessageActivity;
 import com.example.e_commerce.Fragment.CartFragment;
 import com.example.e_commerce.Fragment.ProfileFragment;
+import com.example.e_commerce.Fragment.ReceiveNotificationFragment;
 import com.example.e_commerce.R;
 import com.example.e_commerce.Fragment.SearchFragment;
 import com.example.e_commerce.Fragment.UserCategoryFragment;
 import com.example.e_commerce.Fragment.UserHomeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.ArrayList;
 
 public class UserActivity extends AppCompatActivity {
 
@@ -27,17 +26,30 @@ public class UserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
 
-        getSupportActionBar().hide();
-
-//        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_ios_new_24);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         BottomNavigationView bottomNav = findViewById(R.id.user_bottom_nav);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         getSupportFragmentManager().beginTransaction().replace(R.id.user_container, new UserHomeFragment()).commit();
-
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.user_header, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.user_header_messenger) {
+            Intent intent = new Intent(UserActivity.this, ChatMessageActivity.class);
+            startActivity(intent);
+            finish();
+
+        } else if (item.getItemId() == R.id.user_header_notification) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.user_container
+                    , new ReceiveNotificationFragment()).commit();
+
+        }
+        return true;
+    }
     private BottomNavigationView.OnNavigationItemSelectedListener navListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -55,7 +67,8 @@ public class UserActivity extends AppCompatActivity {
                 selected_fragment = new ProfileFragment();
             }
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.user_container, selected_fragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.user_container
+                    , selected_fragment).commit();
             return true;
         }
     };

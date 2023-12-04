@@ -98,12 +98,12 @@ public class ChartFragment extends Fragment {
         barDataSet.setValueTextSize(16f);
         barChart.getDescription().setEnabled(true);
 
-        Database db = new Database(getContext());
-        String product_name = db.get_most_seeled();
-        if(!product_name.isEmpty())
-            tv_most_selled.setText(product_name);
-        else
-            tv_most_selled.setText("");
+//        Database db = new Database(getContext());
+//        String product_name = db.get_most_seeled();
+//        if(!product_name.isEmpty())
+//            tv_most_selled.setText(product_name);
+//        else
+//            tv_most_selled.setText("");
         return v;
     }
 }

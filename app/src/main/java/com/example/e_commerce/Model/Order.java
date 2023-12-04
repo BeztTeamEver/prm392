@@ -1,19 +1,23 @@
 package com.example.e_commerce.Model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Order {
+public class Order implements Serializable {
 
     private int id, user_id, total_amount;
-    private String date, address, feedback, payment_method;
+    private String address, feedback, payment_method;
     private double rate;
-
-    private Date created_at;
+    private Date created_at, date;
     private String status;
-
     public Order() {
     }
-
+    public Order(String status) {
+        this.status = status;
+    }
+    public Order(int id) {
+        this.id = id;
+    }
     public Order(int id, int user_id, int total_amount, String payment_method
             , Date created_at, String status) {
         this.id = id;
@@ -24,12 +28,22 @@ public class Order {
         this.status = status;
     }
 
-    public Order(int id, int user_id, int total_amount, String date, String address
-            , String feedback, String payment_method, double rate, Date created_at, String status) {
+    public Order(int id, int user_id, int total_amount, String address, String feedback, String payment_method, double rate, Date created_at, Date date, String status) {
         this.id = id;
         this.user_id = user_id;
         this.total_amount = total_amount;
+        this.address = address;
+        this.feedback = feedback;
+        this.payment_method = payment_method;
+        this.rate = rate;
+        this.created_at = created_at;
         this.date = date;
+        this.status = status;
+    }
+
+    public Order(int user_id, int total_amount, String address, String feedback, String payment_method, double rate, Date created_at, String status) {
+        this.user_id = user_id;
+        this.total_amount = total_amount;
         this.address = address;
         this.feedback = feedback;
         this.payment_method = payment_method;
@@ -38,7 +52,7 @@ public class Order {
         this.status = status;
     }
 
-    public Order(int user_id, String date, String address, String feedback, double rate) {
+    public Order(int user_id, Date date, String address, String feedback, double rate) {
         this.user_id = user_id;
         this.date = date;
         this.address = address;
@@ -46,7 +60,7 @@ public class Order {
         this.rate = rate;
     }
 
-    public Order(int order_id, int user_id, String date, String address, String feedback, double rate) {
+    public Order(int order_id, int user_id,  Date date, String address, String feedback, double rate) {
         this.id = order_id;
         this.user_id = user_id;
         this.date = date;
@@ -71,11 +85,11 @@ public class Order {
         this.user_id = user_id;
     }
 
-    public String getDate() {
+    public  Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate( Date date) {
         this.date = date;
     }
 
@@ -133,5 +147,9 @@ public class Order {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public int getId() {
+        return id;
     }
 }

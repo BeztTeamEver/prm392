@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="8dp"
     android:background="@color/primary_050"
     tools:context=".Activity.OrderActivity">
 
@@ -23,41 +23,39 @@
 
             <TextView
                 android:id="@+id/textView2"
-                android:layout_width="wrap_content"
+                android:layout_width="190dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:layout_weight="1"
                 android:padding="5dp"
-                android:text="Product Name"
+                android:text="Tên sản phẩm"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:fontFamily="@font/nunito_bold" />
 
             <TextView
                 android:id="@+id/textView3"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:layout_weight="1"
                 android:padding="5dp"
-                android:text="Quantity"
+                android:text="SL"
                 android:textAlignment="textStart"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:fontFamily="@font/nunito_bold"/>
 
             <TextView
                 android:id="@+id/textView4"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:layout_weight="1"
                 android:padding="5dp"
-                android:text="Price"
-                android:textAlignment="textEnd"
+                android:text="Giá"
+                android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:fontFamily="@font/nunito_bold"/>
         </LinearLayout>
 
         <View
@@ -74,11 +72,6 @@
 
         </ListView>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/black" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -89,7 +82,36 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:padding="5dp"
-                android:text="Total"
+                android:text="Phí giao hàng"
+                android:textColor="@color/black"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/txt_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:text="0"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="Tổng cộng"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -120,7 +142,7 @@
             android:ems="10"
             android:focusable="false"
             android:focusableInTouchMode="false"
-            android:hint="Get Current Location"
+            android:hint="Lấy vị trí"
             android:inputType="textMultiLine"
             android:padding="10dp"
             android:textColor="@color/black"
@@ -135,7 +157,7 @@
             android:layout_margin="5dp"
             android:background="@drawable/bg_btn_solid"
             android:padding="5dp"
-            android:text="Confirm"
+            android:text="Tiếp theo"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="20sp" />
