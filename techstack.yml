@@ -1,0 +1,156 @@
+repo_name: BeztTeamEver/prm392
+report_id: f6c9b46a2a0b7deef152990ab61ba79c
+version: 0.1
+repo_type: Public
+timestamp: '2024-07-18T12:54:12+00:00'
+requested_by: whitespace-dpo
+provider: github
+branch: main
+detected_tools_count: 12
+tools:
+- name: Java
+  description: A concurrent, class-based, object-oriented, language specifically designed
+    to have as few implementation dependencies as possible
+  website_url: https://www.java.com
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/995/K85ZWV2F.png
+  detection_source_url: https://github.com/BeztTeamEver/prm392
+  detection_source: Repo Metadata
+- name: Android SDK
+  description: An SDK that provides you the API libraries and developer tools necessary
+    to build, test, and debug apps for Android.
+  website_url: http://developer.android.com
+  open_source: false
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Frameworks (Full Stack)
+  image_url: https://img.stackshare.io/service/1010/m8jf0po4imu8t5eemjdd.png
+  detection_source_url: https://github.com/BeztTeamEver/prm392/blob/main/app/build.gradle
+  detection_source: app/build.gradle
+  last_updated_by: nghianguyent
+  last_updated_on: 2023-10-23 15:04:35.000000000 Z
+- name: Firebase
+  description: The Realtime App Platform
+  website_url: https://firebase.google.com/
+  open_source: false
+  hosted_saas: true
+  category: Application Hosting
+  sub_category: Realtime Backend / API
+  image_url: https://img.stackshare.io/service/116/cZLxNFZS.jpg
+  detection_source_url: https://github.com/BeztTeamEver/prm392/blob/main/app/build.gradle
+  detection_source: app/build.gradle
+  last_updated_by: bluestar-it
+  last_updated_on: 2023-10-29 09:11:23.000000000 Z
+- name: Git
+  description: Fast, scalable, distributed revision control system
+  website_url: http://git-scm.com/
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Version Control System
+  image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source_url: https://github.com/BeztTeamEver/prm392
+  detection_source: Repo Metadata
+- name: Gradle
+  description: A powerful build system for the JVM
+  website_url: https://www.gradle.org/
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Java Build Tools
+  image_url: https://img.stackshare.io/service/975/gradlephant-social-black-bg.png
+  detection_source_url: https://github.com/BeztTeamEver/prm392/blob/main/app/build.gradle
+  detection_source: app/build.gradle
+  last_updated_by: nghianguyent
+  last_updated_on: 2023-10-23 15:04:35.000000000 Z
+- name: Android OS
+  description: An open source mobile operating system by Google
+  website_url: https://www.android.com
+  open_source: false
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Operating Systems
+  image_url: https://img.stackshare.io/service/9586/ZvmtaSXW_400x400.jpg
+  detection_source_url: https://github.com/BeztTeamEver/prm392/blob/main/app/build.gradle
+  detection_source: app/build.gradle
+  last_updated_by: nghianguyent
+  last_updated_on: 2023-10-23 15:04:35.000000000 Z
+- name: Retrofit
+  description: A type-safe HTTP client for Android and Java
+  website_url: http://square.github.io/retrofit/
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Application Utilities
+  sub_category: API Tools
+  image_url: https://img.stackshare.io/service/2856/retrofit-logo.png
+  detection_source_url: https://github.com/BeztTeamEver/prm392/blob/main/app/build.gradle
+  detection_source: app/build.gradle
+  last_updated_by: obito
+  last_updated_on: 2023-10-26 10:19:34.000000000 Z
+- name: com.github.bumptech.glide:glide
+  description: A fast and efficient image loading library for Android focused on smooth
+    scrolling
+  version: 4.13.2
+  license: BSD-2-Clause,Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/BeztTeamEver/prm392/blob/main/app/build.gradle
+  detection_source: app/build.gradle
+  last_updated_by: bluestar-it
+  last_updated_on: 2023-10-29 09:11:23.000000000 Z
+- name: com.squareup.okhttp3:logging-interceptor
+  description: 'Null'
+  version: 4.11.0
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/BeztTeamEver/prm392/blob/main/app/build.gradle
+  detection_source: app/build.gradle
+  last_updated_by: bluestar-it
+  last_updated_on: 2023-10-29 09:11:23.000000000 Z
+- name: com.squareup.retrofit2:converter-gson
+  version: 2.9.0
+  open_source: false
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/BeztTeamEver/prm392/blob/main/app/build.gradle
+  detection_source: app/build.gradle
+  last_updated_by: bluestar-it
+  last_updated_on: 2023-10-29 09:11:23.000000000 Z
+- name: com.squareup.retrofit2:retrofit
+  version: 2.9.0
+  open_source: false
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/BeztTeamEver/prm392/blob/main/app/build.gradle
+  detection_source: app/build.gradle
+  last_updated_by: bluestar-it
+  last_updated_on: 2023-10-29 09:11:23.000000000 Z
+- name: junit:junit
+  description: JUnit is a unit testing framework for Java
+  version: 4.13.2
+  license: EPL-1.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/BeztTeamEver/prm392/blob/main/app/build.gradle
+  detection_source: app/build.gradle
+  last_updated_by: nghianguyent
+  last_updated_on: 2023-10-23 15:04:35.000000000 Z
